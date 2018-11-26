@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/levels/firstlevel_0_3_1.png</file>
+        <file>resources/levels/firstlevel_0_3_1_1.png</file>
+        <file>resources/outfits/deadpool.png</file>
+        <file>resources/chests/box.png</file>
+    </qresource>
+</RCC>

@@ -12,3 +12,15 @@ MainWindow::~MainWindow()
 {
     delete _ui;
 }
+
+void MainWindow::on_newGame_btn_clicked()
+{
+    _game.reset(new Game(_ui->display));
+    _ui->display->setScene(_game->scene);
+    this->hide();
+}
+
+void MainWindow::on_exit_btn_clicked()
+{
+    this->close();
+}
