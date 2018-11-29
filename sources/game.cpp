@@ -1,38 +1,60 @@
 #include "headers/game.h"
 
-Game::Game(QGraphicsView *) {
+namespace SceneMeasure {
+    qint16 sceneWidth = 1280;
+    qint16 sceneHeight = 720;
+}
 
-    scene = new QGraphicsScene;
+namespace Coordinates {
+    qint16 giftX = 575;
+    qint16 giftY = 255;
+    qint16 closeDoorX = 355;
+    qint16 closeDoorY = 215;
+}
+
+namespace Scaling {
+    qreal giftScale = 0.04;
+    qreal playerScale = 0.03;
+}
+
+Game::Game(QGraphicsView *parent) :
+           _parent(parent)
+{
     //background of scene
-    scene->setBackgroundBrush(QImage(":/resources/levels/firstlevel_0_3_1_1.png"));
+    parent->setBackgroundBrush(QImage(":/resources/levels/firstlevel_0_4.png"));
 
-    player = new Player();
-    player->setPos(sceneWidth/2, sceneHeight/2);
+    _player = new Player();
+    _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
-    player->setZValue(5);
-    player->setScale(0.04);
+    _player->setZValue(5);
+    _player->setScale(Scaling::playerScale);
     //enabling keyboard inputs
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    _player->setFlag(QGraphicsItem::ItemIsFocusable);
     //focusing item, so it can catch keyboard inputs
-    player->setFocus();
-    scene->addItem(player);
+    _player->setFocus();
+    addItem(_player);
 
-    gift = new Gift();
-    //hardcoded coordinates, for now
-    gift->setPos(565, 255);
-    gift->setScale(0.04);
-    gift->setFlag(QGraphicsItem::ItemIsFocusable);
-    gift->player = player;
-    scene->addItem(gift);
+    Key *key = new Key(0);
 
-    //setting scene, setting origin in top, left corner,
-    //setting size to 1280x720 and disabeling size changing
-    setScene(scene);
-    setSceneRect(0, 0, sceneWidth, sceneHeight);
-    //setting fixed size of scene + a little adjusment to height, at least for now
-    setFixedSize(sceneWidth, sceneHeight+15);
+    _gift = new Gift(QPixmap(":/resources/chests/box.png"));
+    _gift->setPos(Coordinates::giftX, Coordinates::giftY);
+    _gift->setScale(Scaling::giftScale);
+    _gift->setFlag(QGraphicsItem::ItemIsFocusable);
+    _gift->player = _player;
+    _gift->key = key;
+    addItem(_gift);
 
-    show();
+    _door = new Door(QPixmap(":/resources/doors/close_door_1.png"));
+    _door->setPos(Coordinates::closeDoorX, Coordinates::closeDoorY);
+    _door->setFlag(QGraphicsItem::ItemIsFocusable);
+    _door->player = _player;
+    _door->key = key;
+    addItem(_door);
+
+    //setting scene, setting origin in top, left corner, size to 1280x720
+    setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
+    //setting fixed size of scene + a little adjusment to height
+    parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+15);
 }
 
 Game::~Game(){
@@ -40,14 +62,17 @@ Game::~Game(){
 }
 
 
-//if user click on box on the scene, keyPressEvent function from gift class will be called
-void Game::mousePressEvent(QMouseEvent *event){
-    if(gift->isUnderMouse())
-        gift->mousePressEvent(event);
+void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    //if user click on gift, keyPressEvent function from gift class will be called
+    if(_gift->isUnderMouse())
+        _gift->mousePressEvent(event);
+    //If user click on door, keyPressEvent function from door class will be called
+    if(_door->isUnderMouse())
+        _door->mousePressEvent(event);
 }
 
 //if user press double click somewhere on the scene, player will stay in focus
-void Game::mouseDoubleClickEvent(QMouseEvent *event){
+void Game::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
     if(event->KeyPress)
-        player->setFocus();
+        _player->setFocus();
 }

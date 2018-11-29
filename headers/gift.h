@@ -1,21 +1,15 @@
 #ifndef GIFT_H
 #define GIFT_H
 
-#include <QGraphicsPixmapItem>
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
-#include "headers/player.h"
-#include <cmath>
-#include <QKeyEvent>
+#include "ingameobjects.h"
 
-class Gift : public QGraphicsPixmapItem {
+class Gift : public InGameObjects {
 
 public:
-    Gift();
+    Gift(QPixmap picture);
     ~Gift();
-    void mousePressEvent(QMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
     qreal distance();
-    Player *player;
 };
 
 #endif // GIFT_H

@@ -16,12 +16,18 @@ SOURCES += sources/main.cpp\
         sources/mainwindow.cpp\
         sources/game.cpp\
     sources/player.cpp \
-    sources/gift.cpp
+    sources/gift.cpp \
+    sources/key.cpp \
+    sources/door.cpp \
+    sources/ingameobjects.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
     headers/player.h \
-    headers/gift.h
+    headers/gift.h \
+    headers/key.h \
+    headers/door.h \
+    headers/ingameobjects.h
 
 FORMS    += ui/mainwindow.ui
 

@@ -4,5 +4,8 @@
         <file>resources/levels/firstlevel_0_3_1_1.png</file>
         <file>resources/outfits/deadpool.png</file>
         <file>resources/chests/box.png</file>
+        <file>resources/doors/close_door_1.png</file>
+        <file>resources/doors/open_door_1.png</file>
+        <file>resources/levels/firstlevel_0_4.png</file>
     </qresource>
 </RCC>

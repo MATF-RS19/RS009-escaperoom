@@ -1,16 +1,19 @@
 #include "headers/gift.h"
 
-Gift::Gift() {
-    setPixmap(QPixmap(":/resources/chests/box.png"));
+Gift::Gift(QPixmap pic)
+{
+    setPixmap(pic);
 }
 
 Gift::~Gift() {
 
 }
 
-void Gift::mousePressEvent(QMouseEvent *event){
+void Gift::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    //checking mouse click and player distance from gift
     if(event->button() == Qt::LeftButton && this->distance() < 100.0 ){
-        qDebug() << "click!";
+        qDebug() << "You got key";
+        player->keyList.push_back(key);
     }
     player->setFocus();
 }
