@@ -19,7 +19,9 @@ SOURCES += sources/main.cpp\
     sources/gift.cpp \
     sources/key.cpp \
     sources/door.cpp \
-    sources/ingameobjects.cpp
+    sources/ingameobjects.cpp \
+    sources/chest.cpp \
+    sources/puzzle_1.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
@@ -27,7 +29,9 @@ HEADERS  += headers/mainwindow.h \
     headers/gift.h \
     headers/key.h \
     headers/door.h \
-    headers/ingameobjects.h
+    headers/ingameobjects.h \
+    headers/chest.hpp \
+    headers/puzzle_1.h
 
 FORMS    += ui/mainwindow.ui
 

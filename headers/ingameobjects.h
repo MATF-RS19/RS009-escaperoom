@@ -15,9 +15,10 @@ public:
     InGameObjects();
     virtual ~InGameObjects();
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) = 0;
-    virtual qreal distance() = 0;
+    qreal distance();
     Player *player;
-    Key *key;
+    Key *universal_key;
+    Key *level_key;
 };
 
 #endif // INGAMEOBJECTS_H

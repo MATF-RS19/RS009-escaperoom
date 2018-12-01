@@ -6,6 +6,7 @@
 #include "headers/player.h"
 #include "headers/gift.h"
 #include "headers/door.h"
+#include "headers/chest.hpp"
 #include <QDebug>
 
 namespace SceneMeasure {
@@ -32,13 +33,13 @@ public:
     ~Game();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
-    //QGraphicsScene *scene;
 
 private:
     QGraphicsView *_parent;
     Player *_player;
     Gift *_gift;
     Door *_door;
+    Chest *_chest;
 };
 
 #endif // GAME_HPP

@@ -14,7 +14,6 @@ public:
     Door(QPixmap picture);
     ~Door();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    qreal distance();
 };
 
 #endif // DOOR_H
