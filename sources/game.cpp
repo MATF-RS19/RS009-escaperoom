@@ -74,14 +74,21 @@ Game::~Game(){
 
 }
 
-
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //if user click on gift, keyPressEvent function from gift class will be called
     if(_gift->isUnderMouse())
         _gift->mousePressEvent(event);
     //If user click on door, keyPressEvent function from door class will be called
-    if(_door->isUnderMouse())
-        _door->mousePressEvent(event);
+    if(_door->isUnderMouse()){
+        //if door hasn't been opened yet, mousePressEvent from door will be called
+        if(_door->pixmap() == QPixmap(":/resources/doors/close_door_1.png")){
+            _door->mousePressEvent(event);
+        }
+        //if door is already open, clicking on the door will get you to (TODO) next level
+        else{
+            this->deleteLater();
+        }
+    }
     //If user click on chest, keyPressEvent function from chest class will be called
     if(_chest->isUnderMouse()){
         _chest->mousePressEvent(event, this->_parent);

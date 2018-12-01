@@ -11,5 +11,7 @@
         <file>resources/buttons/close_btn.png</file>
         <file>resources/levels/puzzle_1.png</file>
         <file>resources/buttons/enter_btn.png</file>
+        <file>resources/levels/puzzle_2.png</file>
+        <file>resources/chests/closed_chest.png</file>
     </qresource>
 </RCC>
