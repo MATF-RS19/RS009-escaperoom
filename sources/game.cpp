@@ -5,25 +5,45 @@ namespace SceneMeasure {
     qint16 sceneHeight = 720;
 }
 
-namespace Coordinates {
-    qint16 giftX = 575;
-    qint16 giftY = 255;
-    qint16 closeDoorX = 355;
-    qint16 closeDoorY = 215;
-}
-
 namespace Scaling {
-    qreal giftScale = 0.04;
     qreal playerScale = 0.03;
 }
+
+static qint16 endGame = 3;
 
 Game::Game(QGraphicsView *parent) :
            _parent(parent)
 {
-    //background of scene
-    setBackgroundBrush(QImage(":/resources/levels/firstlevel_0_4.png"));
 
     _player = new Player();
+    addItem(_player);
+
+    //Universal key
+    universal_key = new Key(0);
+
+    loadLevel();
+
+}
+
+Game::~Game(){
+
+}
+
+void Game::loadLevel(){
+    QFile qf;
+    //reading json file, depends on level
+    QString levelJson = ":/resources/levels_json/level_" + QString::number(_player->currentLevel) + ".json";
+    qf.setFileName(levelJson);
+    qDebug() << levelJson;
+    qf.open(QIODevice::ReadOnly | QIODevice::Text);
+    QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
+
+    //background of scene
+    setBackgroundBrush(QImage(qjd["background"].toString()));
+
+    //Key for current level
+    Key *level_key = new Key(_player->currentLevel);
+
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
@@ -32,66 +52,84 @@ Game::Game(QGraphicsView *parent) :
     _player->setFlag(QGraphicsItem::ItemIsFocusable);
     //focusing item, so it can catch keyboard inputs
     _player->setFocus();
-    addItem(_player);
 
-    //Universal key
-    Key *key = new Key(0);
-    //Key for level1
-    Key *key_1 = new Key(1);
+    QJsonObject giftJsonObject = qjd["gift"].toObject();
+    if(giftJsonObject["on_scene"].toBool()){
+        _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
+        _gift->setPos(giftJsonObject["x_pos"].toInt(), giftJsonObject["y_pos"].toInt());
+        _gift->setScale(giftJsonObject["scale"].toDouble());
+        _gift->setFlag(QGraphicsItem::ItemIsFocusable);
+        _gift->player = _player;
+        _gift->universal_key = universal_key;
+        addItem(_gift);
+    }
 
-    _gift = new Gift(QPixmap(":/resources/chests/box.png"));
-    _gift->setPos(Coordinates::giftX, Coordinates::giftY);
-    _gift->setScale(Scaling::giftScale);
-    _gift->setFlag(QGraphicsItem::ItemIsFocusable);
-    _gift->player = _player;
-    _gift->universal_key = key;
-    addItem(_gift);
-
-    _door = new Door(QPixmap(":/resources/doors/close_door_1.png"));
-    _door->setPos(Coordinates::closeDoorX, Coordinates::closeDoorY);
-    _door->setFlag(QGraphicsItem::ItemIsFocusable);
-    _door->player = _player;
-    _door->universal_key = key;
-    _door->level_key = key_1;
-    addItem(_door);
+    QJsonObject doorJsonObject = qjd["door"].toObject();
+    if(doorJsonObject["on_scene"].toBool()){
+        _door = new Door(QPixmap(doorJsonObject["pixmap"].toString()));
+        _door->setPos(doorJsonObject["x_pos"].toInt(), doorJsonObject["y_pos"].toInt());
+        _door->setFlag(QGraphicsItem::ItemIsFocusable);
+        _door->player = _player;
+        _door->universal_key = universal_key;
+        _door->level_key = level_key;
+        addItem(_door);
+    }
 
     //this item, just for now
-    _chest = new Chest(QPixmap(":/resources/chests/chest_1.png"));
-    _chest->setPos(606, 563);
-    _chest->setFlag(QGraphicsItem::ItemIsFocusable);
-    _chest->setScale(0.2);
-    _chest->player = _player;
-    _chest->level_key = key_1;
-    addItem(_chest);
+    QJsonObject chestJsonObject = qjd["chest"].toObject();
+    if(chestJsonObject["on_scene"].toBool()){
+        _chest = new Chest(QPixmap(chestJsonObject["pixmap"].toString()));
+        _chest->setPos(chestJsonObject["x_pos"].toInt(), chestJsonObject["y_pos"].toInt());
+        _chest->setFlag(QGraphicsItem::ItemIsFocusable);
+        _chest->setScale(chestJsonObject["scale"].toDouble());
+        _chest->player = _player;
+        _chest->level_key = level_key;
+         addItem(_chest);
+    }
 
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
     //setting fixed size of scene + a little adjusment to height
-    parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+15);
-}
-
-Game::~Game(){
+    _parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+15);
 
 }
 
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    //gift only exist on first level
     //if user click on gift, keyPressEvent function from gift class will be called
-    if(_gift->isUnderMouse())
+    if(_player->currentLevel==1 && _gift->isUnderMouse())
         _gift->mousePressEvent(event);
     //If user click on door, keyPressEvent function from door class will be called
-    if(_door->isUnderMouse()){
+    else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
         if(_door->pixmap() == QPixmap(":/resources/doors/close_door_1.png")){
             _door->mousePressEvent(event);
         }
-        //if door is already open, clicking on the door will get you to (TODO) next level
+        //if door is already open, clicking on the door will get you to next level
         else{
-            this->deleteLater();
+            //deleting every graphics item from the scene, except the player, because he won't be changed
+            for(QGraphicsItem *item: this->items()){
+                if(item != _player)
+                    delete item;
+            }
+            _player->currentLevel++;
+
+            //here will be goodbay window
+            if(_player->currentLevel >= endGame){
+                qDebug() << "Congratulations";
+                exit(0);
+            }
+
+            //loading next level
+            loadLevel();
         }
     }
     //If user click on chest, keyPressEvent function from chest class will be called
-    if(_chest->isUnderMouse()){
+    else if(_chest->isUnderMouse()){
         _chest->mousePressEvent(event, this->_parent);
+    }
+    else{
+        //qDebug() << "Click!";
     }
 }
 

@@ -2,6 +2,7 @@
 
 Player::Player() {
     setPixmap(QPixmap(":/resources/outfits/deadpool.png"));
+    currentLevel = 1;
 }
 
 Player::~Player(){

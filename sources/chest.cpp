@@ -14,10 +14,13 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *){
 void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view){
     //checking mouse click and player distance from the chest
     if(event->button() == Qt::LeftButton && this->distance() < 100.0){
-        //setting new scene for puzzle
-        Puzzle_1 *scene = new Puzzle_1(view, view->scene());
-        scene->player = this->player;
-        scene->level_key = this->level_key;
-        view->setScene(scene);
+        //if player already have level key, user won't be able to open puzzle again
+        if(!player->keyList.contains(level_key)){
+            //setting new scene for puzzle
+            Puzzle *puzzleScene = new Puzzle(view, view->scene(), player->currentLevel);
+            puzzleScene->player = this->player;
+            puzzleScene->level_key = this->level_key;
+            view->setScene(puzzleScene);
+        }
     }
 }

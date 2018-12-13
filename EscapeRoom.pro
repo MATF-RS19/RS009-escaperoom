@@ -21,7 +21,7 @@ SOURCES += sources/main.cpp\
     sources/door.cpp \
     sources/ingameobjects.cpp \
     sources/chest.cpp \
-    sources/puzzle_1.cpp
+    sources/puzzle.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
@@ -31,12 +31,13 @@ HEADERS  += headers/mainwindow.h \
     headers/door.h \
     headers/ingameobjects.h \
     headers/chest.hpp \
-    headers/puzzle_1.h
+    headers/puzzle.h
 
 FORMS    += ui/mainwindow.ui
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    json.qrc
 
 DISTFILES += \
-    resources/levels/firstlevel_0_3_1_1.png
+    ../document.json

@@ -7,22 +7,29 @@
 #include <QDebug>
 #include <QGraphicsRectItem>
 #include <QTextEdit>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 #include "headers/player.h"
 #include "headers/key.h"
 
-class Puzzle_1 : public QGraphicsScene {
+class Puzzle : public QGraphicsScene {
 public:
-    Puzzle_1(QGraphicsView *parent, QGraphicsScene *scene);
+    Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     Player *player;
     Key *level_key;
+    qint16 cLevel;
+    void loadPuzzle();
 
 private:
     QGraphicsView *_parent;
-    QGraphicsRectItem *_close_btn;
-    QGraphicsRectItem *_acc_btn;
+    QGraphicsRectItem *_closeBtn;
+    QGraphicsRectItem *_accBtn;
     QGraphicsScene *_scene;
-    QTextEdit *_answer;
+    QVector<QTextEdit*> _answers;
+    qint32 _ansNum;
+    QVector<QString*> _rightAnswers;
 };
 
 #endif // PUZZLE_1_H

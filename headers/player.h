@@ -14,6 +14,7 @@ public:
     ~Player();
     void keyPressEvent(QKeyEvent *key);
     QList<Key*> keyList;
+    qint16 currentLevel;
 
 protected:
 

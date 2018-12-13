@@ -1,0 +1,19 @@
+{
+  "background": ":/resources/levels/secondlevel.png",
+  "gift": {
+    "on_scene": false
+  }, 
+  "door": {
+    "on_scene": true,
+    "pixmap": ":/resources/doors/close_door_1.png",
+    "x_pos": 355,
+    "y_pos": 215
+  }, 
+  "chest": {
+    "on_scene": true,
+    "pixmap": ":/resources/chests/chest_1.png",
+    "x_pos": 606,
+    "y_pos": 563,
+    "scale": 0.2
+  }
+}

@@ -3,10 +3,13 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include "headers/player.h"
 #include "headers/gift.h"
 #include "headers/door.h"
 #include "headers/chest.hpp"
+#include "headers/key.h"
 #include <QDebug>
 
 namespace SceneMeasure {
@@ -14,15 +17,7 @@ namespace SceneMeasure {
     extern qint16 sceneHeight;
 }
 
-namespace Coordinates {
-    extern qint16 giftX;
-    extern qint16 giftY;
-    extern qint16 closeDoorX;
-    extern qint16 closeDoorY;
-}
-
 namespace Scaling {
-    extern qreal giftScale;
     extern qreal playerScale;
 }
 
@@ -33,6 +28,7 @@ public:
     ~Game();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    void loadLevel();
 
 private:
     QGraphicsView *_parent;
@@ -40,6 +36,7 @@ private:
     Gift *_gift;
     Door *_door;
     Chest *_chest;
+    Key *universal_key;
 };
 
 #endif // GAME_HPP

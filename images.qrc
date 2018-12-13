@@ -1,17 +1,19 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/levels/firstlevel_0_3_1.png</file>
-        <file>resources/levels/firstlevel_0_3_1_1.png</file>
         <file>resources/outfits/deadpool.png</file>
         <file>resources/chests/box.png</file>
         <file>resources/doors/close_door_1.png</file>
         <file>resources/doors/open_door_1.png</file>
         <file>resources/levels/firstlevel_0_4.png</file>
         <file>resources/chests/chest_1.png</file>
+        <file>resources/buttons/accept_btn.png</file>
         <file>resources/buttons/close_btn.png</file>
-        <file>resources/levels/puzzle_1.png</file>
-        <file>resources/buttons/enter_btn.png</file>
-        <file>resources/levels/puzzle_2.png</file>
-        <file>resources/chests/closed_chest.png</file>
+        <file>resources/levels/firstlevel.png</file>
+        <file>resources/levels/secondlevel.png</file>
+        <file>resources/puzzles/puzzle_1.png</file>
+        <file>resources/puzzles/puzzle_1_1.png</file>
+        <file>resources/puzzles/puzzle_2.png</file>
+        <file>resources/puzzles/puzzle_3.png</file>
     </qresource>
 </RCC>

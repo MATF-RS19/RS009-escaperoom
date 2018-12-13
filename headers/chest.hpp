@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QObject>
 #include <QGraphicsView>
-#include "headers/puzzle_1.h"
+#include "headers/puzzle.h"
 
 class Chest : public InGameObjects {
 
