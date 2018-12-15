@@ -5,8 +5,7 @@ Player::Player() {
     setPixmap(QPixmap(playerPixmapURL));
     currentLevel = 1;
     _dummy = new QGraphicsPixmapItem;
-    _dummy->setPixmap(QPixmap(":/resources/outfits/dummy_visable.png"));
-    _dummy->setPos(0,0);
+    _dummy->setPixmap(QPixmap(":/resources/outfits/dummy.png"));
 }
 
 Player::~Player(){
@@ -44,9 +43,6 @@ void Player::keyPressEvent(QKeyEvent *event){
 }
 // We're checking if there's one more collision besides collision with the player.
 bool Player::checkCollision() {
-
-    qDebug() << _dummy->x();
-    qDebug() << _dummy->collidingItems().size();
     return this->_dummy->collidingItems().size() > 1 ? false : true;
 }
 

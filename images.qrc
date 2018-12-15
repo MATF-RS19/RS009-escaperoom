@@ -18,5 +18,6 @@
         <file>resources/chests/chest.png</file>
         <file>resources/outfits/dummy_visable.png</file>
         <file>resources/outfits/dummy.png</file>
+        <file>resources/levels/invertedFloor.png</file>
     </qresource>
 </RCC>

@@ -53,6 +53,13 @@ void Game::loadLevel(){
     //focusing item, so it can catch keyboard inputs
     _player->setFocus();
 
+    //setting position for player's dummy object and adding (25,100), so that dummy will be by his legs
+    _player->_dummy->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
+
+    //adding object so we can trace player not to got over edges of room
+    _player->_invertedfloor = new InvertedFloor();
+    addItem(_player->_invertedfloor);
+
     QJsonObject giftJsonObject = qjd["gift"].toObject();
     if(giftJsonObject["on_scene"].toBool()){
         _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
@@ -83,10 +90,6 @@ void Game::loadLevel(){
         _chest->level_key = level_key;
          addItem(_chest);
     }
-    _player->_invertedfloor = new InvertedFloor();
-    _player->_invertedfloor->setPos(0,0);
-    _player->_invertedfloor->setFlag(QGraphicsItem::ItemIsFocusable, false);
-    addItem(_player->_invertedfloor);
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
     //setting fixed size of scene + a little adjusment to height
@@ -109,7 +112,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         else{
             //deleting every graphics item from the scene, except the player, because he won't be changed
             for(QGraphicsItem *item: this->items()){
-                if(item != _player)
+                if(item != _player && item != _player->_dummy)
                     delete item;
             }
             _player->currentLevel++;
