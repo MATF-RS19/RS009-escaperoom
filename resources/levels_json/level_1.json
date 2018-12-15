@@ -1,23 +1,21 @@
 {
-  "background": ":/resources/levels/firstlevel.png",
+  "background": ":/resources/levels/level_01.png",
   "gift": {
     "on_scene": true,
-    "pixmap": ":/resources/chests/box.png",
-    "x_pos": 575,
-    "y_pos": 255,
-    "scale": 0.04
+    "pixmap": ":/resources/chests/trojan_horse.png",
+    "x_pos": 675,
+    "y_pos": 265
   }, 
   "door": {
     "on_scene": true,
-    "pixmap": ":/resources/doors/close_door_1.png",
-    "x_pos": 355,
+    "pixmap": ":/resources/doors/close_door.png",
+    "x_pos": 320,
     "y_pos": 215
   }, 
   "chest": {
     "on_scene": true,
-    "pixmap": ":/resources/chests/chest_1.png",
-    "x_pos": 606,
-    "y_pos": 563,
-    "scale": 0.2
+    "pixmap": ":/resources/chests/chest.png",
+    "x_pos": 420,
+    "y_pos": 310
   }
 }

@@ -9,7 +9,7 @@ namespace Scaling {
     qreal playerScale = 0.03;
 }
 
-static qint16 endGame = 3;
+static qint16 endGame = 4;
 
 Game::Game(QGraphicsView *parent) :
            _parent(parent)
@@ -57,7 +57,6 @@ void Game::loadLevel(){
     if(giftJsonObject["on_scene"].toBool()){
         _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
         _gift->setPos(giftJsonObject["x_pos"].toInt(), giftJsonObject["y_pos"].toInt());
-        _gift->setScale(giftJsonObject["scale"].toDouble());
         _gift->setFlag(QGraphicsItem::ItemIsFocusable);
         _gift->player = _player;
         _gift->universal_key = universal_key;
@@ -75,13 +74,11 @@ void Game::loadLevel(){
         addItem(_door);
     }
 
-    //this item, just for now
     QJsonObject chestJsonObject = qjd["chest"].toObject();
     if(chestJsonObject["on_scene"].toBool()){
         _chest = new Chest(QPixmap(chestJsonObject["pixmap"].toString()));
         _chest->setPos(chestJsonObject["x_pos"].toInt(), chestJsonObject["y_pos"].toInt());
         _chest->setFlag(QGraphicsItem::ItemIsFocusable);
-        _chest->setScale(chestJsonObject["scale"].toDouble());
         _chest->player = _player;
         _chest->level_key = level_key;
          addItem(_chest);
@@ -102,7 +99,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //If user click on door, keyPressEvent function from door class will be called
     else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
-        if(_door->pixmap() == QPixmap(":/resources/doors/close_door_1.png")){
+        if(_door->pixmap() == QPixmap(":/resources/doors/close_door.png")){
             _door->mousePressEvent(event);
         }
         //if door is already open, clicking on the door will get you to next level

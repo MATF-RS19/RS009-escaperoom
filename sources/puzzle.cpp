@@ -40,6 +40,8 @@ void Puzzle::loadPuzzle(){
 
     //getting array with answers
     QJsonArray answersJsonObject = qjd["answers"].toArray();
+    QJsonArray answerPositionX = qjd["aPositionX"].toArray();
+    QJsonArray answerPositionY = qjd["aPositionY"].toArray();
     //number of answers
     _ansNum = answersJsonObject.size();
     //setting two vectors to right size
@@ -49,13 +51,7 @@ void Puzzle::loadPuzzle(){
     for(int i = 0; i < _ansNum; i++){
         //making _ansNum TextEdit fields
         _answers[i] = new QTextEdit();
-        //hardcode just for now
-        if(cLevel == 1){
-            _answers[i]->move(600, 600);
-        }
-        else{
-            _answers[i]->move(850, 5+i*102);
-        }
+        _answers[i]->move(answerPositionX.at(i).toString().toInt(), answerPositionY.at(i).toString().toInt());
         _answers[i]->setFixedSize(QSize(200, 90));
         _answers[i]->setPlaceholderText("Answer");
         this->addWidget(_answers[i]);
@@ -76,7 +72,7 @@ void Puzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
         //if answers in EditText fields are correct, user will get level key
         bool correct = true;
         for(int i = 0; i < _ansNum; i++){
-            if(_answers.at(i)->toPlainText() != _rightAnswers.at(i)){
+            if(_answers.at(i)->toPlainText().toLower() != _rightAnswers.at(i)){
                 correct = false;
                 break;
             }

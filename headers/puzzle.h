@@ -30,6 +30,8 @@ private:
     QVector<QTextEdit*> _answers;
     qint32 _ansNum;
     QVector<QString*> _rightAnswers;
+    QVector<QString*> _answerPositionsX;
+    QVector<QString*> _answerPositionsY;
 };
 
 #endif // PUZZLE_1_H
