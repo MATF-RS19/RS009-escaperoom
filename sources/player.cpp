@@ -1,8 +1,12 @@
 #include "headers/player.h"
+#include "headers/game.h"
 
 Player::Player() {
-    setPixmap(QPixmap(":/resources/outfits/deadpool.png"));
+    setPixmap(QPixmap(playerPixmapURL));
     currentLevel = 1;
+    _dummy = new QGraphicsPixmapItem;
+    _dummy->setPixmap(QPixmap(":/resources/outfits/dummy_visable.png"));
+    _dummy->setPos(0,0);
 }
 
 Player::~Player(){
@@ -13,28 +17,37 @@ Player::~Player(){
 void Player::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
      case Qt::Key_A:
-        if(x() > 300){
-            setPos(x()-_doubleStep,y()-_step);
-            //qDebug() << x() << y();
-        }
+        _dummy->setPos(x()-_doubleStep+25,y()-_step+100);
+        if(checkCollision()) {
+            setPos(x()-_doubleStep, y() - _step);
+        }      
         break;
      case Qt::Key_D:
-        if(x() < 1000){
+        _dummy->setPos(x()+_doubleStep+25,y()+_step+100);
+        if(checkCollision()) {
             setPos(x()+_doubleStep,y()+_step);
-            //qDebug() << x() << y();
-        }
+        }        
         break;
-     case Qt::Key_W:
-        if(y() > 150){
+     case Qt::Key_W: 
+        _dummy->setPos(x()+_doubleStep+25,y()-_step+100);
+        if(checkCollision()) {
             setPos(x()+_doubleStep,y()-_step);
-            //qDebug() << x() << y();
         }
         break;
      case Qt::Key_S:
-        if(y() < 600){
+        _dummy->setPos(x()-_doubleStep+25,y()+_step+100);
+        if(checkCollision()) {
             setPos(x()-_doubleStep,y()+_step);
-            //qDebug() << x() << y();
         }
         break;
     }
 }
+// We're checking if there's one more collision besides collision with the player.
+bool Player::checkCollision() {
+
+    qDebug() << _dummy->x();
+    qDebug() << _dummy->collidingItems().size();
+    return this->_dummy->collidingItems().size() > 1 ? false : true;
+}
+
+

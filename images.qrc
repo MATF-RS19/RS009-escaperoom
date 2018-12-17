@@ -16,5 +16,7 @@
         <file>resources/levels/level_02.png</file>
         <file>resources/levels/level_03.png</file>
         <file>resources/chests/chest.png</file>
+        <file>resources/outfits/dummy_visable.png</file>
+        <file>resources/outfits/dummy.png</file>
     </qresource>
 </RCC>

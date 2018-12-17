@@ -17,7 +17,7 @@ Game::Game(QGraphicsView *parent) :
 
     _player = new Player();
     addItem(_player);
-
+    addItem(_player->_dummy);
     //Universal key
     universal_key = new Key(0);
 
@@ -83,7 +83,10 @@ void Game::loadLevel(){
         _chest->level_key = level_key;
          addItem(_chest);
     }
-
+    _player->_invertedfloor = new InvertedFloor();
+    _player->_invertedfloor->setPos(0,0);
+    _player->_invertedfloor->setFlag(QGraphicsItem::ItemIsFocusable, false);
+    addItem(_player->_invertedfloor);
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
     //setting fixed size of scene + a little adjusment to height

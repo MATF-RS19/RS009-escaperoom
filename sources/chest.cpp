@@ -17,7 +17,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
         //if player already have level key, user won't be able to open puzzle again
         if(!player->keyList.contains(level_key)){
             //setting new scene for puzzle
-            Puzzle *puzzleScene = new Puzzle(view, view->scene(), player->currentLevel);
+            StaticPuzzle *puzzleScene = new StaticPuzzle(view, view->scene(), player->currentLevel);
             puzzleScene->player = this->player;
             puzzleScene->level_key = this->level_key;
             view->setScene(puzzleScene);

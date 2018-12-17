@@ -1,6 +1,6 @@
-#include "headers/puzzle.h"
+#include "headers/staticpuzzle.h"
 
-Puzzle::Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
+StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
     cLevel(cl), _parent(parent), _scene(scene)
 {
 
@@ -25,7 +25,7 @@ IDEA for this puzzle, TODO
 When user put right answer in some of boxes, set background color of that box to green
 */
 
-void Puzzle::loadPuzzle(){
+void StaticPuzzle::loadPuzzle(){
     QFile qf;
     //reading json file, depends on level
     QString levelPuzzleJson = ":/resources/puzzles_json/puzzle_" + QString::number(cLevel) + ".json";
@@ -61,7 +61,7 @@ void Puzzle::loadPuzzle(){
 
 }
 
-void Puzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
+void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
     if(_closeBtn->isUnderMouse()){
         //delete current scene
         this->deleteLater();

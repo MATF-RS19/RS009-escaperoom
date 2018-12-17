@@ -10,6 +10,7 @@
 #include "headers/door.h"
 #include "headers/chest.hpp"
 #include "headers/key.h"
+#include "headers/invertedfloor.h"
 #include <QDebug>
 
 namespace SceneMeasure {
@@ -29,7 +30,6 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void loadLevel();
-
 private:
     QGraphicsView *_parent;
     Player *_player;

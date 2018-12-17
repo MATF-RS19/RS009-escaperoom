@@ -6,7 +6,7 @@
 #include <cmath>
 #include <QDebug>
 #include "headers/key.h"
-
+#include "headers/invertedfloor.h"
 class Player : public QGraphicsPixmapItem {
 
 public:
@@ -15,7 +15,10 @@ public:
     void keyPressEvent(QKeyEvent *key);
     QList<Key*> keyList;
     qint16 currentLevel;
-
+    QString playerPixmapURL = ":/resources/outfits/deadpool.png";
+    InvertedFloor *_invertedfloor;
+    bool checkCollision();
+    QGraphicsPixmapItem* _dummy;
 protected:
 
 private:

@@ -1,5 +1,5 @@
-#ifndef PUZZLE_1_H
-#define PUZZLE_1_H
+#ifndef STATICPUZZLE_H
+#define STATICPUZZLE_H
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -13,9 +13,9 @@
 #include "headers/player.h"
 #include "headers/key.h"
 
-class Puzzle : public QGraphicsScene {
+class StaticPuzzle : public QGraphicsScene {
 public:
-    Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
+    StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     Player *player;
     Key *level_key;
