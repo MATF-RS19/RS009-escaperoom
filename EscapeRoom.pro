@@ -22,7 +22,8 @@ SOURCES += sources/main.cpp\
     sources/ingameobjects.cpp \
     sources/chest.cpp \
     sources/staticpuzzle.cpp \
-    sources/invertedfloor.cpp
+    sources/invertedfloor.cpp \
+    sources/dynamicpuzzle1.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
@@ -33,7 +34,8 @@ HEADERS  += headers/mainwindow.h \
     headers/ingameobjects.h \
     headers/chest.hpp \
     headers/staticpuzzle.h \
-    headers/invertedfloor.h
+    headers/invertedfloor.h \
+    headers/dynamicpuzzle1.h
 
 FORMS    += ui/mainwindow.ui
 

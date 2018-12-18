@@ -6,5 +6,6 @@
         <file>resources/puzzles_json/puzzle_2.json</file>
         <file>resources/levels_json/level_3.json</file>
         <file>resources/puzzles_json/puzzle_3.json</file>
+        <file>resources/levels_json/level_4.json</file>
     </qresource>
 </RCC>

@@ -20,11 +20,6 @@ StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 
 
 }
 
-/*
-IDEA for this puzzle, TODO
-When user put right answer in some of boxes, set background color of that box to green
-*/
-
 void StaticPuzzle::loadPuzzle(){
     QFile qf;
     //reading json file, depends on level

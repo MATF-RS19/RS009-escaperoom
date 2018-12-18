@@ -9,7 +9,7 @@ namespace Scaling {
     qreal playerScale = 0.03;
 }
 
-static qint16 endGame = 4;
+static qint16 endGame = 5;
 
 Game::Game(QGraphicsView *parent) :
            _parent(parent)

@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QGraphicsView>
 #include "headers/staticpuzzle.h"
+#include "headers/dynamicpuzzle1.h"
 
 class Chest : public InGameObjects {
 
