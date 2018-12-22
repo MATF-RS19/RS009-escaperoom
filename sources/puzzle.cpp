@@ -33,3 +33,11 @@ Player *Puzzle::getPlayer(){
 Key *Puzzle::getLK(){
     return _levelKey;
 }
+
+QTextEdit *Puzzle::getLog(){
+    return _log;
+}
+
+void Puzzle::setLog(QTextEdit *l){
+    _log = l;
+}

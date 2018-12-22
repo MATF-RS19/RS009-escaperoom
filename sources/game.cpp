@@ -42,7 +42,23 @@ void Game::loadLevel(){
     setBackgroundBrush(QImage(qjd["background"].toString()));
 
     //Key for current level
-    Key *levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
+    _levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
+
+    //Log for the user
+    _log = new QTextEdit();
+    //frame size
+    _log->setFixedSize(500, 50);
+    //frame position
+    _log->move(0, 660);
+    //text size
+    _log->setFontPointSize(15.0);
+    //text backgroung color
+    _log->setTextBackgroundColor("black");
+    //text color
+    _log->setTextColor("green");
+    //invisible frame
+    _log->setFrameStyle(10);
+    addWidget(_log);
 
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
@@ -65,6 +81,7 @@ void Game::loadLevel(){
         _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
         _gift->setPos(giftJsonObject["x_pos"].toInt(), giftJsonObject["y_pos"].toInt());
         _gift->setFlag(QGraphicsItem::ItemIsFocusable);
+        _gift->setLog(_log);
         _gift->setPlayer(_player);
         _gift->setUK(_universalKey);
         addItem(_gift);
@@ -75,9 +92,10 @@ void Game::loadLevel(){
         _door = new Door(QPixmap(doorJsonObject["pixmap"].toString()));
         _door->setPos(doorJsonObject["x_pos"].toInt(), doorJsonObject["y_pos"].toInt());
         _door->setFlag(QGraphicsItem::ItemIsFocusable);
+        _door->setLog(_log);
         _door->setPlayer(_player);
         _door->setUK(_universalKey);
-        _door->setLK(levelKey);
+        _door->setLK(_levelKey);
         addItem(_door);
     }
 
@@ -86,8 +104,9 @@ void Game::loadLevel(){
         _chest = new Chest(QPixmap(chestJsonObject["pixmap"].toString()));
         _chest->setPos(chestJsonObject["x_pos"].toInt(), chestJsonObject["y_pos"].toInt());
         _chest->setFlag(QGraphicsItem::ItemIsFocusable);
+        _chest->setLog(_log);
         _chest->setPlayer(_player);
-        _chest->setLK(levelKey);
+        _chest->setLK(_levelKey);
          addItem(_chest);
     }
 
@@ -95,14 +114,13 @@ void Game::loadLevel(){
     if(inventoryJsonObject["on_scene"].toBool()){
         _inventory = new Inventory(QPixmap(inventoryJsonObject["pixmap"].toString()));
         _inventory->setPos(inventoryJsonObject["x_pos"].toInt(), inventoryJsonObject["y_pos"].toInt());
-        _inventory->setFlag(QGraphicsItem::ItemIsFocusable);
         addItem(_inventory);
     }
 
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
     //setting fixed size of scene + a little adjusment to height
-    _parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+15);
+    _parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+17);
 
 }
 
@@ -112,9 +130,11 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //if player already have universal key, user won't be able to open gift again
     if(_player->getCurrentLevel()==1 && _gift->isUnderMouse() && !_gift->hasKey()){
         _gift->mousePressEvent(event);
-        _universalKey->setPos(1150, 80);
-        _universalKey->setZValue(5);
-        this->addItem(_universalKey);
+        if(_gift->hasKey()){
+            _universalKey->setPos(1150, 80);
+            _universalKey->setZValue(5);
+            this->addItem(_universalKey);
+        }
     }
     //If user click on door, keyPressEvent function from door class will be called
     else if(_door->isUnderMouse()){
@@ -133,7 +153,9 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
             //here will be goodbay window
             if(_player->getCurrentLevel() >= endGame){
-                qDebug() << "Congratulations";
+                qDebug() << "********************************************\r\n"
+                            "*****        Congratulations           *****\r\n"
+                            "********************************************";
                 exit(0);
             }
 
@@ -141,9 +163,15 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
             loadLevel();
         }
     }
-    //If user click on chest, keyPressEvent function from chest class will be called
-    else if(_chest->isUnderMouse()){
+    //If user click on chest, don't have levelKey and door hasn't been opened yet, keyPressEvent function from chest class will be called
+    else if(_chest->isUnderMouse() && !_player->keyList.contains(_levelKey) && _door->pos().rx() > Coordinates::openDoorX+1.0){
         _chest->mousePressEvent(event, this->_parent);
+    }
+    //If user click on chest, but the has been opened already, chest will be deleted from the scene
+    //Because there's no need to solve puzzle when door is opened
+    else if(_chest->isUnderMouse() && _door->pos().rx() < Coordinates::openDoorX+1.0){
+        _log->setText("Door is already opened, don't need that anymore");
+        delete _chest;
     }
     else{
         //qDebug() << "Click!";

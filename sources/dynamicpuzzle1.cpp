@@ -29,7 +29,7 @@ DynamicPuzzle1::DynamicPuzzle1(QGraphicsView *parent, QGraphicsScene *scene, qin
     setSceneRect(0, 0, 1280, 720);
 
     //adding close button item to the scene
-    _closeBtn = new QGraphicsRectItem(0, 0, 100, 100);
+    _closeBtn = new QGraphicsRectItem(1200, 0, 80, 80);
     _closeBtn->setBrush(QImage(":/resources/buttons/close_btn.png"));
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
@@ -64,22 +64,26 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
         case 1: {
             if(_wolfPosition == island2 && _goatPosition == island2){
                 puzzleOver();
-                qDebug() << "Wolf has eaten goat! \r\nBe careful next time";
+                qDebug() << "Wolf has eaten goat! Be careful next time";
+                getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island2 && _lettucePosition == island2){
                 puzzleOver();
-                qDebug() << "Goat has eaten lettuce! \r\nBe careful next time";
+                qDebug() << "Goat has eaten lettuce! Be careful next time";
+                getLog()->setText("Goat has eaten lettuce! Be careful next time");
             }
             break;
         }
         case 2: {
             if(_wolfPosition == island1 && _goatPosition == island1){
                 puzzleOver();
-                qDebug() << "Wolf have eaten goat! \r\nBe careful next time";
+                qDebug() << "Wolf has eaten goat! Be careful next time";
+                getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island1 && _lettucePosition == island1){
                 puzzleOver();
-                qDebug() << "Goat have eaten lettuce! \r\nBe careful next time";
+                qDebug() << "Goat has eaten lettuce! Be careful next time";
+                getLog()->setText("Goat has eaten lettuce! Be careful next time");
             }
             break;
         }
@@ -90,7 +94,9 @@ void DynamicPuzzle1::checkForWinning(){
     if((_wolfPosition == island2) && (_goatPosition == island2) && (_lettucePosition == island2)){
         getPlayer()->keyList.append(this->getLK());
         qDebug() << "You got level key";
+        getLog()->setText("You got level key");
         getLK()->setPos(1150, 205);
+        addItem(getLK());
         getScene()->addItem(getLK());
         puzzleOver();
     }

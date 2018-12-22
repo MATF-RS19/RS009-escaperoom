@@ -7,13 +7,13 @@ StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 
     loadPuzzle();
 
     //adding close button item to the scene
-    _closeBtn = new QGraphicsRectItem(1100, 0, 100, 100);
+    _closeBtn = new QGraphicsRectItem(1200, 0, 80, 80);
     _closeBtn->setBrush(QImage(":/resources/buttons/close_btn.png"));
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
 
     //adding accept button
-    _accBtn = new QGraphicsRectItem(0, 0, 100, 100);
+    _accBtn = new QGraphicsRectItem(0, 0, 80, 80);
     _accBtn->setBrush(QImage(":/resources/buttons/accept_btn.png"));
     _accBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_accBtn);
@@ -75,12 +75,13 @@ void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
         if(correct == true){
             getPlayer()->keyList.append(this->getLK());
             qDebug() << "You got level key";
+            getLog()->setText("You got level key");
+            getLK()->setPos(1150, 205);
+            getScene()->addItem(getLK());
             //delete current scene
             this->deleteLater();
             //raise old scene
-            getView()->setScene(getScene());
-            getLK()->setPos(1150, 205);
-            getScene()->addItem(getLK());
+            getView()->setScene(getScene());            
         }
         //otherwise, his/her answer will be deleted, and message will occurre
         else{

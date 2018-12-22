@@ -29,9 +29,9 @@
         <file>resources/outfits/rd.png</file>
         <file>resources/outfits/ru.png</file>
         <file>resources/chests/close.png</file>
-        <file>resources/chests/open.png</file>
         <file>resources/inventory/inventory.png</file>
-        <file>resources/inventory/universal_key.png</file>
         <file>resources/inventory/level_key.png</file>
+        <file>resources/inventory/universal_key.png</file>
+        <file>resources/chests/open.png</file>
     </qresource>
 </RCC>

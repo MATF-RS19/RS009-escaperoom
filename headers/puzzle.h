@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
+#include <QTextEdit>
 #include "headers/player.h"
 #include "headers/key.h"
 
@@ -20,6 +21,8 @@ public:
     void setLevelKey(Key *lk);
     Player *getPlayer();
     Key *getLK();
+    QTextEdit *getLog();
+    void setLog(QTextEdit *l);
 
 protected:
     explicit Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
@@ -31,7 +34,7 @@ private:
     qint16 cLevel;
     Player *_player;
     Key *_levelKey;
-
+    QTextEdit *_log;
 };
 
 #endif // PUZZLE_H

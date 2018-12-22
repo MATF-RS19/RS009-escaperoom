@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <cmath>
 #include <QDebug>
+#include <QTextEdit>
 #include "headers/player.h"
 #include "headers/key.h"
 
@@ -20,6 +21,8 @@ public:
     void setPlayer(Player *p);
     void setUK(Key *uk);
     void setLK(Key *lk);
+    QTextEdit *getLog();
+    void setLog(QTextEdit *l);
 
 protected:
     explicit InGameObjects();
@@ -30,6 +33,7 @@ private:
     Player *_player;
     Key *_universalKey;
     Key *_levelKey;
+    QTextEdit *_log;
 };
 
 #endif // INGAMEOBJECTS_H

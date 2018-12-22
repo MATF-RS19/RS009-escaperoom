@@ -40,7 +40,9 @@ private:
     Door *_door;
     Chest *_chest;
     Key *_universalKey;
+    Key *_levelKey;
     Inventory *_inventory;
+    QTextEdit *_log;
     void loadLevel();
 };
 

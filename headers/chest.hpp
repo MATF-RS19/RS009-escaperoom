@@ -16,7 +16,6 @@ public:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     //we needed to add main view as argument, so we can swap scenes from puzzle and game
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *);
-
 };
 
 #endif // CHEST_HPP

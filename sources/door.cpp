@@ -20,6 +20,7 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
         //checking if user have level key and the door isn't alredy opened
         if(getPlayer()->keyList.contains(getLK()) && (x() > Coordinates::openDoorX+1.0)){
             qDebug() << "Door unlocked and opened using level key";
+            getLog()->setText("Door unlocked and opened using level key");
             this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
             this->setX(Coordinates::openDoorX);
             getPlayer()->keyList.removeOne(getLK());
@@ -28,6 +29,7 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
         //checking if user have universal key and the door isn't alredy opened
         else if(getPlayer()->keyList.contains(getUK()) && (x() > Coordinates::openDoorX+1.0)){
             qDebug() << "Door unlocked and opened using universal key";
+            getLog()->setText("Door unlocked and opened using universal key");
             this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
             this->setX(Coordinates::openDoorX);
             getPlayer()->keyList.removeOne(getUK());
@@ -35,9 +37,19 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
         }
         else if(x() > Coordinates::openDoorX-1.0 && x() < Coordinates::openDoorX+1.0){
             qDebug() << "Door already opened";
+            getLog()->setText("Door already opened");
         }
         else{
             qDebug() << "Door locked, you need key";
+            getLog()->setText("Door locked, you need key");
         }
     }
+}
+
+QTextEdit *Door::getLog(){
+    return _log;
+}
+
+void Door::setLog(QTextEdit *l){
+    _log = l;
 }

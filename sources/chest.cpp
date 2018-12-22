@@ -27,14 +27,16 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
                     DynamicPuzzle1 *dynamicPuzzle1Scene = new DynamicPuzzle1(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle1Scene->setPlayer(this->getPlayer());
                     dynamicPuzzle1Scene->setLevelKey(this->getLK());
+                    dynamicPuzzle1Scene->setLog(getLog());
                     view->setScene(dynamicPuzzle1Scene);
                     break;
                 }
                 default: {
-                    //setting new scene for static puzzle
+                    //setting new scene for static puzzles
                     StaticPuzzle *puzzleScene = new StaticPuzzle(view, view->scene(), getPlayer()->getCurrentLevel());
                     puzzleScene->setPlayer(this->getPlayer());
                     puzzleScene->setLevelKey(this->getLK());
+                    puzzleScene->setLog(getLog());
                     view->setScene(puzzleScene);
                 }
             }
