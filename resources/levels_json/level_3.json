@@ -11,8 +11,14 @@
   }, 
   "chest": {
     "on_scene": true,
-    "pixmap": ":/resources/chests/chest.png",
+    "pixmap": ":/resources/chests/close.png",
     "x_pos": 420,
     "y_pos": 310
+  },
+  "inventory": {
+     "on_scene": true,
+     "pixmap": ":/resources/inventory/inventory.png",
+     "x_pos": 1100,
+     "y_pos": 5
   }
 }

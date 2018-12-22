@@ -11,14 +11,25 @@
 //Abstarct class for all clickable objects on the scene
 
 class InGameObjects : public QGraphicsPixmapItem {
+
 public:
-    InGameObjects();
-    virtual ~InGameObjects();
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) = 0;
+    Player *getPlayer();
+    Key *getUK();
+    Key *getLK();
+    void setPlayer(Player *p);
+    void setUK(Key *uk);
+    void setLK(Key *lk);
+
+protected:
+    explicit InGameObjects();
+    ~InGameObjects();
     qreal distance();
-    Player *player;
-    Key *universal_key;
-    Key *level_key;
+
+private:
+    Player *_player;
+    Key *_universalKey;
+    Key *_levelKey;
 };
 
 #endif // INGAMEOBJECTS_H

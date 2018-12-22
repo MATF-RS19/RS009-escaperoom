@@ -1,7 +1,7 @@
 #include "headers/invertedfloor.h"
 
-InvertedFloor::InvertedFloor(){
-    setPixmap(QPixmap(":/resources/levels/invertedFloor.png"));
+InvertedFloor::InvertedFloor(QPixmap background){
+    setPixmap(background);
 }
 
 InvertedFloor::~InvertedFloor(){

@@ -24,5 +24,14 @@
         <file>resources/pictures/goat.png</file>
         <file>resources/pictures/lettuce.png</file>
         <file>resources/pictures/wolf.png</file>
+        <file>resources/outfits/ld.png</file>
+        <file>resources/outfits/lu.png</file>
+        <file>resources/outfits/rd.png</file>
+        <file>resources/outfits/ru.png</file>
+        <file>resources/chests/close.png</file>
+        <file>resources/chests/open.png</file>
+        <file>resources/inventory/inventory.png</file>
+        <file>resources/inventory/universal_key.png</file>
+        <file>resources/inventory/level_key.png</file>
     </qresource>
 </RCC>

@@ -5,17 +5,23 @@
     "pixmap": ":/resources/chests/trojan_horse.png",
     "x_pos": 675,
     "y_pos": 265
-  }, 
+  },
   "door": {
     "on_scene": true,
     "pixmap": ":/resources/doors/close_door.png",
     "x_pos": 320,
     "y_pos": 215
-  }, 
+  },
   "chest": {
     "on_scene": true,
-    "pixmap": ":/resources/chests/chest.png",
+    "pixmap": ":/resources/chests/close.png",
     "x_pos": 420,
     "y_pos": 310
+  },
+  "inventory": {
+     "on_scene": true,
+     "pixmap": ":/resources/inventory/inventory.png",
+     "x_pos": 1100,
+     "y_pos": 5
   }
 }

@@ -12,18 +12,28 @@ class Player : public QGraphicsPixmapItem {
 public:
     Player();
     ~Player();
-    void keyPressEvent(QKeyEvent *key);
     QList<Key*> keyList;
-    qint16 currentLevel;
-    QString playerPixmapURL = ":/resources/outfits/deadpool.png";
-    InvertedFloor *_invertedfloor;
-    bool checkCollision();
-    QGraphicsPixmapItem* _dummy;
-protected:
+    void keyPressEvent(QKeyEvent *key);
+    qint16 getCurrentLevel();
+    InvertedFloor *getInvertedFloor();
+    QGraphicsPixmapItem *getDummy();
+    void setCurrentLevel(qint16 cl);
+    void setInvertedFloor(InvertedFloor *iFloor);
+    void setDummy(QGraphicsPixmapItem *dummy);
 
 private:
     qreal _step = 3.0;
     qreal _doubleStep = 2 * _step;
+    qint16 _currentLevel;
+    InvertedFloor *_invertedfloor;
+    QGraphicsPixmapItem* _dummy;
+
+    QPixmap _ld = QPixmap(":/resources/outfits/ld.png");
+    QPixmap _lu = QPixmap(":/resources/outfits/lu.png");
+    QPixmap _rd = QPixmap(":/resources/outfits/rd.png");
+    QPixmap _ru = QPixmap(":/resources/outfits/ru.png");
+
+    bool checkCollision();
 };
 
 #endif // PLAYER_H

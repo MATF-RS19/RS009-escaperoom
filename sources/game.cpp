@@ -6,7 +6,7 @@ namespace SceneMeasure {
 }
 
 namespace Scaling {
-    qreal playerScale = 0.03;
+    qreal playerScale = 0.35;
 }
 
 static qint16 endGame = 5;
@@ -17,9 +17,9 @@ Game::Game(QGraphicsView *parent) :
 
     _player = new Player();
     addItem(_player);
-    addItem(_player->_dummy);
+    addItem(_player->getDummy());
     //Universal key
-    universal_key = new Key(0);
+    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
 
     loadLevel();
 
@@ -32,7 +32,7 @@ Game::~Game(){
 void Game::loadLevel(){
     QFile qf;
     //reading json file, depends on level
-    QString levelJson = ":/resources/levels_json/level_" + QString::number(_player->currentLevel) + ".json";
+    QString levelJson = ":/resources/levels_json/level_" + QString::number(_player->getCurrentLevel()) + ".json";
     qf.setFileName(levelJson);
     qDebug() << levelJson;
     qf.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -42,7 +42,7 @@ void Game::loadLevel(){
     setBackgroundBrush(QImage(qjd["background"].toString()));
 
     //Key for current level
-    Key *level_key = new Key(_player->currentLevel);
+    Key *levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
 
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
@@ -54,19 +54,19 @@ void Game::loadLevel(){
     _player->setFocus();
 
     //setting position for player's dummy object and adding (25,100), so that dummy will be by his legs
-    _player->_dummy->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
+    _player->getDummy()->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
 
     //adding object so we can trace player not to got over edges of room
-    _player->_invertedfloor = new InvertedFloor();
-    addItem(_player->_invertedfloor);
+    _player->setInvertedFloor(new InvertedFloor(QPixmap(":/resources/levels/invertedFloor.png")));
+    addItem(_player->getInvertedFloor());
 
     QJsonObject giftJsonObject = qjd["gift"].toObject();
     if(giftJsonObject["on_scene"].toBool()){
         _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
         _gift->setPos(giftJsonObject["x_pos"].toInt(), giftJsonObject["y_pos"].toInt());
         _gift->setFlag(QGraphicsItem::ItemIsFocusable);
-        _gift->player = _player;
-        _gift->universal_key = universal_key;
+        _gift->setPlayer(_player);
+        _gift->setUK(_universalKey);
         addItem(_gift);
     }
 
@@ -75,9 +75,9 @@ void Game::loadLevel(){
         _door = new Door(QPixmap(doorJsonObject["pixmap"].toString()));
         _door->setPos(doorJsonObject["x_pos"].toInt(), doorJsonObject["y_pos"].toInt());
         _door->setFlag(QGraphicsItem::ItemIsFocusable);
-        _door->player = _player;
-        _door->universal_key = universal_key;
-        _door->level_key = level_key;
+        _door->setPlayer(_player);
+        _door->setUK(_universalKey);
+        _door->setLK(levelKey);
         addItem(_door);
     }
 
@@ -86,10 +86,19 @@ void Game::loadLevel(){
         _chest = new Chest(QPixmap(chestJsonObject["pixmap"].toString()));
         _chest->setPos(chestJsonObject["x_pos"].toInt(), chestJsonObject["y_pos"].toInt());
         _chest->setFlag(QGraphicsItem::ItemIsFocusable);
-        _chest->player = _player;
-        _chest->level_key = level_key;
+        _chest->setPlayer(_player);
+        _chest->setLK(levelKey);
          addItem(_chest);
     }
+
+    QJsonObject inventoryJsonObject = qjd["inventory"].toObject();
+    if(inventoryJsonObject["on_scene"].toBool()){
+        _inventory = new Inventory(QPixmap(inventoryJsonObject["pixmap"].toString()));
+        _inventory->setPos(inventoryJsonObject["x_pos"].toInt(), inventoryJsonObject["y_pos"].toInt());
+        _inventory->setFlag(QGraphicsItem::ItemIsFocusable);
+        addItem(_inventory);
+    }
+
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
     //setting fixed size of scene + a little adjusment to height
@@ -100,8 +109,13 @@ void Game::loadLevel(){
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //gift only exist on first level
     //if user click on gift, keyPressEvent function from gift class will be called
-    if(_player->currentLevel==1 && _gift->isUnderMouse())
+    //if player already have universal key, user won't be able to open gift again
+    if(_player->getCurrentLevel()==1 && _gift->isUnderMouse() && !_gift->hasKey()){
         _gift->mousePressEvent(event);
+        _universalKey->setPos(1150, 80);
+        _universalKey->setZValue(5);
+        this->addItem(_universalKey);
+    }
     //If user click on door, keyPressEvent function from door class will be called
     else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
@@ -112,13 +126,13 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         else{
             //deleting every graphics item from the scene, except the player, because he won't be changed
             for(QGraphicsItem *item: this->items()){
-                if(item != _player && item != _player->_dummy)
+                if(item != _player && item != _player->getDummy() && item != _universalKey)
                     delete item;
             }
-            _player->currentLevel++;
+            _player->setCurrentLevel(_player->getCurrentLevel()+1);
 
             //here will be goodbay window
-            if(_player->currentLevel >= endGame){
+            if(_player->getCurrentLevel() >= endGame){
                 qDebug() << "Congratulations";
                 exit(0);
             }

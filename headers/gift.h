@@ -9,6 +9,7 @@ public:
     Gift(QPixmap picture);
     ~Gift();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    bool hasKey();
 
 private:
     bool _gotKey = false;

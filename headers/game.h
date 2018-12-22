@@ -11,13 +11,16 @@
 #include "headers/chest.hpp"
 #include "headers/key.h"
 #include "headers/invertedfloor.h"
+#include "headers/inventory.h"
 #include <QDebug>
+#include <QTextEdit>
 
 namespace SceneMeasure {
     extern qint16 sceneWidth;
     extern qint16 sceneHeight;
 }
 
+//TODO: scale player in gimp and delete this
 namespace Scaling {
     extern qreal playerScale;
 }
@@ -29,14 +32,16 @@ public:
     ~Game();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
-    void loadLevel();
+
 private:
     QGraphicsView *_parent;
     Player *_player;
     Gift *_gift;
     Door *_door;
     Chest *_chest;
-    Key *universal_key;
+    Key *_universalKey;
+    Inventory *_inventory;
+    void loadLevel();
 };
 
 #endif // GAME_HPP

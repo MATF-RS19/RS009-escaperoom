@@ -1,6 +1,7 @@
 #ifndef DOOR_H
 #define DOOR_H
 
+#include <QTextEdit>
 #include "ingameobjects.h"
 
 namespace Coordinates {
@@ -8,8 +9,8 @@ namespace Coordinates {
     extern qint16 openDoorY;
 }
 
-class Door : public InGameObjects
-{
+class Door : public InGameObjects {
+
 public:
     Door(QPixmap picture);
     ~Door();

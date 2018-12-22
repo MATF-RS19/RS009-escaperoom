@@ -1,7 +1,7 @@
 #include "headers/staticpuzzle.h"
 
 StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
-    cLevel(cl), _parent(parent), _scene(scene)
+    Puzzle(parent, scene, cl)
 {
 
     loadPuzzle();
@@ -23,7 +23,7 @@ StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 
 void StaticPuzzle::loadPuzzle(){
     QFile qf;
     //reading json file, depends on level
-    QString levelPuzzleJson = ":/resources/puzzles_json/puzzle_" + QString::number(cLevel) + ".json";
+    QString levelPuzzleJson = ":/resources/puzzles_json/puzzle_" + QString::number(getCl()) + ".json";
     qf.setFileName(levelPuzzleJson);
     qDebug() << levelPuzzleJson;
     qf.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -48,7 +48,7 @@ void StaticPuzzle::loadPuzzle(){
         _answers[i] = new QTextEdit();
         _answers[i]->move(answerPositionX.at(i).toString().toInt(), answerPositionY.at(i).toString().toInt());
         _answers[i]->setFixedSize(QSize(200, 90));
-        _answers[i]->setPlaceholderText("Answer");
+        _answers[i]->setPlaceholderText("Double click\r\nAnswer here");
         this->addWidget(_answers[i]);
         //putting right answers in our vector
         _rightAnswers[i] = new QString(answersJsonObject.at(i).toString());
@@ -61,24 +61,26 @@ void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
         //delete current scene
         this->deleteLater();
         //raise old scene
-        _parent->setScene(_scene);
+        getView()->setScene(getScene());
     }
     if(_accBtn->isUnderMouse()){
         //if answers in EditText fields are correct, user will get level key
         bool correct = true;
         for(int i = 0; i < _ansNum; i++){
-            if(_answers.at(i)->toPlainText().toLower() != _rightAnswers.at(i)){
+            if(_answers.at(i)->toPlainText().toLower().trimmed() != _rightAnswers.at(i)){
                 correct = false;
                 break;
             }
         }
         if(correct == true){
-            player->keyList.append(this->level_key);
+            getPlayer()->keyList.append(this->getLK());
             qDebug() << "You got level key";
             //delete current scene
             this->deleteLater();
             //raise old scene
-            _parent->setScene(_scene);
+            getView()->setScene(getScene());
+            getLK()->setPos(1150, 205);
+            getScene()->addItem(getLK());
         }
         //otherwise, his/her answer will be deleted, and message will occurre
         else{
