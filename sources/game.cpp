@@ -163,15 +163,19 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
             loadLevel();
         }
     }
-    //If user click on chest, don't have levelKey and door hasn't been opened yet, keyPressEvent function from chest class will be called
-    else if(_chest->isUnderMouse() && !_player->keyList.contains(_levelKey) && _door->pos().rx() > Coordinates::openDoorX+1.0){
+    //If user click on chest, chest hasn't been opened yet and user didn't solve the puzzle yet, keyPressEvent function from chest class will be called
+    else if(_chest->isUnderMouse() && !_chest->isOpened() && !_levelKey->shouldGetKey()){
         _chest->mousePressEvent(event, this->_parent);
     }
-    //If user click on chest, but the has been opened already, chest will be deleted from the scene
-    //Because there's no need to solve puzzle when door is opened
-    else if(_chest->isUnderMouse() && _door->pos().rx() < Coordinates::openDoorX+1.0){
-        _log->setText("Door is already opened, don't need that anymore");
-        delete _chest;
+    //If user click on chest, chest hasn't been opened yet and user did solve the puzzle yet, levelKey will be added to user's list and chest will open
+    else if(_chest->isUnderMouse() && !_chest->isOpened() && _levelKey->shouldGetKey()){
+        _chest->openChest(true);
+        _player->keyList.append(_levelKey);
+        qDebug() << "You got level key";
+        _log->setText("You got level key");
+        _levelKey->setPos(1150, 205);
+        addItem(_levelKey);
+        _chest->setPixmap(QPixmap(":/resources/chests/open.png"));
     }
     else{
         //qDebug() << "Click!";

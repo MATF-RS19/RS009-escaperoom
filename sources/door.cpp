@@ -18,27 +18,29 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //checking mouse click and player distance from the door
     if(event->button() == Qt::LeftButton && this->distance() < 150.0){
         //checking if user have level key and the door isn't alredy opened
-        if(getPlayer()->keyList.contains(getLK()) && (x() > Coordinates::openDoorX+1.0)){
+        if(getPlayer()->keyList.contains(getLK()) && !isOpened()){
             qDebug() << "Door unlocked and opened using level key";
             getLog()->setText("Door unlocked and opened using level key");
             this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
             this->setX(Coordinates::openDoorX);
             getPlayer()->keyList.removeOne(getLK());
+            openDoor(true);
             delete getLK();
         }
         //checking if user have universal key and the door isn't alredy opened
-        else if(getPlayer()->keyList.contains(getUK()) && (x() > Coordinates::openDoorX+1.0)){
+        else if(getPlayer()->keyList.contains(getUK()) && !isOpened()){
             qDebug() << "Door unlocked and opened using universal key";
             getLog()->setText("Door unlocked and opened using universal key");
             this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
             this->setX(Coordinates::openDoorX);
             getPlayer()->keyList.removeOne(getUK());
+            openDoor(true);
             delete getUK();
-        }
-        else if(x() > Coordinates::openDoorX-1.0 && x() < Coordinates::openDoorX+1.0){
+        }/*
+        else if(isOpened()){
             qDebug() << "Door already opened";
             getLog()->setText("Door already opened");
-        }
+        }*/
         else{
             qDebug() << "Door locked, you need key";
             getLog()->setText("Door locked, you need key");
@@ -52,4 +54,12 @@ QTextEdit *Door::getLog(){
 
 void Door::setLog(QTextEdit *l){
     _log = l;
+}
+
+bool Door::isOpened() {
+    return _opened;
+}
+
+void Door::openDoor(bool o) {
+    _opened = o;
 }

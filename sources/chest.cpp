@@ -43,3 +43,11 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
         }
     }
 }
+
+bool Chest::isOpened() {
+    return _opened;
+}
+
+void Chest::openChest(bool o) {
+    _opened = o;
+}

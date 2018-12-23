@@ -17,9 +17,12 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     QTextEdit *getLog();
     void setLog(QTextEdit *l);
+    bool isOpened();
+    void openDoor(bool o);
 
 private:
     QTextEdit *_log;
+    bool _opened = false;
 };
 
 #endif // DOOR_H

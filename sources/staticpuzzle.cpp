@@ -73,11 +73,9 @@ void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
             }
         }
         if(correct == true){
-            getPlayer()->keyList.append(this->getLK());
-            qDebug() << "You got level key";
-            getLog()->setText("You got level key");
-            getLK()->setPos(1150, 205);
-            getScene()->addItem(getLK());
+            getLK()->setKeyAvailability(true);
+            qDebug() << "Chest unlocked, click to get key";
+            getLog()->setText("Chest unlocked, click to get key");
             //delete current scene
             this->deleteLater();
             //raise old scene

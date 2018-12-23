@@ -9,3 +9,11 @@ Key::Key(qint16 id, QPixmap bg) :
 Key::~Key(){
 
 }
+
+bool Key::shouldGetKey() {
+    return _getKey;
+}
+
+void Key::setKeyAvailability(bool k) {
+    _getKey = k;
+}

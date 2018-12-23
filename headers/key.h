@@ -10,9 +10,12 @@ class Key : public QGraphicsPixmapItem
 public:
     Key(qint16 id, QPixmap bg);
     ~Key();
+    bool shouldGetKey();
+    void setKeyAvailability(bool k);
 
 private:
     qint16 _id;
+    bool _getKey = false;
 };
 
 #endif // KEY_H
