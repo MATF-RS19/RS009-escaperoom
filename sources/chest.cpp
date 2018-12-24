@@ -22,6 +22,14 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
         //if player already have level key, user won't be able to open puzzle again
         if(!getPlayer()->keyList.contains(getLK())){
             switch (getPlayer()->getCurrentLevel()) {
+                case 5:{
+                    DynamicPuzzle2 *dynamicPuzzle2Scene = new DynamicPuzzle2(view, view->scene(), getPlayer()->getCurrentLevel());
+                    dynamicPuzzle2Scene->setPlayer(this->getPlayer());
+                    dynamicPuzzle2Scene->setLevelKey(this->getLK());
+                    dynamicPuzzle2Scene->setLog(getLog());
+                    view->setScene(dynamicPuzzle2Scene);
+                    break;
+                }
                 case 4: {
                     //setting scene for first dynamic puzzle
                     DynamicPuzzle1 *dynamicPuzzle1Scene = new DynamicPuzzle1(view, view->scene(), getPlayer()->getCurrentLevel());

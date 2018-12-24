@@ -33,5 +33,24 @@
         <file>resources/inventory/level_key.png</file>
         <file>resources/inventory/universal_key.png</file>
         <file>resources/chests/open.png</file>
+        <file>resources/puzzles/fifteen_puzzle/0.png</file>
+        <file>resources/puzzles/fifteen_puzzle/10.png</file>
+        <file>resources/puzzles/fifteen_puzzle/11.png</file>
+        <file>resources/puzzles/fifteen_puzzle/12.png</file>
+        <file>resources/puzzles/fifteen_puzzle/13.png</file>
+        <file>resources/puzzles/fifteen_puzzle/14.png</file>
+        <file>resources/puzzles/fifteen_puzzle/2.png</file>
+        <file>resources/puzzles/fifteen_puzzle/3.png</file>
+        <file>resources/puzzles/fifteen_puzzle/4.png</file>
+        <file>resources/puzzles/fifteen_puzzle/5.png</file>
+        <file>resources/puzzles/fifteen_puzzle/6.png</file>
+        <file>resources/puzzles/fifteen_puzzle/7.png</file>
+        <file>resources/puzzles/fifteen_puzzle/8.png</file>
+        <file>resources/puzzles/fifteen_puzzle/9.png</file>
+        <file>resources/puzzles/fifteen_puzzle/frame.png</file>
+        <file>resources/puzzles/justInCase.png</file>
+        <file>resources/puzzles/fifteen_puzzle/1.png</file>
+        <file>resources/puzzles/fifteen_puzzle/15.png</file>
+        <file>resources/puzzles/fifteen_puzzle/frame1.png</file>
     </qresource>
 </RCC>

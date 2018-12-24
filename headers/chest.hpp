@@ -6,6 +6,7 @@
 #include "headers/puzzle.h"
 #include "headers/staticpuzzle.h"
 #include "headers/dynamicpuzzle1.h"
+#include "headers/dynamicpuzzle2.h"
 
 class Chest : public InGameObjects {
 

@@ -25,7 +25,8 @@ SOURCES += sources/main.cpp\
     sources/invertedfloor.cpp \
     sources/dynamicpuzzle1.cpp \
     sources/puzzle.cpp \
-    sources/inventory.cpp
+    sources/inventory.cpp \
+    sources/dynamicpuzzle2.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
@@ -39,7 +40,8 @@ HEADERS  += headers/mainwindow.h \
     headers/invertedfloor.h \
     headers/dynamicpuzzle1.h \
     headers/puzzle.h \
-    headers/inventory.h
+    headers/inventory.h \
+    headers/dynamicpuzzle2.h
 
 FORMS    += ui/mainwindow.ui
 
