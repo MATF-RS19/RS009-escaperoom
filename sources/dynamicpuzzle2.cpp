@@ -243,7 +243,7 @@ void DynamicPuzzle2::mousePressEvent(QGraphicsSceneMouseEvent *){
                         swapTiles(i, i-4);
                     }
                     else if(_tiles.at(i+1).second == 15){
-                        swapTiles(i, i+4);
+                        swapTiles(i, i+1);
                     }
                     break;
                 }
