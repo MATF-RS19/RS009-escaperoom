@@ -1,4 +1,5 @@
 #include "headers/staticpuzzle.h"
+#include<QSound>
 
 StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
     Puzzle(parent, scene, cl)
@@ -83,6 +84,8 @@ void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){
         }
         //otherwise, his/her answer will be deleted, and message will occurre
         else{
+            _fail_sound->setLoops(1);
+            _fail_sound->play();
             for(int i = 0; i < _ansNum; i++){
                 //only incorrect answers will be deleted
                 if(_answers[i]->toPlainText() != _rightAnswers[i]){

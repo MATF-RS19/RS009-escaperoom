@@ -63,11 +63,15 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
     switch (boatIslandNumber) {
         case 1: {
             if(_wolfPosition == island2 && _goatPosition == island2){
+                _fail_sound->setLoops(1);
+                _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island2 && _lettucePosition == island2){
+                _fail_sound->setLoops(1);
+                _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Goat has eaten lettuce! Be careful next time";
                 getLog()->setText("Goat has eaten lettuce! Be careful next time");
@@ -76,11 +80,15 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
         }
         case 2: {
             if(_wolfPosition == island1 && _goatPosition == island1){
+                _fail_sound->setLoops(1);
+                _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island1 && _lettucePosition == island1){
+                _fail_sound->setLoops(1);
+                _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Goat has eaten lettuce! Be careful next time";
                 getLog()->setText("Goat has eaten lettuce! Be careful next time");

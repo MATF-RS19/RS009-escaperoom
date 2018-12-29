@@ -14,6 +14,9 @@
 #include "headers/inventory.h"
 #include <QDebug>
 #include <QTextEdit>
+#include <QSound>
+#include <QSoundEffect>
+
 
 namespace SceneMeasure {
     extern qint16 sceneWidth;
@@ -43,6 +46,11 @@ private:
     Key *_levelKey;
     Inventory *_inventory;
     QTextEdit *_log;
+    QSound *_door_knock_sound = new QSound(QString(":/resources/sounds/knock_on_the_door.wav"));
+    QSound *_door_opening_sound = new QSound(QString(":/resources/sounds/door_opening.wav"));
+    QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav"));
+    QSoundEffect *_background_music = new QSoundEffect();
+
     void loadLevel();
 };
 

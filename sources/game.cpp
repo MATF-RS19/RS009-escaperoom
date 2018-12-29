@@ -30,6 +30,13 @@ Game::~Game(){
 }
 
 void Game::loadLevel(){
+
+    //setting background music
+    _background_music->setSource(QUrl("qrc:/resources/sounds/background.wav"));
+    _background_music->setLoopCount(QSoundEffect::Infinite);
+    _background_music->setVolume(0.4);
+    _background_music->play();
+
     QFile qf;
     //reading json file, depends on level
     QString levelJson = ":/resources/levels_json/level_" + QString::number(_player->getCurrentLevel()) + ".json";
@@ -126,23 +133,34 @@ void Game::loadLevel(){
 
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //gift only exist on first level
-    //if user click on gift, keyPressEvent function from gift class will be called
-    //if player already have universal key, user won't be able to open gift again
+    //if user clicks on gift, keyPressEvent function from gift class will be called
+    //if player already has universal key, user won't be able to open the gift again
     if(_player->getCurrentLevel()==1 && _gift->isUnderMouse() && !_gift->hasKey()){
         _gift->mousePressEvent(event);
         if(_gift->hasKey()){
+            _key_sound->setLoops(1);
+            _key_sound->play();
             _universalKey->setPos(1150, 80);
             _universalKey->setZValue(5);
             this->addItem(_universalKey);
         }
     }
-    //If user click on door, keyPressEvent function from door class will be called
+    //If user clicks on door, keyPressEvent function from door class will be called
     else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
         if(_door->pixmap() == QPixmap(":/resources/doors/close_door.png")){
             _door->mousePressEvent(event);
+
+            //sound of door opening or knocking, as a reminder that a key is required in order to open the door
+            if(_door->isOpened()){
+                _door_opening_sound->setLoops(1);
+                _door_opening_sound->play();
+            }else{
+                _door_knock_sound->setLoops(1);
+                _door_knock_sound->play();
+            }
         }
-        //if door is already open, clicking on the door will get you to next level
+        //if door has already been opened, clicking on the door will get you to next level
         else{
             //deleting every graphics item from the scene, except the player, because he won't be changed
             for(QGraphicsItem *item: this->items()){
@@ -167,10 +185,12 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     else if(_chest->isUnderMouse() && !_chest->isOpened() && !_levelKey->shouldGetKey()){
         _chest->mousePressEvent(event, this->_parent);
     }
-    //If user click on chest, chest hasn't been opened yet and user did solve the puzzle yet, levelKey will be added to user's list and chest will open
+    //If user click on chest, chest hasn't been opened yet and the user solved the puzzle, levelKey will be added to user's list and chest will open
     else if(_chest->isUnderMouse() && !_chest->isOpened() && _levelKey->shouldGetKey()){
         _chest->openChest(true);
         _player->keyList.append(_levelKey);
+        _key_sound->setLoops(1);
+        _key_sound->play();
         qDebug() << "You got level key";
         _log->setText("You got level key");
         _levelKey->setPos(1150, 205);

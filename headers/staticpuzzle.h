@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include "headers/puzzle.h"
+#include <QSound>
 
 class StaticPuzzle : public Puzzle {
 public:

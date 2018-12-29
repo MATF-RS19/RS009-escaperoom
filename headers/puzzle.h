@@ -6,6 +6,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QTextEdit>
+#include <QSound>
 #include "headers/player.h"
 #include "headers/key.h"
 
@@ -23,6 +24,7 @@ public:
     Key *getLK();
     QTextEdit *getLog();
     void setLog(QTextEdit *l);
+    QSound *_fail_sound = new QSound(QString(":/resources/sounds/fail_Windows.wav"));
 
 protected:
     explicit Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
