@@ -20,7 +20,6 @@ public:
     void setCurrentLevel(qint16 cl);
     void setInvertedFloor(InvertedFloor *iFloor);
     void setDummy(QGraphicsPixmapItem *dummy);
-
 private:
     qreal _step = 3.0;
     qreal _doubleStep = 2 * _step;

@@ -20,9 +20,7 @@ Game::Game(QGraphicsView *parent) :
     addItem(_player->getDummy());
     //Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
-
     loadLevel();
-
 }
 
 Game::~Game(){
@@ -30,7 +28,6 @@ Game::~Game(){
 }
 
 void Game::loadLevel(){
-
     //setting background music
     _background_music->setSource(QUrl("qrc:/resources/sounds/background.wav"));
     _background_music->setLoopCount(QSoundEffect::Infinite);
@@ -56,16 +53,27 @@ void Game::loadLevel(){
     //frame size
     _log->setFixedSize(500, 50);
     //frame position
-    _log->move(0, 660);
+    _log->move(5, 655);
     //text size
     _log->setFontPointSize(15.0);
     //text backgroung color
-    _log->setTextBackgroundColor("black");
+    _log->setTextBackgroundColor("darkRed");
     //text color
-    _log->setTextColor("green");
+    _log->setTextColor("yellow");
     //invisible frame
     _log->setFrameStyle(10);
     addWidget(_log);
+    _score = new QLabel();
+    _score->setFont(QFont("Arial", 17, QFont::Normal));
+    _score->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
+    _score->move(5, 5);
+    _score->setAlignment(Qt::AlignCenter);
+    _score->setFixedSize(100, 30);
+    _score->setText(QString::number((_player->getCurrentLevel()-1)*10));
+    addWidget(_score);
+
+    _stopwatch = new Stopwatch(_startingTime);
+    addWidget(_stopwatch);
 
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's

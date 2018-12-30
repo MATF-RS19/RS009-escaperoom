@@ -12,11 +12,12 @@
 #include "headers/key.h"
 #include "headers/invertedfloor.h"
 #include "headers/inventory.h"
+#include "headers/stopwatch.h"
 #include <QDebug>
 #include <QTextEdit>
+#include <QLabel>
 #include <QSound>
 #include <QSoundEffect>
-
 
 namespace SceneMeasure {
     extern qint16 sceneWidth;
@@ -50,7 +51,9 @@ private:
     QSound *_door_opening_sound = new QSound(QString(":/resources/sounds/door_opening.wav"));
     QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav"));
     QSoundEffect *_background_music = new QSoundEffect();
-
+    QLabel *_score;
+    QTime _startingTime = QTime::currentTime();
+    Stopwatch *_stopwatch;
     void loadLevel();
 };
 
