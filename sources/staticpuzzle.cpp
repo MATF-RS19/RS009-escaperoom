@@ -29,6 +29,7 @@ void StaticPuzzle::loadPuzzle(){
     qDebug() << levelPuzzleJson;
     qf.open(QIODevice::ReadOnly | QIODevice::Text);
     QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
+    qf.close();
 
     //setting background picture
     setBackgroundBrush(QImage(qjd["background"].toString()));

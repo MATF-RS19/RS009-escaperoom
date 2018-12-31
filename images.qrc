@@ -9,7 +9,6 @@
         <file>resources/puzzles/puzzle_2.png</file>
         <file>resources/puzzles/puzzle_3.jpg</file>
         <file>resources/chests/trojan_horse.png</file>
-        <file>resources/levels/Untitled-2.png</file>
         <file>resources/doors/close_door.png</file>
         <file>resources/doors/open_door.png</file>
         <file>resources/levels/level_01.png</file>
@@ -52,5 +51,6 @@
         <file>resources/puzzles/fifteen_puzzle/1.png</file>
         <file>resources/puzzles/fifteen_puzzle/15.png</file>
         <file>resources/puzzles/fifteen_puzzle/frame1.png</file>
+        <file>resources/levels/level_05.png</file>
     </qresource>
 </RCC>

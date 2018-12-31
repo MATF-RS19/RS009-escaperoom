@@ -32,10 +32,13 @@ namespace Scaling {
 class Game : public QGraphicsScene {
 
 public:
-    Game(QGraphicsView *parent);
+    Game(QGraphicsView *parent, QString name);
+    Game(QGraphicsView *parent, QString name, qint16 cl, bool uk/*, qint32 time*/);
     ~Game();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+    Player *getPlayer();
+    void addToHighscore();
 
 private:
     QGraphicsView *_parent;

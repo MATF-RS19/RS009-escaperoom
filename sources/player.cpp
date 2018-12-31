@@ -1,7 +1,9 @@
 #include "headers/player.h"
 #include "headers/game.h"
 
-Player::Player() {
+Player::Player(QString name) :
+    _username(name)
+{
     setPixmap(QPixmap(":/resources/outfits/rd.png"));
     _currentLevel = 1;
     _dummy = new QGraphicsPixmapItem;
@@ -81,4 +83,8 @@ void Player::setInvertedFloor(InvertedFloor *iFloor){
 
 void Player::setDummy(QGraphicsPixmapItem *dummy){
     _dummy = std::move(dummy);
+}
+
+QString Player::getUsername() {
+    return _username;
 }

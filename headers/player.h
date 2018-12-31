@@ -10,7 +10,7 @@
 class Player : public QGraphicsPixmapItem {
 
 public:
-    Player();
+    Player(QString name);
     ~Player();
     QList<Key*> keyList;
     void keyPressEvent(QKeyEvent *key);
@@ -20,12 +20,15 @@ public:
     void setCurrentLevel(qint16 cl);
     void setInvertedFloor(InvertedFloor *iFloor);
     void setDummy(QGraphicsPixmapItem *dummy);
+    QString getUsername();
+
 private:
     qreal _step = 3.0;
     qreal _doubleStep = 2 * _step;
     qint16 _currentLevel;
     InvertedFloor *_invertedfloor;
     QGraphicsPixmapItem* _dummy;
+    QString _username;
 
     QPixmap _ld = QPixmap(":/resources/outfits/ld.png");
     QPixmap _lu = QPixmap(":/resources/outfits/lu.png");

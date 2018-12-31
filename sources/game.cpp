@@ -11,15 +11,34 @@ namespace Scaling {
 
 static qint16 endGame = 6;
 
-Game::Game(QGraphicsView *parent) :
+Game::Game(QGraphicsView *parent, QString name) :
            _parent(parent)
 {
 
-    _player = new Player();
+    _player = new Player(name);
+    addItem(_player);
+    addItem(_player->getDummy());
+    qDebug() << _player->getUsername();
+    //Universal key
+    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+    loadLevel();
+}
+
+Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk) :
+            _parent(parent)
+{
+    _player = new Player(name);
     addItem(_player);
     addItem(_player->getDummy());
     //Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+    _player->setCurrentLevel(cl);
+    if(uk){
+        _player->keyList.push_back(_universalKey);
+        _universalKey->setPos(1150, 80);
+        _universalKey->setZValue(5);
+        this->addItem(_universalKey);
+    }
     loadLevel();
 }
 
@@ -41,6 +60,7 @@ void Game::loadLevel(){
     qDebug() << levelJson;
     qf.open(QIODevice::ReadOnly | QIODevice::Text);
     QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
+    qf.close();
 
     //background of scene
     setBackgroundBrush(QImage(qjd["background"].toString()));
@@ -63,6 +83,9 @@ void Game::loadLevel(){
     //invisible frame
     _log->setFrameStyle(10);
     addWidget(_log);
+
+    //_log->setText(_player->getUsername());
+
     _score = new QLabel();
     _score->setFont(QFont("Arial", 17, QFont::Normal));
     _score->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
@@ -134,9 +157,7 @@ void Game::loadLevel(){
 
     //setting scene, setting origin in top, left corner, size to 1280x720
     setSceneRect(0, 0, SceneMeasure::sceneWidth, SceneMeasure::sceneHeight);
-    //setting fixed size of scene + a little adjusment to height
-    _parent->setFixedSize(SceneMeasure::sceneWidth, SceneMeasure::sceneHeight+17);
-
+    _parent->setFrameStyle(0);
 }
 
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
@@ -182,6 +203,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 qDebug() << "********************************************\r\n"
                             "*****        Congratulations           *****\r\n"
                             "********************************************";
+                addToHighscore();
                 exit(0);
             }
 
@@ -214,4 +236,30 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
 void Game::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
     if(event->KeyPress)
         _player->setFocus();
+}
+
+Player *Game::getPlayer() {
+    return _player;
+}
+
+//BUG: sometime write palyers in qDebug and sometimes finish unexpectedly
+void Game::addToHighscore() {
+    QFile qf("../RS009-escaperoom/resources/highscores.json");
+    qf.open(QIODevice::ReadWrite);
+    QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
+    QJsonArray currentArray = qjd["results"].toArray();
+    QJsonObject newPlayer;
+    newPlayer.insert("name", QJsonValue(_player->getUsername()));
+    //BUG: _score->text() returns ""
+    newPlayer.insert("score", QJsonValue(_score->text()));
+    currentArray.append(newPlayer);
+    for(int i = 0, n = currentArray.size(); i < n; ++i){
+        qDebug() << currentArray.at(i) << "\n";
+    }
+    QJsonObject newObject;
+    newObject.insert("results", QJsonArray(currentArray));
+    qjd.setObject(newObject);
+    qf.resize(0);
+    qf.write(qjd.toJson());
+    qf.close();
 }
