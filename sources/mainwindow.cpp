@@ -12,6 +12,7 @@ MainWindow::~MainWindow(){
     delete _ui;
 }
 
+//starting new game
 void MainWindow::newGame(QString name) {
     //making new game
     _game.reset(new Game(_ui->display, name));
@@ -23,6 +24,7 @@ void MainWindow::newGame(QString name) {
     _ui->display->setFocus();
 }
 
+//setting textEdit field visible, so user can enter his/her username
 void MainWindow::on_newGame_btn_clicked() {
 
     _ui->newGameTE->setVisible(true);
@@ -31,6 +33,7 @@ void MainWindow::on_newGame_btn_clicked() {
 
 }
 
+//if lenght of username is > 0, user can confirm that username
 void MainWindow::on_newGameTE_textChanged() {
     if(_ui->newGameTE->toPlainText().size() > 0 )
         _ui->newGame_conf_btn->setEnabled(true);
@@ -38,6 +41,8 @@ void MainWindow::on_newGameTE_textChanged() {
         _ui->newGame_conf_btn->setEnabled(false);
 }
 
+//checking is username alredy exist and if doesn't create new json file and start game,
+//otherwise ask user if he/she want to erase old data and start game all over again
 void MainWindow::on_newGame_conf_btn_clicked() {
     QString username = _ui->newGameTE->toPlainText();
     QFile qf("../RS009-escaperoom/resources/username_json/" + username + ".json");
@@ -55,6 +60,7 @@ void MainWindow::on_newGame_conf_btn_clicked() {
     }
 }
 
+//make json file for new user or rewrite data for old one
 void MainWindow::writeJson(QString name) {
     QFile qf("../RS009-escaperoom/resources/username_json/" + name + ".json");
     qf.open(QIODevice::WriteOnly);
@@ -67,6 +73,7 @@ void MainWindow::writeJson(QString name) {
     qf.close();
 }
 
+//load old user's data from json and start game where he/she left off
 void MainWindow::readJsonAndStartGame(QString name) {
     QFile qf("../RS009-escaperoom/resources/username_json/" + name + ".json");
     qf.open(QIODevice::ReadOnly);
@@ -86,12 +93,14 @@ void MainWindow::readJsonAndStartGame(QString name) {
     _ui->display->setFocus();
 }
 
+//setting textEdit field visible, so user can enter his/her existing username
 void MainWindow::on_loadGame_btn_clicked() {
     _ui->loadGameTE->setVisible(true);
     _ui->loadGameTE->setEnabled(true);
     _ui->loadGame_conf_btn->setVisible(true);
 }
 
+//if lenght of username is > 0, user can confirm that username
 void MainWindow::on_loadGameTE_textChanged() {
     if(_ui->loadGameTE->toPlainText().size() > 0 )
         _ui->loadGame_conf_btn->setEnabled(true);
@@ -99,6 +108,7 @@ void MainWindow::on_loadGameTE_textChanged() {
         _ui->loadGame_conf_btn->setEnabled(false);
 }
 
+//checking is username alredy exist and if does loas json file and continue game
 void MainWindow::on_loadGame_conf_btn_clicked() {
     QString username = _ui->loadGameTE->toPlainText();
     QFile qf("../RS009-escaperoom/resources/username_json/" + username + ".json");
@@ -111,26 +121,26 @@ void MainWindow::on_loadGame_conf_btn_clicked() {
     }
 }
 
+//read highscores txt file, sort all data by score and write it in list on left side
 void MainWindow::on_highscore_btn_clicked() {
-    QFile qf("../RS009-escaperoom/resources/highscores.json");
-    qf.open(QIODevice::ReadOnly);
-    QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
-    qf.close();
-    QJsonArray arrayOfBest = qjd["results"].toArray();
-    QVector<QPair<QString, qint32>> best;
-    qint32 n = arrayOfBest.size();
-    for(qint32 i = 0; i < n; ++i){
-        QPair<QString, qint32> curr;
-        curr.first = arrayOfBest.at(i)["name"].toString();
-        curr.second = arrayOfBest.at(i)["score"].toInt();
-        best.push_back(curr);
+    QFile qf("../RS009-escaperoom/resources/highscores.txt");
+    QString line;
+    if(qf.open(QIODevice::ReadOnly)){
+        QVector<QPair<QString, qint32>> players;
+        while((line = qf.readLine()) != nullptr){
+            if(line.trimmed().size() == 0) continue;
+            QStringList reci = line.split(' ');
+            QPair<QString, qint32> onePlayer(reci.at(0).trimmed(),
+                                             reci.size() > 1 ? reci.at(1).trimmed().toInt() : 0 /*For now, because _score->text return ""*/);
+            players.push_back(onePlayer);
+        }
+        std::sort(std::begin(players), std::end(players),
+                  [](const QPair<QString, qint32> &first, const QPair<QString, qint32> &second) {return first.second > second.second;});
+
+        for(qint32 i = 0, n = players.size(); i < n; ++i)
+            _ui->highscoreList->addItem(players.at(i).first + "\t" + QString::number(players.at(i).second));
     }
-
-    std::sort(std::begin(best), std::end(best),
-              [](const QPair<QString, qint32> &first, const QPair<QString, qint32> &second) {return first.second > second.second;});
-
-    for(qint32 i = 0; i < n; ++i)
-        _ui->highscoreList->addItem(best.at(i).first + "\t" + QString::number(best.at(i).second));
+    qf.close();
 }
 
 void MainWindow::on_exit_btn_clicked(){

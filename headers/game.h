@@ -55,6 +55,7 @@ private:
     QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav"));
     QSoundEffect *_background_music = new QSoundEffect();
     QLabel *_score;
+    QString _scoreText;
     QTime _startingTime = QTime::currentTime();
     Stopwatch *_stopwatch;
     void loadLevel();

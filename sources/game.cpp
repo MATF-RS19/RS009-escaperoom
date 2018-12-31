@@ -94,6 +94,8 @@ void Game::loadLevel(){
     _score->setFixedSize(100, 30);
     _score->setText(QString::number((_player->getCurrentLevel()-1)*10));
     addWidget(_score);
+    _scoreText = _score->text();
+    qDebug() << _score->text();
 
     _stopwatch = new Stopwatch(_startingTime);
     addWidget(_stopwatch);
@@ -203,7 +205,11 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 qDebug() << "********************************************\r\n"
                             "*****        Congratulations           *****\r\n"
                             "********************************************";
+                //because score is added on levelLoad
+                _scoreText = QString::number(_scoreText.toInt()+10);
+                //after finishing game, username and score are added to highscore file
                 addToHighscore();
+                //TODO: when finished, redirect to start window
                 exit(0);
             }
 
@@ -242,24 +248,14 @@ Player *Game::getPlayer() {
     return _player;
 }
 
-//BUG: sometime write palyers in qDebug and sometimes finish unexpectedly
+//adding score from current user to highscore file
 void Game::addToHighscore() {
-    QFile qf("../RS009-escaperoom/resources/highscores.json");
-    qf.open(QIODevice::ReadWrite);
-    QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
-    QJsonArray currentArray = qjd["results"].toArray();
-    QJsonObject newPlayer;
-    newPlayer.insert("name", QJsonValue(_player->getUsername()));
-    //BUG: _score->text() returns ""
-    newPlayer.insert("score", QJsonValue(_score->text()));
-    currentArray.append(newPlayer);
-    for(int i = 0, n = currentArray.size(); i < n; ++i){
-        qDebug() << currentArray.at(i) << "\n";
+    QFile qf("../RS009-escaperoom/resources/highscores.txt");
+    if(qf.open(QIODevice::Append)){
+        QTextStream out(&qf);
+        //BUG _score->text() return ""
+        out << '\n' << _player->getUsername() << " " << _scoreText;
     }
-    QJsonObject newObject;
-    newObject.insert("results", QJsonArray(currentArray));
-    qjd.setObject(newObject);
-    qf.resize(0);
-    qf.write(qjd.toJson());
+
     qf.close();
 }
