@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <cmath>
 #include <QDebug>
+#include <QObject>
 #include <QTextEdit>
 #include "headers/player.h"
 #include "headers/key.h"

@@ -52,5 +52,17 @@
         <file>resources/puzzles/fifteen_puzzle/15.png</file>
         <file>resources/puzzles/fifteen_puzzle/frame1.png</file>
         <file>resources/levels/level_05.png</file>
+        <file>resources/outfits/aframe1.png</file>
+        <file>resources/outfits/aframe2.png</file>
+        <file>resources/outfits/aframe3.png</file>
+        <file>resources/outfits/dframe1.png</file>
+        <file>resources/outfits/dframe2.png</file>
+        <file>resources/outfits/dframe3.png</file>
+        <file>resources/outfits/sframe1.png</file>
+        <file>resources/outfits/sframe2.png</file>
+        <file>resources/outfits/sframe3.png</file>
+        <file>resources/outfits/wframe1.png</file>
+        <file>resources/outfits/wframe2.png</file>
+        <file>resources/outfits/wframe3.png</file>
     </qresource>
 </RCC>

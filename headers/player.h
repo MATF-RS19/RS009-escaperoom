@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <cmath>
 #include <QDebug>
+#include "headers/sprite.h"
 #include "headers/key.h"
 #include "headers/invertedfloor.h"
 class Player : public QGraphicsPixmapItem {
@@ -21,7 +22,8 @@ public:
     void setInvertedFloor(InvertedFloor *iFloor);
     void setDummy(QGraphicsPixmapItem *dummy);
     QString getUsername();
-
+    void initSpriteSheets();
+    void setSprite(Sprite& sprite);
 private:
     qreal _step = 3.0;
     qreal _doubleStep = 2 * _step;
@@ -29,11 +31,10 @@ private:
     InvertedFloor *_invertedfloor;
     QGraphicsPixmapItem* _dummy;
     QString _username;
-
-    QPixmap _ld = QPixmap(":/resources/outfits/ld.png");
-    QPixmap _lu = QPixmap(":/resources/outfits/lu.png");
-    QPixmap _rd = QPixmap(":/resources/outfits/rd.png");
-    QPixmap _ru = QPixmap(":/resources/outfits/ru.png");
+    Sprite _wSpriteSheet;
+    Sprite _aSpriteSheet;
+    Sprite _sSpriteSheet;
+    Sprite _dSpriteSheet;
 
     bool checkCollision();
 };

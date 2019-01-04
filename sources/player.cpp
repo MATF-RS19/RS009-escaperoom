@@ -4,55 +4,62 @@
 Player::Player(QString name) :
     _username(name)
 {
-    setPixmap(QPixmap(":/resources/outfits/rd.png"));
+    setPixmap(QPixmap(":/resources/outfits/dframe1.png"));
     _currentLevel = 1;
     _dummy = new QGraphicsPixmapItem;
     _dummy->setPixmap(QPixmap(":/resources/outfits/dummy.png"));
+    initSpriteSheets();
 }
 
 Player::~Player(){
 
 }
 
-//pseudo collision, for now
 void Player::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
      case Qt::Key_A:
-        _dummy->setPos(x()-_doubleStep+25,y()-_step+100);
+        _dummy->setPos(x()-_doubleStep+50,y()+128);
         if(checkCollision()) {
             setPos(x()-_doubleStep, y() - _step);
-            if(this->pixmap() != _lu){
-                this->setPixmap(_lu);
-            }
-        }      
+            this->setSprite(_aSpriteSheet);
+
+        }
+        else {
+            this->setPixmap(_aSpriteSheet.startingSprite());
+        }
         break;
      case Qt::Key_D:
-        _dummy->setPos(x()+_doubleStep+25,y()+_step+100);
+        _dummy->setPos(x()+_doubleStep+50,y()+_step+128);
         if(checkCollision()) {
             setPos(x()+_doubleStep,y()+_step);
-            if(this->pixmap() != _rd){
-                this->setPixmap(_rd);
-            }
-        }        
+            this->setSprite(_dSpriteSheet);
+
+        }
+        else{
+            this->setPixmap(_dSpriteSheet.startingSprite());
+        }
         break;
      case Qt::Key_W: 
-        _dummy->setPos(x()+_doubleStep+25,y()-_step+100);
+        _dummy->setPos(x()+_doubleStep+50,y()-_step+128);
         if(checkCollision()) {
             setPos(x()+_doubleStep,y()-_step);
-            if(this->pixmap() != _ru){
-                this->setPixmap(_ru);
-            }
+            this->setSprite(_wSpriteSheet);
+        }
+        else {
+            this->setPixmap(_wSpriteSheet.startingSprite());
         }
         break;
      case Qt::Key_S:
-        _dummy->setPos(x()-_doubleStep+25,y()+_step+100);
+        _dummy->setPos(x()-_doubleStep+50,y()+_step+128);
         if(checkCollision()) {
             setPos(x()-_doubleStep,y()+_step);
-            if(this->pixmap() != _ld){
-                this->setPixmap(_ld);
-            }
+            this->setSprite(_sSpriteSheet);
+        }
+        else {
+         this->setPixmap(_sSpriteSheet.startingSprite());
         }
         break;
+    default: break;
     }
 }
 // We're checking if there's one more collision besides collision with the player.
@@ -87,4 +94,64 @@ void Player::setDummy(QGraphicsPixmapItem *dummy){
 
 QString Player::getUsername() {
     return _username;
+}
+// It would be much nicer if we had more different frames/sprites for spritesheet
+void Player::initSpriteSheets(){
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe2.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe2.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe2.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe1.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe3.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe3.png");
+    _aSpriteSheet.addSprite(":/resources/outfits/aframe3.png");
+
+
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe2.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe2.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe2.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe1.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe3.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe3.png");
+    _wSpriteSheet.addSprite(":/resources/outfits/wframe3.png");
+
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe2.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe2.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe2.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe1.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe3.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe3.png");
+    _sSpriteSheet.addSprite(":/resources/outfits/sframe3.png");
+
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe2.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe2.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe2.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe1.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe3.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe3.png");
+    _dSpriteSheet.addSprite(":/resources/outfits/dframe3.png");
+
+}
+
+void Player::setSprite(Sprite& sprite){
+    this->setPixmap(sprite.nextSprite());
 }

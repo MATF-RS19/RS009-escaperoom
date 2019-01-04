@@ -10,7 +10,10 @@ class Stopwatch : public QLabel {
     Q_OBJECT
 public:
     Stopwatch(QTime startingTime);
+
+private slots:
     void showElapsedTime();
+
 private:
     QTime _startingTime;
 };

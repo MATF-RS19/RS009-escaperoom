@@ -5,10 +5,6 @@ namespace SceneMeasure {
     qint16 sceneHeight = 720;
 }
 
-namespace Scaling {
-    qreal playerScale = 0.35;
-}
-
 static qint16 endGame = 6;
 
 Game::Game(QGraphicsView *parent, QString name) :
@@ -103,7 +99,6 @@ void Game::loadLevel(){
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
-    _player->setScale(Scaling::playerScale);
     //enabling keyboard inputs
     _player->setFlag(QGraphicsItem::ItemIsFocusable);
     //focusing item, so it can catch keyboard inputs
