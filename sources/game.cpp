@@ -280,7 +280,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         addItem(_levelKey);
         _chest->setPixmap(_openChestPic);
     }
-    else if(_saveBtn->isUnderMouse() && !isTutorial()){
+    else if(!isTutorial() && _saveBtn->isUnderMouse()){
         qDebug() << "SAVE";
         QFile qf("../RS009-escaperoom/resources/username_json/" + _player->getUsername() + ".json");
         qf.open(QIODevice::WriteOnly);
@@ -292,7 +292,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         qf.write(qjd.toJson());
         qf.close();
     }
-    else if(_quitBtn->isUnderMouse() && !isTutorial()){
+    else if(!isTutorial() &&_quitBtn->isUnderMouse()){
         qDebug() << "QUIT";
         quit();
     }
