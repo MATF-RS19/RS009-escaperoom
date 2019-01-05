@@ -8,6 +8,7 @@
 #include "headers/sprite.h"
 #include "headers/key.h"
 #include "headers/invertedfloor.h"
+
 class Player : public QGraphicsPixmapItem {
 
 public:

@@ -15,6 +15,7 @@ public:
     Door(QPixmap picture);
     ~Door();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 xCoord);
     QTextEdit *getLog();
     void setLog(QTextEdit *l);
     bool isOpened();

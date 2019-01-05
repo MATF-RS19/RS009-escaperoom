@@ -58,6 +58,7 @@ void MainWindow::on_newGame_conf_btn_clicked() {
         writeJson(username);
         newGame(username);
     }
+    _ui->newGameTE->clear();
 }
 
 //make json file for new user or rewrite data for old one
@@ -66,7 +67,7 @@ void MainWindow::writeJson(QString name) {
     qf.open(QIODevice::WriteOnly);
     QJsonDocument qjd;
     QJsonObject qjo;
-    qjo.insert("CurrentLevel", QJsonValue(0));
+    qjo.insert("CurrentLevel", QJsonValue(1));
     qjo.insert("UniversalKey", QJsonValue(false));
     qjd.setObject(qjo);
     qf.write(qjd.toJson());
@@ -119,6 +120,7 @@ void MainWindow::on_loadGame_conf_btn_clicked() {
     else{
         _ui->loadGameTE->setText("Username dosen't exist");
     }
+    _ui->loadGameTE->clear();
 }
 
 //read highscores txt file, sort all data by score and write it in list on left side
@@ -145,4 +147,17 @@ void MainWindow::on_highscore_btn_clicked() {
 
 void MainWindow::on_exit_btn_clicked(){
     this->close();
+}
+
+void MainWindow::on_tutorial_btn_clicked()
+{
+    //making a new game, but we are not setting a player name.
+    _game.reset(new Game(_ui->display));
+
+    //setting scene
+    _ui->display->setScene(&(*_game));
+    //setting game scene to be main scene
+    _ui->display->raise();
+    //setting focus on game scene
+    _ui->display->setFocus();
 }

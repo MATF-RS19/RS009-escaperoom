@@ -14,15 +14,19 @@ Door::~Door(){
 
 }
 
-void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
+void Door::mousePressEvent(QGraphicsSceneMouseEvent *){
+
+}
+
+void Door::mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 xCoord) {
     //checking mouse click and player distance from the door
     if(event->button() == Qt::LeftButton && this->distance() < 150.0){
         //checking if user have level key and the door isn't alredy opened
         if(getPlayer()->keyList.contains(getLK()) && !isOpened()){
             qDebug() << "Door unlocked and opened using level key";
             getLog()->setText("Door unlocked and opened using level key");
-            this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
-            this->setX(Coordinates::openDoorX);
+            this->setPixmap(pic);
+            this->setX(xCoord);
             getPlayer()->keyList.removeOne(getLK());
             openDoor(true);
             delete getLK();
@@ -31,8 +35,8 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event){
         else if(getPlayer()->keyList.contains(getUK()) && !isOpened()){
             qDebug() << "Door unlocked and opened using universal key";
             getLog()->setText("Door unlocked and opened using universal key");
-            this->setPixmap(QPixmap(":/resources/doors/open_door.png"));
-            this->setX(Coordinates::openDoorX);
+            this->setPixmap(pic);
+            this->setX(xCoord);
             getPlayer()->keyList.removeOne(getUK());
             openDoor(true);
             delete getUK();

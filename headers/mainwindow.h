@@ -35,6 +35,8 @@ private slots:
 
     void on_highscore_btn_clicked();
 
+    void on_tutorial_btn_clicked();
+
 private:
     Ui::MainWindow *_ui;
     QScopedPointer<Game> _game;

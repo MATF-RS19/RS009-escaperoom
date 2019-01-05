@@ -39,7 +39,7 @@ void Player::keyPressEvent(QKeyEvent *event){
             this->setPixmap(_dSpriteSheet.startingSprite());
         }
         break;
-     case Qt::Key_W: 
+     case Qt::Key_W:
         _dummy->setPos(x()+_doubleStep+50,y()-_step+128);
         if(checkCollision()) {
             setPos(x()+_doubleStep,y()-_step);
@@ -59,6 +59,7 @@ void Player::keyPressEvent(QKeyEvent *event){
          this->setPixmap(_sSpriteSheet.startingSprite());
         }
         break;
+
     default: break;
     }
 }

@@ -13,6 +13,7 @@
 #include "headers/invertedfloor.h"
 #include "headers/inventory.h"
 #include "headers/stopwatch.h"
+#include "headers/help.h"
 #include <QDebug>
 #include <QTextEdit>
 #include <QLabel>
@@ -24,21 +25,21 @@ namespace SceneMeasure {
     extern qint16 sceneHeight;
 }
 
-//TODO: scale player in gimp and delete this
-namespace Scaling {
-    extern qreal playerScale;
-}
-
 class Game : public QGraphicsScene {
 
 public:
+    Game(QGraphicsView *parent);
     Game(QGraphicsView *parent, QString name);
     Game(QGraphicsView *parent, QString name, qint16 cl, bool uk/*, qint32 time*/);
     ~Game();
+    void start(QString name);
+    void quit();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     Player *getPlayer();
     void addToHighscore();
+    void itIsTutorial();
+    bool isTutorial();
 
 private:
     QGraphicsView *_parent;
@@ -58,6 +59,14 @@ private:
     QString _scoreText;
     QTime _startingTime = QTime::currentTime();
     Stopwatch *_stopwatch;
+    QPixmap _openChestPic;
+    QPixmap _openDoorPic;
+    qint32 _openDoorXCoord;
+    QGraphicsPixmapItem *_saveBtn;
+    QGraphicsPixmapItem *_quitBtn;
+    bool _tutorial = false;
+    Help *_help;
+
     void loadLevel();
 };
 

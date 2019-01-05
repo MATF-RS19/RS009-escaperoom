@@ -29,7 +29,8 @@ SOURCES += sources/main.cpp\
     sources/inventory.cpp \
     sources/dynamicpuzzle2.cpp \
     sources/stopwatch.cpp \
-    sources/sprite.cpp
+    sources/sprite.cpp \
+    sources/help.cpp
 
 HEADERS  += headers/mainwindow.h \
     headers/game.h \
@@ -46,7 +47,8 @@ HEADERS  += headers/mainwindow.h \
     headers/inventory.h \
     headers/dynamicpuzzle2.h \
     headers/stopwatch.h \
-    headers/sprite.h
+    headers/sprite.h \
+    headers/help.h
 
 FORMS    += ui/mainwindow.ui
 

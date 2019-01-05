@@ -7,27 +7,33 @@ namespace SceneMeasure {
 
 static qint16 endGame = 6;
 
+//This constructor is only being called when it's a tutorial, because player name is not being set
+Game::Game(QGraphicsView *parent) :
+    _parent(parent)
+{
+    _player = new Player("");
+    itIsTutorial();
+    addItem(_player);
+    addItem(_player->getDummy());
+    qDebug() << "Tutorial";
+    //Universal key
+    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+
+    _player->setCurrentLevel(1);
+    loadLevel();
+}
+
 Game::Game(QGraphicsView *parent, QString name) :
            _parent(parent)
 {
-
-    _player = new Player(name);
-    addItem(_player);
-    addItem(_player->getDummy());
-    qDebug() << _player->getUsername();
-    //Universal key
-    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+    start(name);
     loadLevel();
 }
 
 Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk) :
             _parent(parent)
 {
-    _player = new Player(name);
-    addItem(_player);
-    addItem(_player->getDummy());
-    //Universal key
-    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+    start(name);
     _player->setCurrentLevel(cl);
     if(uk){
         _player->keyList.push_back(_universalKey);
@@ -42,7 +48,26 @@ Game::~Game(){
 
 }
 
+void Game::start(QString name) {
+    _player = new Player(name);
+    addItem(_player);
+    addItem(_player->getDummy());
+    //Universal key
+    _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+    //Save button
+    _saveBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/save_btn.png"));
+    _saveBtn->setFlag(QGraphicsItem::ItemIsFocusable);
+    _saveBtn->setPos(0, 80);
+    addItem(_saveBtn);
+    //Quit button
+    _quitBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/exit_btn.png"));
+    _quitBtn->setFlag(QGraphicsItem::ItemIsFocusable);
+    _quitBtn->setPos(0, 200);
+    addItem(_quitBtn);
+}
+
 void Game::loadLevel(){
+
     //setting background music
     _background_music->setSource(QUrl("qrc:/resources/sounds/background.wav"));
     _background_music->setLoopCount(QSoundEffect::Infinite);
@@ -108,7 +133,7 @@ void Game::loadLevel(){
     _player->getDummy()->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
 
     //adding object so we can trace player not to got over edges of room
-    _player->setInvertedFloor(new InvertedFloor(QPixmap(":/resources/levels/invertedFloor.png")));
+    _player->setInvertedFloor(new InvertedFloor(QPixmap(qjd["floor"].toString())));
     addItem(_player->getInvertedFloor());
 
     QJsonObject giftJsonObject = qjd["gift"].toObject();
@@ -124,8 +149,10 @@ void Game::loadLevel(){
 
     QJsonObject doorJsonObject = qjd["door"].toObject();
     if(doorJsonObject["on_scene"].toBool()){
-        _door = new Door(QPixmap(doorJsonObject["pixmap"].toString()));
-        _door->setPos(doorJsonObject["x_pos"].toInt(), doorJsonObject["y_pos"].toInt());
+        _door = new Door(QPixmap(doorJsonObject["pixmapClose"].toString()));
+        _openDoorPic = QPixmap(doorJsonObject["pixmapOpen"].toString());
+        _openDoorXCoord = doorJsonObject["x_pos_open"].toInt();
+        _door->setPos(doorJsonObject["x_pos_close"].toInt(), doorJsonObject["y_pos_close"].toInt());
         _door->setFlag(QGraphicsItem::ItemIsFocusable);
         _door->setLog(_log);
         _door->setPlayer(_player);
@@ -136,7 +163,8 @@ void Game::loadLevel(){
 
     QJsonObject chestJsonObject = qjd["chest"].toObject();
     if(chestJsonObject["on_scene"].toBool()){
-        _chest = new Chest(QPixmap(chestJsonObject["pixmap"].toString()));
+        _chest = new Chest(QPixmap(chestJsonObject["pixmapClose"].toString()));
+        _openChestPic = QPixmap(chestJsonObject["pixmapOpen"].toString());
         _chest->setPos(chestJsonObject["x_pos"].toInt(), chestJsonObject["y_pos"].toInt());
         _chest->setFlag(QGraphicsItem::ItemIsFocusable);
         _chest->setLog(_log);
@@ -150,6 +178,18 @@ void Game::loadLevel(){
         _inventory = new Inventory(QPixmap(inventoryJsonObject["pixmap"].toString()));
         _inventory->setPos(inventoryJsonObject["x_pos"].toInt(), inventoryJsonObject["y_pos"].toInt());
         addItem(_inventory);
+    }
+
+//
+    if(isTutorial()){
+        _help = new Help(QPixmap(":/resources/tutorijal/pop.png"));
+        _help->setPos(500, 5);
+        _help->setZValue(5);
+        addItem(_help);
+
+        qDebug() << "Tutorijal je";
+    }else{
+        qDebug() << "Nije tutorijal";
     }
 
     //setting scene, setting origin in top, left corner, size to 1280x720
@@ -175,7 +215,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
         if(_door->pixmap() == QPixmap(":/resources/doors/close_door.png")){
-            _door->mousePressEvent(event);
+            _door->mousePressEvent(event, _openDoorPic, _openDoorXCoord);
 
             //sound of door opening or knocking, as a reminder that a key is required in order to open the door
             if(_door->isOpened()){
@@ -188,31 +228,43 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         }
         //if door has already been opened, clicking on the door will get you to next level
         else{
-            //deleting every graphics item from the scene, except the player, because he won't be changed
-            for(QGraphicsItem *item: this->items()){
-                if(item != _player && item != _player->getDummy() && item != _universalKey)
-                    delete item;
-            }
-            _player->setCurrentLevel(_player->getCurrentLevel()+1);
 
-            //here will be goodbay window
-            if(_player->getCurrentLevel() >= endGame){
-                qDebug() << "********************************************\r\n"
-                            "*****        Congratulations           *****\r\n"
-                            "********************************************";
-                //because score is added on levelLoad
-                _scoreText = QString::number(_scoreText.toInt()+10);
-                //after finishing game, username and score are added to highscore file
-                addToHighscore();
-                //TODO: when finished, redirect to start window
-                exit(0);
+            //if we are in tutorial, game is over
+            if(isTutorial()){
+                for(QGraphicsItem *item: this->items()){
+                        delete item;
+                }
+                quit();
             }
+            else {
 
-            //loading next level
-            loadLevel();
+                //deleting every graphics item from the scene, except the player, because he won't be changed
+                for(QGraphicsItem *item: this->items()){
+                    if(item != _player && item != _player->getDummy() && item != _universalKey && item != _saveBtn && item != _quitBtn)
+                        delete item;
+                }
+                _player->setCurrentLevel(_player->getCurrentLevel()+1);
+
+                //here will be goodbye window
+                if(_player->getCurrentLevel() >= endGame){
+                    qDebug() << "********************************************\r\n"
+                                "*****        Congratulations           *****\r\n"
+                                "********************************************";
+
+                    // score is added on levelLoad
+                    _scoreText = QString::number(_scoreText.toInt()+10);
+                    //after finishing game, username and score are added to highscore file
+                    addToHighscore();
+                    quit();
+                }
+                else{
+                    //loading next level
+                    loadLevel();
+                }
+            }
         }
     }
-    //If user click on chest, chest hasn't been opened yet and user didn't solve the puzzle yet, keyPressEvent function from chest class will be called
+    //If user clicks on chest, chest hasn't been opened yet and user hasn't solve the puzzle yet, keyPressEvent function from chest class will be called
     else if(_chest->isUnderMouse() && !_chest->isOpened() && !_levelKey->shouldGetKey()){
         _chest->mousePressEvent(event, this->_parent);
     }
@@ -226,11 +278,37 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         _log->setText("You got level key");
         _levelKey->setPos(1150, 205);
         addItem(_levelKey);
-        _chest->setPixmap(QPixmap(":/resources/chests/open.png"));
+        _chest->setPixmap(_openChestPic);
+    }
+    else if(_saveBtn->isUnderMouse() && !isTutorial()){
+        qDebug() << "SAVE";
+        QFile qf("../RS009-escaperoom/resources/username_json/" + _player->getUsername() + ".json");
+        qf.open(QIODevice::WriteOnly);
+        QJsonDocument qjd;
+        QJsonObject qjo;
+        qjo.insert("CurrentLevel", QJsonValue(_player->getCurrentLevel()));
+        qjo.insert("UniversalKey", QJsonValue(_player->keyList.contains(_universalKey)));
+        qjd.setObject(qjo);
+        qf.write(qjd.toJson());
+        qf.close();
+    }
+    else if(_quitBtn->isUnderMouse() && !isTutorial()){
+        qDebug() << "QUIT";
+        quit();
     }
     else{
         //qDebug() << "Click!";
     }
+}
+
+void Game::quit() {
+    _parent->lower();
+    for(QGraphicsItem *item: this->items()){
+        delete item;
+    }
+    //this->deleteLater();
+    setBackgroundBrush(QBrush("white"));
+    _background_music->stop();
 }
 
 //if user press double click somewhere on the scene, player will stay in focus
@@ -253,4 +331,12 @@ void Game::addToHighscore() {
     }
 
     qf.close();
+}
+
+void Game::itIsTutorial(){
+    _tutorial = true;
+}
+
+bool Game::isTutorial(){
+    return _tutorial;
 }

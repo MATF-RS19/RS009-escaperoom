@@ -64,5 +64,13 @@
         <file>resources/outfits/wframe1.png</file>
         <file>resources/outfits/wframe2.png</file>
         <file>resources/outfits/wframe3.png</file>
+        <file>resources/chests/chest3_close.png</file>
+        <file>resources/chests/chest3_open.png</file>
+        <file>resources/chests/chest3_open1.png</file>
+        <file>resources/levels/invertedFloor1.png</file>
+        <file>resources/levels/invertedFloor3.png</file>
+        <file>resources/buttons/exit_btn.png</file>
+        <file>resources/buttons/save_btn.png</file>
+        <file>resources/tutorijal/pop.png</file>
     </qresource>
 </RCC>
