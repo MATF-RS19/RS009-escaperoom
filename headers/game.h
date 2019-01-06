@@ -15,11 +15,11 @@
 #include "headers/stopwatch.h"
 #include "headers/help.h"
 #include <QDebug>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QLabel>
 #include <QSound>
 #include <QSoundEffect>
-
+#include <QPointer>
 namespace SceneMeasure {
     extern qint16 sceneWidth;
     extern qint16 sceneHeight;
@@ -40,6 +40,9 @@ public:
     void addToHighscore();
     void itIsTutorial();
     bool isTutorial();
+    void addLog();
+    void addScore();
+    void addStopwatch();
 
 private:
     QGraphicsView *_parent;
@@ -50,7 +53,7 @@ private:
     Key *_universalKey;
     Key *_levelKey;
     Inventory *_inventory;
-    QTextEdit *_log;
+    QLineEdit *_log;
     QSound *_door_knock_sound = new QSound(QString(":/resources/sounds/knock_on_the_door.wav"));
     QSound *_door_opening_sound = new QSound(QString(":/resources/sounds/door_opening.wav"));
     QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav"));

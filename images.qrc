@@ -72,5 +72,15 @@
         <file>resources/buttons/exit_btn.png</file>
         <file>resources/buttons/save_btn.png</file>
         <file>resources/tutorijal/pop.png</file>
+        <file>resources/gui/highscore.png</file>
+        <file>resources/gui/load_game.png</file>
+        <file>resources/gui/log.png</file>
+        <file>resources/gui/new_game.png</file>
+        <file>resources/gui/quit.png</file>
+        <file>resources/gui/score.png</file>
+        <file>resources/gui/time.png</file>
+        <file>resources/gui/tutorial.png</file>
+        <file>resources/gui/highscore_list.png</file>
+        <file>resources/gui/highscore_list_widget.png</file>
     </qresource>
 </RCC>

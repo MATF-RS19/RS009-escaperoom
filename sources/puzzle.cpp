@@ -34,10 +34,10 @@ Key *Puzzle::getLK(){
     return _levelKey;
 }
 
-QTextEdit *Puzzle::getLog(){
+QLineEdit *Puzzle::getLog(){
     return _log;
 }
 
-void Puzzle::setLog(QTextEdit *l){
+void Puzzle::setLog(QLineEdit *l){
     _log = l;
 }

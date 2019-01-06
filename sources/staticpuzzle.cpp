@@ -8,14 +8,13 @@ StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 
     loadPuzzle();
 
     //adding close button item to the scene
-    _closeBtn = new QGraphicsRectItem(1200, 0, 80, 80);
-    _closeBtn->setBrush(QImage(":/resources/buttons/close_btn.png"));
+    _closeBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/close_btn.png"));
+    _closeBtn->moveBy(1080, 0);
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
 
     //adding accept button
-    _accBtn = new QGraphicsRectItem(0, 0, 80, 80);
-    _accBtn->setBrush(QImage(":/resources/buttons/accept_btn.png"));
+    _accBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/accept_btn.png"));
     _accBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_accBtn);
 

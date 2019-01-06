@@ -5,7 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QSound>
 #include "headers/player.h"
 #include "headers/key.h"
@@ -22,13 +22,13 @@ public:
     void setLevelKey(Key *lk);
     Player *getPlayer();
     Key *getLK();
-    QTextEdit *getLog();
-    void setLog(QTextEdit *l);
+    QLineEdit *getLog();
+    void setLog(QLineEdit *l);
     QSound *_fail_sound = new QSound(QString(":/resources/sounds/fail_Windows.wav"));
 
 protected:
     explicit Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
-    QGraphicsRectItem *_closeBtn;
+    QGraphicsPixmapItem *_closeBtn;
 
 private:
     QGraphicsView *_parent;
@@ -36,7 +36,7 @@ private:
     qint16 cLevel;
     Player *_player;
     Key *_levelKey;
-    QTextEdit *_log;
+    QLineEdit *_log;
 };
 
 #endif // PUZZLE_H

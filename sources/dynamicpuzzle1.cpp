@@ -29,8 +29,8 @@ DynamicPuzzle1::DynamicPuzzle1(QGraphicsView *parent, QGraphicsScene *scene, qin
     setSceneRect(0, 0, 1280, 720);
 
     //adding close button item to the scene
-    _closeBtn = new QGraphicsRectItem(1200, 0, 80, 80);
-    _closeBtn->setBrush(QImage(":/resources/buttons/close_btn.png"));
+    _closeBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/close_btn.png"));
+    _closeBtn->moveBy(1080, 0);
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
 

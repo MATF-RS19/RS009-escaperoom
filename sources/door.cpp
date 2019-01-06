@@ -33,8 +33,8 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 
         }
         //checking if user have universal key and the door isn't alredy opened
         else if(getPlayer()->keyList.contains(getUK()) && !isOpened()){
-            qDebug() << "Door unlocked and opened using universal key";
-            getLog()->setText("Door unlocked and opened using universal key");
+            qDebug() << "Door unlocked using universal key";
+            getLog()->setText("Door unlocked using universal key");
             this->setPixmap(pic);
             this->setX(xCoord);
             getPlayer()->keyList.removeOne(getUK());
@@ -52,11 +52,11 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 
     }
 }
 
-QTextEdit *Door::getLog(){
+QLineEdit *Door::getLog(){
     return _log;
 }
 
-void Door::setLog(QTextEdit *l){
+void Door::setLog(QLineEdit *l){
     _log = l;
 }
 

@@ -7,7 +7,12 @@
 #include "headers/staticpuzzle.h"
 #include "headers/dynamicpuzzle1.h"
 #include "headers/dynamicpuzzle2.h"
-
+/**
+ * @brief Static collidable object.
+ *
+ * This is an ingame object which contains key for the level's door.
+ * It is static, meaning that it doesn't change it's position during game.
+ */
 class Chest : public InGameObjects {
 
 public:
@@ -21,7 +26,7 @@ public:
     void openChest(bool o);
 
 private:
-    bool _opened = false;
+    bool _opened = false; //!< Checks if the player has solved the puzzle
 };
 
 #endif // CHEST_HPP

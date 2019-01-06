@@ -15,9 +15,11 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void initGUI();
     void newGame(QString name);
     void writeJson(QString name);
     void readJsonAndStartGame(QString name);
+    void setAllInvisible();
 
 private slots:
     void on_newGame_btn_clicked();

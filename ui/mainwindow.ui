@@ -29,10 +29,10 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>280</y>
-      <width>541</width>
-      <height>281</height>
+      <x>360</x>
+      <y>110</y>
+      <width>671</width>
+      <height>451</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -47,7 +47,17 @@
        <item>
         <widget class="QPushButton" name="newGame_btn">
          <property name="text">
-          <string>New Game</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/gui/new_game.png</normaloff>:/resources/gui/new_game.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -114,7 +124,17 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Confirm</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/buttons/accept_btn.png</normaloff>:/resources/buttons/accept_btn.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -144,7 +164,17 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Load Game</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/gui/load_game.png</normaloff>:/resources/gui/load_game.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -165,6 +195,18 @@
         <widget class="QTextEdit" name="loadGameTE">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>80</horstretch>
+           <verstretch>60</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>50</height>
+          </size>
          </property>
          <property name="visible">
           <bool>false</bool>
@@ -196,7 +238,17 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Confirm</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/buttons/accept_btn.png</normaloff>:/resources/buttons/accept_btn.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -236,25 +288,36 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Tutorial</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/gui/tutorial.png</normaloff>:/resources/gui/tutorial.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -279,25 +342,36 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Highscore</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/gui/highscore.png</normaloff>:/resources/gui/highscore.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3"/>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -322,7 +396,20 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Exit</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../images.qrc">
+           <normaloff>:/resources/gui/quit.png</normaloff>:/resources/gui/quit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>324</width>
+           <height>93</height>
+          </size>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -368,25 +455,56 @@
      <string extracomment="A starting window"/>
     </property>
    </widget>
-   <widget class="QListWidget" name="highscoreList">
+   <widget class="QFrame" name="highscore_frame">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>361</width>
-      <height>701</height>
+      <x>50</x>
+      <y>60</y>
+      <width>250</width>
+      <height>405</height>
      </rect>
     </property>
-    <property name="lineWidth">
-     <number>1</number>
+    <property name="styleSheet">
+     <string notr="true">background-image:url(:/resources/gui/highscore_list.png);
+border:none;</string>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QListWidget" name="highscoreList">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>70</y>
+       <width>141</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+    </widget>
    </widget>
    <zorder>display</zorder>
    <zorder>verticalLayoutWidget</zorder>
-   <zorder>highscoreList</zorder>
+   <zorder>highscore_frame</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

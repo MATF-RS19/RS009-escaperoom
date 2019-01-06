@@ -57,12 +57,12 @@ void Game::start(QString name) {
     //Save button
     _saveBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/save_btn.png"));
     _saveBtn->setFlag(QGraphicsItem::ItemIsFocusable);
-    _saveBtn->setPos(0, 80);
+    _saveBtn->setPos(1070, 585);
     addItem(_saveBtn);
     //Quit button
     _quitBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/exit_btn.png"));
     _quitBtn->setFlag(QGraphicsItem::ItemIsFocusable);
-    _quitBtn->setPos(0, 200);
+    _quitBtn->setPos(1070, 655);
     addItem(_quitBtn);
 }
 
@@ -89,38 +89,9 @@ void Game::loadLevel(){
     //Key for current level
     _levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
 
-    //Log for the user
-    _log = new QTextEdit();
-    //frame size
-    _log->setFixedSize(500, 50);
-    //frame position
-    _log->move(5, 655);
-    //text size
-    _log->setFontPointSize(15.0);
-    //text backgroung color
-    _log->setTextBackgroundColor("darkRed");
-    //text color
-    _log->setTextColor("yellow");
-    //invisible frame
-    _log->setFrameStyle(10);
-    addWidget(_log);
-
-    //_log->setText(_player->getUsername());
-
-    _score = new QLabel();
-    _score->setFont(QFont("Arial", 17, QFont::Normal));
-    _score->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
-    _score->move(5, 5);
-    _score->setAlignment(Qt::AlignCenter);
-    _score->setFixedSize(100, 30);
-    _score->setText(QString::number((_player->getCurrentLevel()-1)*10));
-    addWidget(_score);
-    _scoreText = _score->text();
-    qDebug() << _score->text();
-
-    _stopwatch = new Stopwatch(_startingTime);
-    addWidget(_stopwatch);
-
+    addLog();
+    addScore();
+    addStopwatch();
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
@@ -135,7 +106,6 @@ void Game::loadLevel(){
     //adding object so we can trace player not to got over edges of room
     _player->setInvertedFloor(new InvertedFloor(QPixmap(qjd["floor"].toString())));
     addItem(_player->getInvertedFloor());
-
     QJsonObject giftJsonObject = qjd["gift"].toObject();
     if(giftJsonObject["on_scene"].toBool()){
         _gift = new Gift(QPixmap(giftJsonObject["pixmap"].toString()));
@@ -206,7 +176,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         if(_gift->hasKey()){
             _key_sound->setLoops(1);
             _key_sound->play();
-            _universalKey->setPos(1150, 80);
+            _universalKey->setPos(1175, 296);
             _universalKey->setZValue(5);
             this->addItem(_universalKey);
         }
@@ -252,7 +222,12 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
                                 "********************************************";
 
                     // score is added on levelLoad
-                    _scoreText = QString::number(_scoreText.toInt()+10);
+                    /*
+                     * Probaj ovako nesto za skor
+                    int mins = _stopwatch->text().split(':').at(0).trim().toInt();
+                    int secs = _stopwatch->text().split(':').at(1).trim().toInt();
+                    _scoreText = QString::number((_scoreText.toInt()+100)/(mins*10+secs/6)); Tako nesto
+                    */
                     //after finishing game, username and score are added to highscore file
                     addToHighscore();
                     quit();
@@ -276,7 +251,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         _key_sound->play();
         qDebug() << "You got level key";
         _log->setText("You got level key");
-        _levelKey->setPos(1150, 205);
+        _levelKey->setPos(1175, 407);
         addItem(_levelKey);
         _chest->setPixmap(_openChestPic);
     }
@@ -339,4 +314,48 @@ void Game::itIsTutorial(){
 
 bool Game::isTutorial(){
     return _tutorial;
+}
+
+void Game::addLog(){
+    //Log for the user
+    QGraphicsPixmapItem *logPixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/log.png"));
+    logPixmap->setPos(0, 662);
+    addItem(logPixmap);
+    _log = new QLineEdit();
+    //frame size
+    _log->setFixedSize(470, 40);
+    _log->setAlignment(Qt::AlignCenter);
+    _log->setFont(QFont("Arial", 17, QFont::Bold));
+    _log->setStyleSheet("background-color : darkRed; color : yellow; border:none");
+
+    //frame position
+    _log->move(5, 677);
+    //invisible frame
+    addWidget(_log);
+    //_log->setText(_player->getUsername());
+
+
+}
+void Game::addScore(){
+    QGraphicsPixmapItem *scorePixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/score.png"));
+    scorePixmap->setPos(995, 3);
+    addItem(scorePixmap);
+    _score = new QLabel();
+    _score->setFont(QFont("Arial", 20, QFont::Bold));
+    _score->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
+    _score->move(1090, 100);
+    _score->setAlignment(Qt::AlignCenter);
+    _score->setFixedSize(100, 30);
+    _score->setText(QString::number(((_player->getCurrentLevel()-1)*100)));
+    addWidget(_score);
+    _scoreText = _score->text();
+    qDebug() << _score->text();
+}
+
+void Game::addStopwatch(){
+    QGraphicsPixmapItem *stopwatchPixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/time.png"));
+    stopwatchPixmap->setPos(3, 3);
+    addItem(stopwatchPixmap);
+    _stopwatch = new Stopwatch(_startingTime);
+    addWidget(_stopwatch);
 }

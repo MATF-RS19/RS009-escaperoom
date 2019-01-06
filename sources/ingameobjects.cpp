@@ -38,10 +38,10 @@ void InGameObjects::setLK(Key *lk){
     _levelKey = std::move(lk);
 }
 
-QTextEdit *InGameObjects::getLog(){
+QLineEdit *InGameObjects::getLog(){
     return _log;
 }
 
-void InGameObjects::setLog(QTextEdit *l){
+void InGameObjects::setLog(QLineEdit *l){
     _log = l;
 }

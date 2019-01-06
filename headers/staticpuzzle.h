@@ -15,7 +15,7 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    QGraphicsRectItem *_accBtn;
+    QGraphicsPixmapItem *_accBtn;
     QVector<QTextEdit*> _answers;
     qint32 _ansNum;
     QVector<QString*> _rightAnswers;

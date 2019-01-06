@@ -1,7 +1,7 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include <QTextEdit>
+#include <QLineEdit>
 #include "ingameobjects.h"
 
 namespace Coordinates {
@@ -16,13 +16,13 @@ public:
     ~Door();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 xCoord);
-    QTextEdit *getLog();
-    void setLog(QTextEdit *l);
+    QLineEdit *getLog();
+    void setLog(QLineEdit *l);
     bool isOpened();
     void openDoor(bool o);
 
 private:
-    QTextEdit *_log;
+    QLineEdit *_log;
     bool _opened = false;
 };
 

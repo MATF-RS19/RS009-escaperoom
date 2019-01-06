@@ -1,2 +1,6 @@
-
+lena 60
 bata 50
+bata 50
+aca 10
+marko 40
+CrniGruja 100

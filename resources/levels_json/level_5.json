@@ -22,7 +22,7 @@
   "inventory": {
      "on_scene": true,
      "pixmap": ":/resources/inventory/inventory.png",
-     "x_pos": 1100,
-     "y_pos": 5
+     "x_pos": 1110,
+     "y_pos": 200
   }
 }

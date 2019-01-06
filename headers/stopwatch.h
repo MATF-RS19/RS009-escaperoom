@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QLabel>
 #include <QTime>
+#include <QGraphicsEffect>
 
 class Stopwatch : public QLabel {
     Q_OBJECT
