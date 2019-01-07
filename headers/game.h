@@ -30,7 +30,7 @@ class Game : public QGraphicsScene {
 public:
     Game(QGraphicsView *parent);
     Game(QGraphicsView *parent, QString name);
-    Game(QGraphicsView *parent, QString name, qint16 cl, bool uk/*, qint32 time*/);
+    Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime);
     ~Game();
     void start(QString name);
     void quit();
@@ -60,7 +60,7 @@ private:
     QSoundEffect *_background_music = new QSoundEffect();
     QLabel *_score;
     QString _scoreText;
-    QTime _startingTime = QTime::currentTime();
+    QTime _startingTime;
     Stopwatch *_stopwatch;
     QPixmap _openChestPic;
     QPixmap _openDoorPic;
@@ -69,6 +69,7 @@ private:
     QGraphicsPixmapItem *_quitBtn;
     bool _tutorial = false;
     Help *_help;
+    QString _timeText = "00:00";
 
     void loadLevel();
 };

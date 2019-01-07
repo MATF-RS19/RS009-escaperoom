@@ -92,7 +92,6 @@ void MainWindow::on_newGameTE_textChanged() {
 //checking is username alredy exist and if doesn't create new json file and start game,
 //otherwise ask user if he/she want to erase old data and start game all over again
 void MainWindow::on_newGame_conf_btn_clicked() {
-    setAllInvisible();
     QString username = _ui->newGameTE->toPlainText();
     QFile qf("../RS009-escaperoom/resources/username_json/" + username + ".json");
 
@@ -106,8 +105,9 @@ void MainWindow::on_newGame_conf_btn_clicked() {
     else{
         writeJson(username);
         newGame(username);
+        _ui->newGameTE->clear();
+        setAllInvisible();
     }
-    _ui->newGameTE->clear();
 }
 
 //make json file for new user or rewrite data for old one
@@ -118,6 +118,7 @@ void MainWindow::writeJson(QString name) {
     QJsonObject qjo;
     qjo.insert("CurrentLevel", QJsonValue(1));
     qjo.insert("UniversalKey", QJsonValue(false));
+    qjo.insert("Time", QJsonValue("00:00"));
     qjd.setObject(qjo);
     qf.write(qjd.toJson());
     qf.close();
@@ -131,9 +132,10 @@ void MainWindow::readJsonAndStartGame(QString name) {
     qf.close();
     qint32 currLevel = qjd["CurrentLevel"].toInt();
     bool doesHaveUniversalKey = qjd["UniversalKey"].toBool();
+    QString currentTime = qjd["Time"].toString();
 
     //making new game
-    _game.reset(new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey));
+    _game.reset(new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey, currentTime));
     //_game.get()->getPlayer()->setUsername(" ");
     //setting scene
     _ui->display->setScene(&(*_game));
@@ -161,17 +163,18 @@ void MainWindow::on_loadGameTE_textChanged() {
 
 //checking is username alredy exist and if does loas json file and continue game
 void MainWindow::on_loadGame_conf_btn_clicked() {
-    setAllInvisible();
     QString username = _ui->loadGameTE->toPlainText();
     QFile qf("../RS009-escaperoom/resources/username_json/" + username + ".json");
 
     if(qf.exists()){
+        setAllInvisible();
         readJsonAndStartGame(username);
+        _ui->loadGameTE->clear();
     }
     else{
-        _ui->loadGameTE->setText("Username dosen't exist");
+        _ui->loadGameTE->clear();
+        _ui->loadGameTE->setPlaceholderText("Username dosen't exist");
     }
-    _ui->loadGameTE->clear();
 }
 
 //read highscores txt file, sort all data by score and write it in list on left side

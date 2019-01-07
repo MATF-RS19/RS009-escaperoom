@@ -1,5 +1,3 @@
-
-
 #include "headers/game.h"
 
 namespace SceneMeasure {
@@ -20,8 +18,11 @@ Game::Game(QGraphicsView *parent) :
     qDebug() << "Tutorial";
     //Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
-
-    _player->setCurrentLevel(1);
+    //Quit button
+    _quitBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/exit_btn.png"));
+    _quitBtn->setFlag(QGraphicsItem::ItemIsFocusable);
+    _quitBtn->setPos(1070, 655);
+    addItem(_quitBtn);
     loadLevel();
 }
 
@@ -32,9 +33,10 @@ Game::Game(QGraphicsView *parent, QString name) :
     loadLevel();
 }
 
-Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk) :
+Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime) :
             _parent(parent)
 {
+    _timeText = ctime;
     start(name);
     _player->setCurrentLevel(cl);
     if(uk){
@@ -56,6 +58,11 @@ void Game::start(QString name) {
     addItem(_player->getDummy());
     //Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
+
+    qint32 cMins = _timeText.split(':').at(0).toInt();
+    qint32 cSecs = _timeText.split(':').at(1).toInt() + cMins*60;
+    _startingTime = QTime::currentTime().addMSecs(-cSecs*1000);
+
     //Save button
     _saveBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/save_btn.png"));
     _saveBtn->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -94,6 +101,10 @@ void Game::loadLevel(){
     addLog();
     addScore();
     addStopwatch();
+
+    qDebug() << _stopwatch->getTime();
+    _timeText = _stopwatch->getTime();
+
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
@@ -152,7 +163,6 @@ void Game::loadLevel(){
         addItem(_inventory);
     }
 
-//
     if(isTutorial()){
         _help = new Help(QPixmap(":/resources/tutorijal/pop.png"));
         _help->setPos(500, 5);
@@ -172,7 +182,7 @@ void Game::loadLevel(){
 void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //gift only exist on first level
     //if user clicks on gift, keyPressEvent function from gift class will be called
-    //if player already has universal key, user won't be able to open the gift again
+    //if player already has universal key, user won't be able to 'open' the gift again
     if(_player->getCurrentLevel()==1 && _gift->isUnderMouse() && !_gift->hasKey()){
         _gift->mousePressEvent(event);
         if(_gift->hasKey()){
@@ -209,32 +219,27 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 quit();
             }
             else {
-
-                //deleting every graphics item from the scene, except the player, because he won't be changed
-                for(QGraphicsItem *item: this->items()){
-                    if(item != _player && item != _player->getDummy() && item != _universalKey && item != _saveBtn && item != _quitBtn)
-                        delete item;
-                }
                 _player->setCurrentLevel(_player->getCurrentLevel()+1);
 
-                //here will be goodbye window
                 if(_player->getCurrentLevel() >= endGame){
                     qDebug() << "********************************************\r\n"
                                 "*****        Congratulations           *****\r\n"
                                 "********************************************";
 
                     // score is added on levelLoad
-                    /*
-                     * Probaj ovako nesto za skor
-                    int mins = _stopwatch->text().split(':').at(0).trim().toInt();
-                    int secs = _stopwatch->text().split(':').at(1).trim().toInt();
-                    _scoreText = QString::number((_scoreText.toInt()+100)/(mins*10+secs/6)); Tako nesto
-                    */
-                    //after finishing game, username and score are added to highscore file
+                    //after finishing game, username and score are added to highscore file                    
+                    _scoreText = QString::number((_scoreText.toInt()+100));
                     addToHighscore();
                     quit();
                 }
                 else{
+
+                    //deleting every graphics item from the scene, except the player, because he won't be changed
+                    for(QGraphicsItem *item: this->items()){
+                        if(item != _player && item != _player->getDummy() && item != _universalKey && item != _saveBtn && item != _quitBtn)
+                            delete item;
+                    }
+
                     //loading next level
                     loadLevel();
                 }
@@ -265,12 +270,14 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         QJsonObject qjo;
         qjo.insert("CurrentLevel", QJsonValue(_player->getCurrentLevel()));
         qjo.insert("UniversalKey", QJsonValue(_player->keyList.contains(_universalKey)));
+        qjo.insert("Time", QJsonValue(_stopwatch->getTime()));
         qjd.setObject(qjo);
         qf.write(qjd.toJson());
         qf.close();
     }
-    else if(!isTutorial() &&_quitBtn->isUnderMouse()){
+    else if(_quitBtn->isUnderMouse()){
         qDebug() << "QUIT";
+        //idea: check if user have saved his game, only if level is higher than the one in the json file
         quit();
     }
     else{
@@ -303,10 +310,11 @@ void Game::addToHighscore() {
     QFile qf("../RS009-escaperoom/resources/highscores.txt");
     if(qf.open(QIODevice::Append)){
         QTextStream out(&qf);
-        //BUG _score->text() return ""
         out << '\n' << _player->getUsername() << " " << _scoreText;
     }
-
+    //time on the end of the game
+    _timeText = _stopwatch->getTime();
+    qDebug() << _timeText;
     qf.close();
 }
 
@@ -348,6 +356,13 @@ void Game::addScore(){
     _score->move(1090, 100);
     _score->setAlignment(Qt::AlignCenter);
     _score->setFixedSize(100, 30);
+    //TODO: change score system
+    /*
+     * Probaj ovako nesto za skor
+    int mins = _stopwatch->text().split(':').at(0).trim().toInt();
+    int secs = _stopwatch->text().split(':').at(1).trim().toInt();
+    _scoreText = QString::number((_scoreText.toInt()+100)/(mins*10+secs/6)); Tako nesto
+    */
     _score->setText(QString::number(((_player->getCurrentLevel()-1)*100)));
     addWidget(_score);
     _scoreText = _score->text();

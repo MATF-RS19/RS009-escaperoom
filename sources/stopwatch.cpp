@@ -14,9 +14,14 @@ Stopwatch::Stopwatch(QTime startingTime)
 
 }
 
-void Stopwatch::showElapsedTime() {
+QString Stopwatch::showElapsedTime() {
     int diff = _startingTime.msecsTo(QTime::currentTime());
     QTime time = QTime(0,0,0).addMSecs(diff);
     QString text = time.toString("mm:ss");
     this->setText(text);
+    return text;
 };
+
+QString Stopwatch::getTime(){
+    return showElapsedTime();
+}
