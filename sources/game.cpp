@@ -1,3 +1,5 @@
+
+
 #include "headers/game.h"
 
 namespace SceneMeasure {
@@ -37,7 +39,7 @@ Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk) :
     _player->setCurrentLevel(cl);
     if(uk){
         _player->keyList.push_back(_universalKey);
-        _universalKey->setPos(1150, 80);
+        _universalKey->setPos(1175, 296);
         _universalKey->setZValue(5);
         this->addItem(_universalKey);
     }

@@ -3,12 +3,13 @@
 DynamicPuzzle2::DynamicPuzzle2(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl)
     : Puzzle(parent, scene, cl)
 {
+    setSceneRect(0,0,1280,720);
     setBackgroundBrush(QImage(":/resources/puzzles/fifteen_puzzle/frame1.png"));
+    initializePuzzle();
     _closeBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/close_btn.png"));
-    _closeBtn->moveBy(1080, 0);
+    _closeBtn->moveBy(1075,0);
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
-    initializePuzzle();
 
 }
 void DynamicPuzzle2::initializePuzzle(){
