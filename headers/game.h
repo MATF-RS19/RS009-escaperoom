@@ -53,7 +53,7 @@ public:
      * @brief       Short description
      * @param X     X description
      */
-    Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime);
+    Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime, QString cscore);
 
     /**
      * @brief       Short description
@@ -142,7 +142,7 @@ private:
     QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav")); //!<
     QSoundEffect *_background_music = new QSoundEffect(); //!<
     QLabel *_score; //!<
-    QString _scoreText; //!<
+    QString _scoreText = "0"; //!<
     QTime _startingTime; //!<
     Stopwatch *_stopwatch; //!<
     QPixmap _openChestPic; //!<
@@ -154,6 +154,7 @@ private:
     Help *_help; //!<
     Help *_help_text; //!<
     QString _timeText = "00:00"; //!<
+    bool _isScoreLoaded = false;
 
     /**
      * @brief       Short description

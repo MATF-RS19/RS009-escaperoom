@@ -19,6 +19,7 @@ void MainWindow::initGUI(){
     _ui->exit_btn->setStyleSheet("border: none;");
     _ui->exit_btn->setIcon(exitPixmap);
     _ui->exit_btn->setIconSize(exitPixmap.rect().size());
+
     QPixmap newGamePixmap(":/resources/gui/new_game.png");
     _ui->newGame_btn->setStyleSheet("border: none;");
     _ui->newGame_btn->setIcon(newGamePixmap);
@@ -62,9 +63,9 @@ void MainWindow::initGUI(){
 //starting new game
 void MainWindow::newGame(QString name) {
     //making new game
-    _game.reset(new Game(_ui->display, name));
+    _game = new Game(_ui->display, name);
     //setting scene
-    _ui->display->setScene(&(*_game));
+    _ui->display->setScene(_game);
     //setting game scene to be main scene
     _ui->display->raise();
     //setting focus on game scene
@@ -99,6 +100,8 @@ void MainWindow::on_newGame_conf_btn_clicked() {
         if(answer == 1){
             writeJson(username);
             newGame(username);
+            _ui->newGameTE->clear();
+            setAllInvisible();
         }
     }
     else{
@@ -118,6 +121,7 @@ void MainWindow::writeJson(QString name) {
     qjo.insert("CurrentLevel", QJsonValue(1));
     qjo.insert("UniversalKey", QJsonValue(false));
     qjo.insert("Time", QJsonValue("00:00"));
+    qjo.insert("Score", QJsonValue("0"));
     qjd.setObject(qjo);
     qf.write(qjd.toJson());
     qf.close();
@@ -132,12 +136,13 @@ void MainWindow::readJsonAndStartGame(QString name) {
     qint32 currLevel = qjd["CurrentLevel"].toInt();
     bool doesHaveUniversalKey = qjd["UniversalKey"].toBool();
     QString currentTime = qjd["Time"].toString();
+    QString currentScore = qjd["Score"].toString();
 
     //making new game
-    _game.reset(new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey, currentTime));
+    _game = new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey, currentTime, currentScore);
     //_game.get()->getPlayer()->setUsername(" ");
     //setting scene
-    _ui->display->setScene(&(*_game));
+    _ui->display->setScene(_game);
     //setting game scene to be main scene
     _ui->display->raise();
     //setting focus on game scene
@@ -215,10 +220,10 @@ void MainWindow::on_tutorial_btn_clicked()
 {
     setAllInvisible();
     //making a new game, but we are not setting a player name.
-    _game.reset(new Game(_ui->display));
+    _game = new Game(_ui->display);
 
     //setting scene
-    _ui->display->setScene(&(*_game));
+    _ui->display->setScene(_game);
     //setting game scene to be main scene
     _ui->display->raise();
     //setting focus on game scene

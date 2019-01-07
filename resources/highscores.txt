@@ -1,15 +1,4 @@
-lena 60
-bata 50
-bata 50
-aca 10
-marko 40
-CrniGruja 100
-bata 400
-bata 400
-bata 400
-bata 400
-bata 400
-bata 400
-bata 11
-bata 500
-Mladen 500
+bata 140
+bn 272
+
+PetiNivo 272

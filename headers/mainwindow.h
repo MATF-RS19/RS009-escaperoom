@@ -119,7 +119,7 @@ private slots:
 
 private:
     Ui::MainWindow *_ui; //!<
-    QScopedPointer<Game> _game; //!<
+    Game *_game; //!<
 };
 
 #endif // MAINWINDOW_H

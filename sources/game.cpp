@@ -33,18 +33,20 @@ Game::Game(QGraphicsView *parent, QString name) :
     loadLevel();
 }
 
-Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime) :
+Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime, QString cscore) :
             _parent(parent)
 {
     _timeText = ctime;
     start(name);
     _player->setCurrentLevel(cl);
+    _scoreText = cscore;
     if(uk){
         _player->keyList.push_back(_universalKey);
         _universalKey->setPos(1175, 296);
         _universalKey->setZValue(5);
         this->addItem(_universalKey);
     }
+    _isScoreLoaded = true;
     loadLevel();
 }
 
@@ -99,11 +101,12 @@ void Game::loadLevel(){
     _levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
 
     addLog();
-    addScore();
     addStopwatch();
 
     qDebug() << _stopwatch->getTime();
     _timeText = _stopwatch->getTime();
+
+    addScore();
 
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
@@ -234,9 +237,9 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
             //if we are in tutorial, game is over
             if(isTutorial() && _help->currentStep() == 3){
-                for(QGraphicsItem *item: this->items()){
+                /*for(QGraphicsItem *item: this->items()){
                         delete item;
-                }
+                }*/
                 quit();
             }
             else {
@@ -306,13 +309,13 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         qjo.insert("CurrentLevel", QJsonValue(_player->getCurrentLevel()));
         qjo.insert("UniversalKey", QJsonValue(_player->keyList.contains(_universalKey)));
         qjo.insert("Time", QJsonValue(_stopwatch->getTime()));
+        qjo.insert("Score", QJsonValue(_scoreText));
         qjd.setObject(qjo);
         qf.write(qjd.toJson());
         qf.close();
     }
     else if(_quitBtn->isUnderMouse()){
         qDebug() << "QUIT";
-        //idea: check if user have saved his game, only if level is higher than the one in the json file
         quit();
     }
     else{
@@ -325,9 +328,8 @@ void Game::quit() {
     for(QGraphicsItem *item: this->items()){
         delete item;
     }
-    //this->deleteLater();
-    setBackgroundBrush(QBrush("white"));
     _background_music->stop();
+    this->deleteLater();
 }
 
 //if user press double click somewhere on the scene, player will stay in focus
@@ -391,16 +393,15 @@ void Game::addScore(){
     _score->move(1090, 100);
     _score->setAlignment(Qt::AlignCenter);
     _score->setFixedSize(100, 30);
-    //TODO: change score system
-    /*
-     * Probaj ovako nesto za skor
-    int mins = _stopwatch->text().split(':').at(0).trim().toInt();
-    int secs = _stopwatch->text().split(':').at(1).trim().toInt();
-    _scoreText = QString::number((_scoreText.toInt()+100)/(mins*10+secs/6)); Tako nesto
-    */
-    _score->setText(QString::number(((_player->getCurrentLevel()-1)*100)));
+
+    int mins = _timeText.split(':').at(0).trimmed().toInt();
+    int secs = _timeText.split(':').at(1).trimmed().toInt();
+    if(_isScoreLoaded)
+        _isScoreLoaded = false;
+    else
+        _scoreText = QString::number((_scoreText.toInt())+((_player->getCurrentLevel()-1)*100/(mins*10+secs/6+1)));
+    _score->setText(_scoreText);
     addWidget(_score);
-    _scoreText = _score->text();
     qDebug() << _score->text();
 }
 
