@@ -163,11 +163,19 @@ void Game::loadLevel(){
         addItem(_inventory);
     }
 
+    //adding text explaining how to play this game.
     if(isTutorial()){
-        _help = new Help(QPixmap(":/resources/tutorijal/pop.png"));
+        _help = new Help(QPixmap(":/resources/tutorijal/pop1.png"));
         _help->setPos(500, 5);
         _help->setZValue(5);
         addItem(_help);
+
+        _help_text = new Help(QPixmap(":/resources/tutorijal/text1.png"));
+        _help_text->setPos(5, 415);
+        _help_text->setZValue(5);
+        addItem(_help_text);
+
+
 
         qDebug() << "Tutorijal je";
     }else{
@@ -191,14 +199,27 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
             _universalKey->setPos(1175, 296);
             _universalKey->setZValue(5);
             this->addItem(_universalKey);
+
+            //moving to the next step in case of a tutorial
+            if(isTutorial() && _help->currentStep() == 1){
+                _help->setPixmap(QPixmap(":/resources/tutorijal/pop2.png"));
+                _help->nextStep();
+                _help_text->setPixmap(QPixmap(":/resources/tutorijal/text2.png"));
+                _help_text->nextStep();
+            }
         }
     }
     //If user clicks on door, keyPressEvent function from door class will be called
     else if(_door->isUnderMouse()){
         //if door hasn't been opened yet, mousePressEvent from door will be called
         if(_door->pixmap() == QPixmap(":/resources/doors/close_door.png")){
-            _door->mousePressEvent(event, _openDoorPic, _openDoorXCoord);
 
+            //In tutorial game, steps cannot be skipped in order to finish faster!!
+            if(isTutorial() && _help->currentStep() != 3){
+
+            }else {
+                _door->mousePressEvent(event, _openDoorPic, _openDoorXCoord);
+            }
             //sound of door opening or knocking, as a reminder that a key is required in order to open the door
             if(_door->isOpened()){
                 _door_opening_sound->setLoops(1);
@@ -212,7 +233,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         else{
 
             //if we are in tutorial, game is over
-            if(isTutorial()){
+            if(isTutorial() && _help->currentStep() == 3){
                 for(QGraphicsItem *item: this->items()){
                         delete item;
                 }
@@ -246,9 +267,15 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
             }
         }
     }
-    //If user clicks on chest, chest hasn't been opened yet and user hasn't solve the puzzle yet, keyPressEvent function from chest class will be called
+    //If user clicks on chest, chest hasn't been opened yet and user hasn't solved the puzzle yet, keyPressEvent function from chest class will be called
     else if(_chest->isUnderMouse() && !_chest->isOpened() && !_levelKey->shouldGetKey()){
-        _chest->mousePressEvent(event, this->_parent);
+
+        //in a tutorial, the chest cannot be opened in the wrong step
+        if(isTutorial() && _help->currentStep() != 2){
+
+        } else{
+            _chest->mousePressEvent(event, this->_parent);
+        }
     }
     //If user click on chest, chest hasn't been opened yet and the user solved the puzzle, levelKey will be added to user's list and chest will open
     else if(_chest->isUnderMouse() && !_chest->isOpened() && _levelKey->shouldGetKey()){
@@ -261,6 +288,14 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         _levelKey->setPos(1175, 407);
         addItem(_levelKey);
         _chest->setPixmap(_openChestPic);
+
+        //moving to the final step if it is a tutorial game
+        if(isTutorial() && _help->currentStep() == 2){
+            _help->setPixmap(QPixmap(":/resources/tutorijal/pop3.png"));
+            _help->nextStep();
+            _help_text->setPixmap(QPixmap(":/resources/tutorijal/text3.png"));
+            _help_text->nextStep();
+        }
     }
     else if(!isTutorial() && _saveBtn->isUnderMouse()){
         qDebug() << "SAVE";

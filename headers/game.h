@@ -69,6 +69,7 @@ private:
     QGraphicsPixmapItem *_quitBtn;
     bool _tutorial = false;
     Help *_help;
+    Help *_help_text;
     QString _timeText = "00:00";
 
     void loadLevel();

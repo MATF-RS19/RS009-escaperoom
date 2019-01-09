@@ -82,5 +82,11 @@
         <file>resources/gui/tutorial.png</file>
         <file>resources/gui/highscore_list.png</file>
         <file>resources/gui/highscore_list_widget.png</file>
+        <file>resources/tutorijal/pop1.png</file>
+        <file>resources/tutorijal/pop2.png</file>
+        <file>resources/tutorijal/pop3.png</file>
+        <file>resources/tutorijal/text1.png</file>
+        <file>resources/tutorijal/text2.png</file>
+        <file>resources/tutorijal/text3.png</file>
     </qresource>
 </RCC>
