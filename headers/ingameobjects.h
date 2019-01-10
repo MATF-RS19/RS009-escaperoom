@@ -10,96 +10,82 @@
 #include "headers/player.h"
 #include "headers/key.h"
 
-//Abstarct class for all clickable objects on the scene
-
 /**
- * @brief Short description
- *
- * Description
+ * @brief Abstract class for all clickable objects on the scene
  */
 class InGameObjects : public QGraphicsPixmapItem {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Virtual method which is used for event handling.
+     * @param event An event which should be handled.
      */
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) = 0;
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Player getter.
      */
     Player *getPlayer();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Universal Key getter.
      */
     Key *getUK();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Level Key getter.
      */
     Key *getLK();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Player setter.
      */
     void setPlayer(Player *p);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Universal Key setter.
      */
     void setUK(Key *uk);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Level Key setter.
      */
     void setLK(Key *lk);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       In-game log getter.
      */
     QLineEdit *getLog();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       In-game log setter.
      */
     void setLog(QLineEdit *l);
 
 protected:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       InGameObjects constructor.
      */
     explicit InGameObjects();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       InGameObjects destructor.
      */
     ~InGameObjects();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Distance between Player and InGameObjects.
+     *              We use it to check if the player can click on the object.
      */
     qreal distance();
 
 private:
-    Player *_player; //!<
-    Key *_universalKey; //!<
-    Key *_levelKey; //!<
-    QLineEdit *_log; //!<
+    Player *_player; //!< Controllable object.
+    Key *_universalKey; //!< Key which is in Gift.
+    Key *_levelKey; //!< Key which is in Chest.
+    QLineEdit *_log; //!< In-game log which shows messages.
 };
 
 #endif // INGAMEOBJECTS_H

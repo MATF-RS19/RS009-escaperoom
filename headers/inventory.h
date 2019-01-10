@@ -9,33 +9,23 @@
 #include <QGraphicsPixmapItem>
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief In-game static object used to stash Keys.
  */
 class Inventory : public QGraphicsPixmapItem {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Inventory constructor.
+     * @param picture   Sets the pixmap of the Inventory.
      */
     Inventory(QPixmap picture);
 
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Inventory destructor.
      */
     ~Inventory();
-
-    /**
-     * @brief       Short description
-     * @param X     X description
-     */
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-
 };
 
 #endif // INVENTORY_H

@@ -58,9 +58,9 @@ void Game::start(QString name) {
     _player = new Player(name);
     addItem(_player);
     addItem(_player->getDummy());
-    //Universal key
+    // Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
-
+    // Initializing time
     qint32 cMins = _timeText.split(':').at(0).toInt();
     qint32 cSecs = _timeText.split(':').at(1).toInt() + cMins*60;
     _startingTime = QTime::currentTime().addMSecs(-cSecs*1000);
@@ -79,7 +79,7 @@ void Game::start(QString name) {
 
 void Game::loadLevel(){
 
-    //setting background music
+    // Setting background music
     _background_music->setSource(QUrl("qrc:/resources/sounds/background.wav"));
     _background_music->setLoopCount(QSoundEffect::Infinite);
     _background_music->setVolume(0.4);
@@ -100,12 +100,14 @@ void Game::loadLevel(){
     //Key for current level
     _levelKey = new Key(_player->getCurrentLevel(), QPixmap(":/resources/inventory/level_key.png"));
 
+    // Adding log
     addLog();
+    // Adding stopwatch
     addStopwatch();
 
     qDebug() << _stopwatch->getTime();
     _timeText = _stopwatch->getTime();
-
+    // Adding score
     addScore();
 
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
@@ -366,17 +368,17 @@ bool Game::isTutorial(){
 void Game::addLog(){
     //Log for the user
     QGraphicsPixmapItem *logPixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/log.png"));
-    logPixmap->setPos(0, 662);
+    logPixmap->setPos(LOG_PIXMAP_X, LOG_PIXMAP_Y);
     addItem(logPixmap);
     _log = new QLineEdit();
-    //frame size
-    _log->setFixedSize(470, 40);
+    //frame size and style
+    _log->setFixedSize(LOG_WIDTH, LOG_HEIGHT);
     _log->setAlignment(Qt::AlignCenter);
     _log->setFont(QFont("Arial", 17, QFont::Bold));
     _log->setStyleSheet("background-color : darkRed; color : yellow; border:none");
 
     //frame position
-    _log->move(5, 677);
+    _log->move(LOG_X, LOG_Y);
     //invisible frame
     addWidget(_log);
     //_log->setText(_player->getUsername());
@@ -385,29 +387,33 @@ void Game::addLog(){
 }
 void Game::addScore(){
     QGraphicsPixmapItem *scorePixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/score.png"));
-    scorePixmap->setPos(995, 3);
+    scorePixmap->setPos(SCORE_PIXMAP_X, SCORE_PIXMAP_Y);
     addItem(scorePixmap);
     _score = new QLabel();
     _score->setFont(QFont("Arial", 20, QFont::Bold));
     _score->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
-    _score->move(1090, 100);
+    _score->move(SCORE_X, SCORE_Y);
     _score->setAlignment(Qt::AlignCenter);
-    _score->setFixedSize(100, 30);
-
+    _score->setFixedSize(SCORE_WIDTH, SCORE_HEIGHT);
+    // Getting minutes and seconds from the time spent in game so we could do something with it to change score.
     int mins = _timeText.split(':').at(0).trimmed().toInt();
     int secs = _timeText.split(':').at(1).trimmed().toInt();
-    if(_isScoreLoaded)
+    if(_isScoreLoaded) {
         _isScoreLoaded = false;
-    else
+    }
+    // Random function just to give some variety to the score.
+    else {
         _scoreText = QString::number((_scoreText.toInt())+((_player->getCurrentLevel()-1)*100/(mins*10+secs/6+1)));
+    }
     _score->setText(_scoreText);
     addWidget(_score);
     qDebug() << _score->text();
 }
 
 void Game::addStopwatch(){
+    // Simple setting up and then adding the stopwatch.
     QGraphicsPixmapItem *stopwatchPixmap = new QGraphicsPixmapItem(QPixmap(":/resources/gui/time.png"));
-    stopwatchPixmap->setPos(3, 3);
+    stopwatchPixmap->setPos(STOPWATCH_PIXMAP_X, STOPWATCH_PIXMAP_Y);
     addItem(stopwatchPixmap);
     _stopwatch = new Stopwatch(_startingTime);
     addWidget(_stopwatch);

@@ -5,9 +5,9 @@ Stopwatch::Stopwatch(QTime startingTime)
 {
     this->setFont(QFont("Arial", 20, QFont::Bold));
     this->setStyleSheet("QLabel { background-color : darkRed; color : yellow; }");
-    this->move(94, 100);
+    this->move(STOPWATCH_X, STOPWATCH_Y);
     this->setAlignment(Qt::AlignCenter);
-    this->setFixedSize(100, 30);
+    this->setFixedSize(STOPWATCH_WIDTH, STOPWATCH_HEIGHT);
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Stopwatch::showElapsedTime);
     timer->start(1000);

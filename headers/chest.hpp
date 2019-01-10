@@ -13,8 +13,8 @@
 #define DYNAMIC_LEVEL_2 (5)
 #define CHECK_DISTANCE (100)
 
-/**
- * @brief Static collidable object.
+/**Static collidable object.
+ * @brief
  *
  * This is an InGameObjects which contains key for the level's door.
  * It is static, meaning that it doesn't change it's position during game.

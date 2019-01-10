@@ -15,6 +15,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
         if(!getPlayer()->keyList.contains(getLK())){
             switch (getPlayer()->getCurrentLevel()) {
                 case DYNAMIC_LEVEL_2:{
+                    //setting scene for second dynamic puzzle
                     DynamicPuzzle2 *dynamicPuzzle2Scene = new DynamicPuzzle2(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle2Scene->setPlayer(this->getPlayer());
                     dynamicPuzzle2Scene->setLevelKey(this->getLK());

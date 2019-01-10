@@ -14,23 +14,25 @@
 #define EMPTY_TILE (15)
 
 /**
- * @brief Short description
- *
- * Description
- */
+* @brief Interactive puzzle.
+*
+* In this puzzle, you can click on objects and interact with them, unlike with StaticPuzzle class objects.
+*/
 class DynamicPuzzle2 : public Puzzle {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           DynamicPuzzle1 constructor.
+     * @param parent    Parent object.
+     * @param scene     Current scene.
+     * @param cl        Current level.
      */
     DynamicPuzzle2(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Override from Puzzle
+     * @param event     An event which should be handled.
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
@@ -38,29 +40,27 @@ public:
 private:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Initializing puzzle. Randomizes tiles with swaping tiles in loop.
      */
     void initializePuzzle();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Checking if the player has solved the puzzle.
      */
     void checkResult();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief               Function which puzzle swaps tiles.
+     * @param position      Current position.
+     * @param nextPosition  Next position.
      */
     void swapTiles(int& position, int nextPosition);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Closes the puzzle.
      */
     void puzzleOver();
 
-    QVector<QPair<QGraphicsPixmapItem*, qint16>> _tiles; //!<
+    QVector<QPair<QGraphicsPixmapItem*, qint16>> _tiles; //!< Vector of tiles which construct the puzzle.
 };
 #endif // DYNAMICPUZZLE2_H

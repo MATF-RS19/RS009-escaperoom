@@ -38,53 +38,53 @@ namespace Coordinates {
 
 
 /**
- * @brief Short description
+ * @brief Interactive puzzle.
  *
- * Description
+ * In this puzzle, you can click on objects and interact with them, unlike with StaticPuzzle class objects.
  */
 
-class DynamicPuzzle1 : public Puzzle{
+class DynamicPuzzle1 : public Puzzle {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           DynamicPuzzle1 constructor.
+     * @param parent    Parent object.
+     * @param scene     Current scene.
+     * @param cl        Current level.
      */
     DynamicPuzzle1(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Override from Puzzle
+     * @param event     An event which should be handled.
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    QGraphicsPixmapItem *_boat; //!<
-    QGraphicsPixmapItem *_goat; //!<
-    QGraphicsPixmapItem *_wolf; //!<
-    QGraphicsPixmapItem *_lettuce; //!<
-    qint16 _numberOfItemsOnTheBoat = 1; //!<
-    qint8 _boatIsland = 1; //!<
-    ItemPosition _wolfPosition = island1; //!<
-    ItemPosition _goatPosition = island1; //!<
-    ItemPosition _lettucePosition = island1; //!<
+    QGraphicsPixmapItem *_boat; //!< An item which represents a boat.
+    QGraphicsPixmapItem *_goat; //!< An item which represents a goat.
+    QGraphicsPixmapItem *_wolf; //!< An item which represents a wolf.
+    QGraphicsPixmapItem *_lettuce; //!< An item which represents a lettuce.
+    qint16 _numberOfItemsOnTheBoat = 1; //!< Current number of items on the boat.
+    qint8 _boatIsland = 1; //!< Current island.
+    ItemPosition _wolfPosition = island1; //!< Position in scene of a private member _wolf.
+    ItemPosition _goatPosition = island1; //!< Position in scene of a private member _goat.
+    ItemPosition _lettucePosition = island1; //!< Position in scene of a private member _lettuce.
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief                   Checks if there's a constraint issue.
+     * @param boatIslandNumber  Island ID number.
      */
     void checkForEating(qint16 boatIslandNumber);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Closes the puzzle.
      */
     void puzzleOver();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Checks if the player has solved the puzzle.
      */
     void checkForWinning();
 };

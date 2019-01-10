@@ -7,6 +7,3 @@ Inventory::Inventory(QPixmap picture) {
 Inventory::~Inventory(){
 
 }
-
-void Inventory::mousePressEvent(QGraphicsSceneMouseEvent *){
-}

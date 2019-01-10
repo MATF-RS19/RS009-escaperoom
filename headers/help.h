@@ -4,46 +4,42 @@
 #include "ingameobjects.h"
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Class used during a tutorial for navigation through the tutorial.
  */
 class Help : public InGameObjects {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Help constructor.
+     * @param picture   Sets the pixmap of the Help.
      */
     Help(QPixmap picture);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Help destructor.
+     *              Destroys Help object.
      */
     ~Help();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Overrides from InGameObjects.
+     * @param event     An event which should handled.
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Returns the current step of the tutorial.
      */
     qint16 currentStep();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Sets the next step of the tutorial.
      */
     void nextStep();
 
 private:
-    qint16 _step = 1; //!<
+    qint16 _step = 1; //!< Current step in the tutorial.
 };
 
 #endif // HELP_H

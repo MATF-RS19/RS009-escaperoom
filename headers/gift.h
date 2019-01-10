@@ -6,40 +6,39 @@
 
 
 /**
- * @brief Short description
+ * @brief Static colidable object.
  *
- * Description
+ * Contains the universal Key.
  */
 class Gift : public InGameObjects {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Gift constructor.
+     * @param picture   Sets the pixmap of the Gift.
      */
     Gift(QPixmap picture);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Gift destructor.
+     *              Destroys Gift object.
      */
     ~Gift();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Overrides from InGameObjects.
+     * @param event     An event which should handled.
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Checks if the player has universal Key.
      */
     bool hasKey();
 
 private:
-    bool _gotKey = false; //!<
+    bool _gotKey = false; //!< Indicator of universal Key ownership.
 };
 
 #endif // GIFT_H

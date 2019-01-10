@@ -11,7 +11,7 @@ namespace Coordinates {
     extern qint16 openDoorY;
 }
 /**
- * @brief Short description
+ * @brief Static colidable object.
  *
  * This is an InGameObjects which is opened with the Key class object.
  * It is static, meaning that it doesn't change it's position during game.
