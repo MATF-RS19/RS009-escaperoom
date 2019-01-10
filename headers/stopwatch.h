@@ -7,18 +7,38 @@
 #include <QTime>
 #include <QGraphicsEffect>
 
+/**
+ * @brief Short description
+ *
+ * Description
+ */
 class Stopwatch : public QLabel {
     Q_OBJECT
 public:
+
+    /**
+     * @brief       Short description
+     * @param X     X description
+     */
     Stopwatch(QTime startingTime);
+
+    /**
+     * @brief       Short description
+     * @param X     X description
+     */
     QString getTime();
 
 private slots:
+
+    /**
+     * @brief       Short description
+     * @param X     X description
+     */
     QString showElapsedTime();
 
 private:
-    QTime _startingTime;
-    QString time;
+    QTime _startingTime; //!<
+    QString time; //!<
 };
 
 #endif // STOPWATCH_H

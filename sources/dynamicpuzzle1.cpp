@@ -26,11 +26,11 @@ DynamicPuzzle1::DynamicPuzzle1(QGraphicsView *parent, QGraphicsScene *scene, qin
     Puzzle(parent, scene, cl)
 {
     setBackgroundBrush(QImage(":/resources/puzzles/dp1.png"));
-    setSceneRect(0, 0, 1280, 720);
+    setSceneRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //adding close button item to the scene
     _closeBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/close_btn.png"));
-    _closeBtn->moveBy(1080, 0);
+    _closeBtn->moveBy(CLOSE_BTN_POSITION, 0);
     _closeBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_closeBtn);
 
@@ -63,14 +63,14 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
     switch (boatIslandNumber) {
         case 1: {
             if(_wolfPosition == island2 && _goatPosition == island2){
-                _fail_sound->setLoops(1);
+                _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island2 && _lettucePosition == island2){
-                _fail_sound->setLoops(1);
+                _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Goat has eaten lettuce! Be careful next time";
@@ -80,14 +80,14 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
         }
         case 2: {
             if(_wolfPosition == island1 && _goatPosition == island1){
-                _fail_sound->setLoops(1);
+                _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island1 && _lettucePosition == island1){
-                _fail_sound->setLoops(1);
+                _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
                 qDebug() << "Goat has eaten lettuce! Be careful next time";
@@ -112,22 +112,22 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
         puzzleOver();
     }
     else if(_wolf->isUnderMouse()){
-        if(_numberOfItemsOnTheBoat < 2 && _wolfPosition == island1 && _boatIsland == 1){
+        if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _wolfPosition == island1 && _boatIsland == FIRST_ISLAND){
             _wolfPosition = boat;
             _numberOfItemsOnTheBoat++;
-            _wolf->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+            _wolf->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
         }
-        else if(_wolfPosition == boat && _boatIsland == 1){
+        else if(_wolfPosition == boat && _boatIsland == FIRST_ISLAND){
             _numberOfItemsOnTheBoat--;
             _wolfPosition = island1;
             _wolf->setPos(Coordinates::wolfIsland1X, Coordinates::wolfIsland1Y);
         }
-        else if(_numberOfItemsOnTheBoat < 2 && _wolfPosition == island2 && _boatIsland == 2){
+        else if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _wolfPosition == island2 && _boatIsland == SECOND_ISLAND){
             _numberOfItemsOnTheBoat++;
             _wolfPosition = boat;
-            _wolf->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+            _wolf->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
         }
-        else if(_wolfPosition == boat && _boatIsland == 2){
+        else if(_wolfPosition == boat && _boatIsland == MAX_NUM_OF_ITEMS){
             _numberOfItemsOnTheBoat--;
             _wolfPosition = island2;
             _wolf->setPos(Coordinates::wolfIsland2X, Coordinates::wolfIsland2Y);
@@ -138,22 +138,22 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
         }
     }
     else if(_goat->isUnderMouse()){
-        if(_numberOfItemsOnTheBoat < 2 && _goatPosition == island1 && _boatIsland == 1){
+        if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _goatPosition == island1 && _boatIsland == FIRST_ISLAND){
             _goatPosition = boat;
             _numberOfItemsOnTheBoat++;
-            _goat->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+            _goat->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
         }
-        else if(_goatPosition == boat && _boatIsland == 1){
+        else if(_goatPosition == boat && _boatIsland == FIRST_ISLAND){
             _numberOfItemsOnTheBoat--;
             _goatPosition = island1;
             _goat->setPos(Coordinates::goatIsland1X, Coordinates::goatIsland1Y);
         }
-        else if(_numberOfItemsOnTheBoat < 2 && _goatPosition == island2 && _boatIsland == 2){
+        else if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _goatPosition == island2 && _boatIsland == SECOND_ISLAND){
             _numberOfItemsOnTheBoat++;
             _goatPosition = boat;
-            _goat->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+            _goat->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
         }
-        else if(_goatPosition == boat && _boatIsland == 2){
+        else if(_goatPosition == boat && _boatIsland == SECOND_ISLAND){
             _numberOfItemsOnTheBoat--;
             _goatPosition = island2;
             _goat->setPos(Coordinates::goatIsland2X, Coordinates::goatIsland2Y);
@@ -164,22 +164,22 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
         }
     }
     else if(_lettuce->isUnderMouse()){
-        if(_numberOfItemsOnTheBoat < 2 && _lettucePosition == island1 && _boatIsland == 1){
+        if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _lettucePosition == island1 && _boatIsland == FIRST_ISLAND){
             _lettucePosition = boat;
             _numberOfItemsOnTheBoat++;
-            _lettuce->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+            _lettuce->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
         }
-        else if(_lettucePosition == boat && _boatIsland == 1){
+        else if(_lettucePosition == boat && _boatIsland == FIRST_ISLAND){
             _numberOfItemsOnTheBoat--;
             _lettucePosition = island1;
             _lettuce->setPos(Coordinates::lettuceIsland1X, Coordinates::lettuceIsland1Y);
         }
-        else if(_numberOfItemsOnTheBoat < 2 && _lettucePosition == island2 && _boatIsland == 2){
+        else if(_numberOfItemsOnTheBoat < MAX_NUM_OF_ITEMS && _lettucePosition == island2 && _boatIsland == SECOND_ISLAND){
             _numberOfItemsOnTheBoat++;
             _lettucePosition = boat;
-            _lettuce->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+            _lettuce->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
         }
-        else if(_lettucePosition == boat && _boatIsland == 2){
+        else if(_lettucePosition == boat && _boatIsland == SECOND_ISLAND){
             _numberOfItemsOnTheBoat--;
             _lettucePosition = island2;
             _lettuce->setPos(Coordinates::lettuceIsland2X, Coordinates::lettuceIsland2Y);
@@ -191,39 +191,39 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
 
     }
     else if(_boat->isUnderMouse()){
-        if(_numberOfItemsOnTheBoat == 2 && _boatIsland == 1){
+        if(_numberOfItemsOnTheBoat == MAX_NUM_OF_ITEMS && _boatIsland == FIRST_ISLAND){
             //ship to island 2
             _boat->setPos(Coordinates::boatIsland2X, Coordinates::boatIsland2Y);
-            _boatIsland = 2;
+            _boatIsland = SECOND_ISLAND;
             if(_wolfPosition == boat){
-                _wolf->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+                _wolf->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
             }
             if(_goatPosition == boat){
-                _goat->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+                _goat->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
             }
             if(_lettucePosition == boat){
-                _lettuce->setPos(Coordinates::boatIsland2X+20, Coordinates::boatIsland2Y);
+                _lettuce->setPos(Coordinates::boatIsland2X+POSITION_CORRECTION, Coordinates::boatIsland2Y);
             }
 
             //if (wolf and goat) or (goat and lettuce) are alone on the island1, puzzle over and start again
-            checkForEating(2);
+            checkForEating(SECOND_ISLAND);
         }
-        else if(_boatIsland == 2){
+        else if(_boatIsland == SECOND_ISLAND){
             //ship to island 1
             _boat->setPos(Coordinates::boatIsland1X, Coordinates::boatIsland1Y);
-            _boatIsland = 1;
+            _boatIsland = FIRST_ISLAND;
             if(_wolfPosition == boat){
-                _wolf->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+                _wolf->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
             }
             if(_goatPosition == boat){
-                _goat->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+                _goat->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
             }
             if(_lettucePosition == boat){
-                _lettuce->setPos(Coordinates::boatIsland1X+20, Coordinates::boatIsland1Y);
+                _lettuce->setPos(Coordinates::boatIsland1X+POSITION_CORRECTION, Coordinates::boatIsland1Y);
             }
 
             //if (wolf and goat) or (goat and lettuce) are alone on the island2, puzzle over and start again
-            checkForEating(1);
+            checkForEating(FIRST_ISLAND);
         }
     }
 }

@@ -19,7 +19,6 @@ void MainWindow::initGUI(){
     _ui->exit_btn->setStyleSheet("border: none;");
     _ui->exit_btn->setIcon(exitPixmap);
     _ui->exit_btn->setIconSize(exitPixmap.rect().size());
-
     QPixmap newGamePixmap(":/resources/gui/new_game.png");
     _ui->newGame_btn->setStyleSheet("border: none;");
     _ui->newGame_btn->setIcon(newGamePixmap);

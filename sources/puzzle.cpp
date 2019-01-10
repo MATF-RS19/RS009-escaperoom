@@ -3,7 +3,6 @@
 Puzzle::Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
     _parent(parent), _scene(scene), cLevel(cl)
 {
-
 }
 
 qint16 Puzzle::getCl(){

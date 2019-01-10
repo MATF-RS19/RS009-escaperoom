@@ -1,28 +1,20 @@
-/*TODO:
-    -Change pixmap of chest, when user solve puzzle
-    -Add log to all classes that need to change log text
-*/
-
 #include "headers/chest.hpp"
 
 Chest::Chest(QPixmap picture) {
     setPixmap(picture);
 }
 
-Chest::~Chest(){
+Chest::~Chest(){}
 
-}
-
-void Chest::mousePressEvent(QGraphicsSceneMouseEvent *){
-}
+void Chest::mousePressEvent(QGraphicsSceneMouseEvent *){}
 
 void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view){
     //checking mouse click and player distance from the chest
-    if(event->button() == Qt::LeftButton && this->distance() < 100.0){
+    if(event->button() == Qt::LeftButton && this->distance() < CHECK_DISTANCE){
         //if player already have level key, user won't be able to open puzzle again
         if(!getPlayer()->keyList.contains(getLK())){
             switch (getPlayer()->getCurrentLevel()) {
-                case 5:{
+                case DYNAMIC_LEVEL_2:{
                     DynamicPuzzle2 *dynamicPuzzle2Scene = new DynamicPuzzle2(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle2Scene->setPlayer(this->getPlayer());
                     dynamicPuzzle2Scene->setLevelKey(this->getLK());
@@ -30,7 +22,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
                     view->setScene(dynamicPuzzle2Scene);
                     break;
                 }
-                case 4: {
+                case DYNAMIC_LEVEL_1: {
                     //setting scene for first dynamic puzzle
                     DynamicPuzzle1 *dynamicPuzzle1Scene = new DynamicPuzzle1(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle1Scene->setPlayer(this->getPlayer());

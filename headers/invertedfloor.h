@@ -5,9 +5,24 @@
 #include <QPixmap>
 #include <QDebug>
 
+/**
+ * @brief Short description
+ *
+ * Description
+ */
 class InvertedFloor : public QGraphicsPixmapItem {
 public:
+
+    /**
+     * @brief       Short description
+     * @param X     X description
+     */
     InvertedFloor(QPixmap bg);
+
+    /**
+     * @brief       Short description
+     * @param X     X description
+     */
     ~InvertedFloor();
 };
 

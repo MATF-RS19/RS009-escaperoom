@@ -3,7 +3,7 @@
 DynamicPuzzle2::DynamicPuzzle2(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl)
     : Puzzle(parent, scene, cl)
 {
-    setSceneRect(0,0,1280,720);
+    setSceneRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     setBackgroundBrush(QImage(":/resources/puzzles/fifteen_puzzle/frame1.png"));
     initializePuzzle();
     _closeBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/close_btn.png"));
@@ -14,18 +14,18 @@ DynamicPuzzle2::DynamicPuzzle2(QGraphicsView *parent, QGraphicsScene *scene, qin
 }
 void DynamicPuzzle2::initializePuzzle(){
     QString base(":/resources/puzzles/fifteen_puzzle/");
-    for(qint16 j = 0; j < 4; j++){
-        for(qint16 i = 0; i < 4; i++) {
-            auto s1 = base + QString::number(j*4 + i) + ".png";
+    for(qint16 j = 0; j < NUM_OF_ROWS; j++){
+        for(qint16 i = 0; i < NUM_OF_COLS; i++) {
+            auto s1 = base + QString::number(j*NUM_OF_COLS + i) + ".png";
             QGraphicsPixmapItem* tilePixmap = new QGraphicsPixmapItem(QPixmap(QString(s1)));
-            QPair<QGraphicsPixmapItem*, qint16> item(tilePixmap, j*4 + i);
+            QPair<QGraphicsPixmapItem*, qint16> item(tilePixmap, j*NUM_OF_COLS + i);
             _tiles.push_back(std::move(item));
-            _tiles.at(j*4 + i).first->setPos(QPoint(337+151*i, 58+151*j));
+            _tiles.at(j*NUM_OF_COLS + i).first->setPos(QPoint(STARTING_X+MOVE_VAL*i, STARTING_Y+MOVE_VAL*j));
         }
     }
-    for(qint16 i = 0; i < 4; i++) {
-        for(qint16 j = 0; j < 4; j++) {
-            this->addItem(_tiles.at(4*i + j).first);
+    for(qint16 i = 0; i < NUM_OF_ROWS; i++) {
+        for(qint16 j = 0; j < NUM_OF_COLS; j++) {
+            this->addItem(_tiles.at(NUM_OF_COLS*i + j).first);
         }
     }
     int i = 0;
@@ -159,50 +159,50 @@ void DynamicPuzzle2::mousePressEvent(QGraphicsSceneMouseEvent *){
     if(_closeBtn->isUnderMouse()){
         puzzleOver();
     }
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < NUM_OF_COLS*NUM_OF_ROWS; i++){
         if (_tiles.at(i).first->isUnderMouse()){
             switch(i) {
                 case 0: {
-                    if(_tiles.at(i+1).second == 15){
+                    if(_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i, i+1);
                     }
-                    else if(_tiles.at(i+4).second == 15){
+                    else if(_tiles.at(i+4).second == EMPTY_TILE){
                         swapTiles(i, i+4);
                     }
                     break;
                 }
                 case 1:
                 case 2: {
-                    if(_tiles.at(i+1).second == 15){
+                    if(_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i, i+1);
                     }
-                    else if(_tiles.at(i-1).second == 15) {
+                    else if(_tiles.at(i-1).second == EMPTY_TILE) {
                         swapTiles(i, i-1);
                     }
-                    else if(_tiles.at(i+4).second == 15) {
+                    else if(_tiles.at(i+4).second == EMPTY_TILE) {
                         swapTiles(i, i+4);
                     }
                     break;
 
                 }
                 case 3: {
-                    if (_tiles.at(i-1).second == 15){
+                    if (_tiles.at(i-1).second == EMPTY_TILE){
                         swapTiles(i, i-1);
                     }
-                    else if (_tiles.at(i+4).second == 15){
+                    else if (_tiles.at(i+4).second == EMPTY_TILE){
                         swapTiles(i, i+4);
                     }
                     break;
                 }
                 case 4:
                 case 8: {
-                    if (_tiles.at(i+1).second == 15){
+                    if (_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i,i+1);
                     }
-                    else if(_tiles.at(i+4).second == 15){
+                    else if(_tiles.at(i+4).second == EMPTY_TILE){
                         swapTiles(i, i+4);
                     }
-                    else if(_tiles.at(i-4).second == 15) {
+                    else if(_tiles.at(i-4).second == EMPTY_TILE) {
                         swapTiles(i, i-4);
                     }
                     break;
@@ -211,51 +211,51 @@ void DynamicPuzzle2::mousePressEvent(QGraphicsSceneMouseEvent *){
                 case 6:
                 case 9:
                 case 10: {
-                    if(_tiles.at(i-1).second == 15){
+                    if(_tiles.at(i-1).second == EMPTY_TILE){
                         swapTiles(i, i-1);
                     }
-                    else if(_tiles.at(i+1).second == 15){
+                    else if(_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i, i+1);
                     }
-                    else if(_tiles.at(i+4).second == 15){
+                    else if(_tiles.at(i+4).second == EMPTY_TILE){
                         swapTiles(i, i+4);
                     }
-                    else if(_tiles.at(i-4).second == 15){
+                    else if(_tiles.at(i-4).second == EMPTY_TILE){
                         swapTiles(i, i-4);
                     }
                     break;
                 }
                 case 7:
                 case 11:{
-                    if(_tiles.at(i-1).second == 15){
+                    if(_tiles.at(i-1).second == EMPTY_TILE){
                         swapTiles(i, i-1);
                     }
-                    else if(_tiles.at(i+4).second == 15){
+                    else if(_tiles.at(i+4).second == EMPTY_TILE){
                         swapTiles(i, i+4);
                     }
-                    else if(_tiles.at(i-4).second == 15){
+                    else if(_tiles.at(i-4).second == EMPTY_TILE){
                         swapTiles(i, i-4);
                     }
                     break;
                 }
                 case 12: {
-                    if(_tiles.at(i-4).second == 15){
+                    if(_tiles.at(i-4).second == EMPTY_TILE){
                         swapTiles(i, i-4);
                     }
-                    else if(_tiles.at(i+1).second == 15){
+                    else if(_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i, i+1);
                     }
                     break;
                 }
                 case 13:
                 case 14:{
-                    if(_tiles.at(i-1).second == 15){
+                    if(_tiles.at(i-1).second == EMPTY_TILE){
                         swapTiles(i, i-1);
                     }
-                    else if(_tiles.at(i+1).second == 15){
+                    else if(_tiles.at(i+1).second == EMPTY_TILE){
                         swapTiles(i, i+1);
                     }
-                    else if(_tiles.at(i-4).second == 15){
+                    else if(_tiles.at(i-4).second == EMPTY_TILE){
                         swapTiles(i, i-4);
                     }
                     break;

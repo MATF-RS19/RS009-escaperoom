@@ -4,7 +4,6 @@
 StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl) :
     Puzzle(parent, scene, cl)
 {
-
     loadPuzzle();
 
     //adding close button item to the scene
@@ -17,7 +16,6 @@ StaticPuzzle::StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 
     _accBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/accept_btn.png"));
     _accBtn->setFlag(QGraphicsItem::ItemIsFocusable);
     this->addItem(_accBtn);
-
 }
 
 void StaticPuzzle::loadPuzzle(){
@@ -29,7 +27,7 @@ void StaticPuzzle::loadPuzzle(){
     qf.open(QIODevice::ReadOnly | QIODevice::Text);
     QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
     qf.close();
-
+    // zar ne treba da proverimo da li je lepo ucitan fajl?
     //setting background picture
     setBackgroundBrush(QImage(qjd["background"].toString()));
     setSceneRect(0, 0, 1280, 720);
@@ -38,23 +36,43 @@ void StaticPuzzle::loadPuzzle(){
     QJsonArray answersJsonObject = qjd["answers"].toArray();
     QJsonArray answerPositionX = qjd["aPositionX"].toArray();
     QJsonArray answerPositionY = qjd["aPositionY"].toArray();
+
     //number of answers
     _ansNum = answersJsonObject.size();
     //setting two vectors to right size
     _answers.resize(_ansNum);
     _rightAnswers.resize(_ansNum);
-
+    //adding a widget with layout, so we can place text fields wherever we'd like
+    QWidget *answerWidget = new QWidget;
+    answerWidget->setContentsMargins(0,0,0,0);
+    QVBoxLayout *answerLayout = new QVBoxLayout;
+    answerLayout->setMargin(0);
+    answerLayout->setSpacing(1);
+    answerWidget->move(answerPositionX.at(0).toString().toInt(), answerPositionY.at(0).toString().toInt());
     for(int i = 0; i < _ansNum; i++){
         //making _ansNum TextEdit fields
+        // mozda bi bilo bolje da je QLineEdit umesto QTextEdit ?
         _answers[i] = new QTextEdit();
         _answers[i]->move(answerPositionX.at(i).toString().toInt(), answerPositionY.at(i).toString().toInt());
-        _answers[i]->setFixedSize(QSize(200, 90));
-        _answers[i]->setPlaceholderText("Double click\r\nAnswer here");
-        this->addWidget(_answers[i]);
+        // just a simple example of how should we handle multiple answers, depending on the current puzzle
+        if(getCl() == 2) {
+            _answers[i]->setFixedSize(200,57);
+            _answers[i]->setStyleSheet("border-bottom:1px solid green; background:black; color:green");
+            _answers[i]->setFont(QFont(QFont("Arial", 15, QFont::Bold)));
+            _answers[i]->setAlignment(Qt::AlignCenter);
+
+        }
+        else{
+            _answers[i]->setFixedSize(200,50);
+        }
+        _answers[i]->setPlaceholderText("Double click! Answer here");
+        answerLayout->addWidget(_answers[i]);
         //putting right answers in our vector
         _rightAnswers[i] = new QString(answersJsonObject.at(i).toString());
     }
 
+    answerWidget->setLayout(answerLayout);
+    addWidget(answerWidget);
 }
 
 void StaticPuzzle::mousePressEvent(QGraphicsSceneMouseEvent *){

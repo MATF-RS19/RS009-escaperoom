@@ -88,5 +88,8 @@
         <file>resources/tutorijal/text1.png</file>
         <file>resources/tutorijal/text2.png</file>
         <file>resources/tutorijal/text3.png</file>
+        <file>resources/chests/chest2.png</file>
+        <file>resources/puzzles/puzzle_2_0.png</file>
+        <file>resources/levels/invertedFloor2.png</file>
     </qresource>
 </RCC>

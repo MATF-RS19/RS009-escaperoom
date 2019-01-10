@@ -20,7 +20,7 @@ void Door::mousePressEvent(QGraphicsSceneMouseEvent *){
 
 void Door::mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 xCoord) {
     //checking mouse click and player distance from the door
-    if(event->button() == Qt::LeftButton && this->distance() < 150.0){
+    if(event->button() == Qt::LeftButton && this->distance() < CHECK_DISTANCE){
         //checking if user have level key and the door isn't alredy opened
         if(getPlayer()->keyList.contains(getLK()) && !isOpened()){
             qDebug() << "Door unlocked and opened using level key";
