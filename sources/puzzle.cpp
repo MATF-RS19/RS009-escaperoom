@@ -18,11 +18,11 @@ QGraphicsScene *Puzzle::getScene(){
 }
 
 void Puzzle::setPlayer(Player *p){
-    _player = std::move(p);
+    _player = p;
 }
 
 void Puzzle::setLevelKey(Key *lk){
-    _levelKey = std::move(lk);
+    _levelKey = lk;
 }
 
 Player *Puzzle::getPlayer(){

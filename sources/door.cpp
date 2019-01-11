@@ -1,10 +1,5 @@
 #include "headers/door.h"
 
-namespace Coordinates {
-    qint16 openDoorX = 265;
-    qint16 openDoorY = 215;
-}
-
 Door::Door(const QPixmap& picture)
     :_log(nullptr)
 {

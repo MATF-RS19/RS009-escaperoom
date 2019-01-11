@@ -86,7 +86,7 @@ private:
     qreal _step = 3.0; //!< Player's speed on y axis
     qreal _doubleStep = 2 * _step; //!< Player's speed on x axis
     qint16 _currentLevel; //!< Current level
-    InvertedFloor *_invertedfloor; //!< Object that represent inverted floor
+    InvertedFloor *_invertedfloor{}; //!< Object that represent inverted floor
     QGraphicsPixmapItem* _dummy; //!< Object that always goes with player and help us to solve collision
     QString _username; //!< User nickname
     Sprite _wSpriteSheet; //!< SpriteSheet for moving up

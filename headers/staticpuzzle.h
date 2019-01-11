@@ -32,7 +32,7 @@ public:
 private:
     QGraphicsPixmapItem *_accBtn; //!< Accept button
     QVector<QTextEdit*> _answers; //!< Vector of TextEdit fields where user should eneter his/her answers
-    qint32 _ansNum; //!< Number of answers
+    qint32 _ansNum{}; //!< Number of answers
     QVector<QString*> _rightAnswers; //!< Vector of correct answers
     QVector<QString*> _answerPositionsX; //!< Vector of position on x axis for answers TextEdit fields
     QVector<QString*> _answerPositionsY; //!< Vector of position on y axis for answers TextEdit fields

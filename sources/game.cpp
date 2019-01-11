@@ -1,5 +1,8 @@
 #include "headers/game.h"
 
+#define DUMMY_X_POS (25)
+#define DUMMY_Y_POS (128)
+
 namespace SceneMeasure {
     qint16 sceneWidth = 1280;
     qint16 sceneHeight = 720;
@@ -15,7 +18,7 @@ Game::Game(QGraphicsView *parent) :
     itIsTutorial();
     addItem(_player);
     addItem(_player->getDummy());
-    qDebug() << "Tutorial";
+    //qDebug() << "Tutorial";
     //Universal key
     _universalKey = new Key(0, QPixmap(":/resources/inventory/universal_key.png"));
     //Quit button
@@ -104,7 +107,7 @@ void Game::loadLevel(){
     // Adding score
     addScore();
     // We may lose precision, but it doesn't really matter that much.
-    _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
+    _player->setPos(SceneMeasure::sceneWidth/2.0, SceneMeasure::sceneHeight/2.0);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
     //enabling keyboard inputs
@@ -112,9 +115,9 @@ void Game::loadLevel(){
     //focusing item, so it can catch keyboard inputs
     _player->setFocus();
 
-    //setting position for player's dummy object and adding (25,100), so that dummy will be by his legs
+    //setting position for player's dummy object and adding (25,128), so that dummy will be by his legs
     //We may lose precision, but it doesn't really matter that much.
-    _player->getDummy()->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
+    _player->getDummy()->setPos(SceneMeasure::sceneWidth/2.0+DUMMY_X_POS, SceneMeasure::sceneHeight/2.0+DUMMY_Y_POS);
 
     //adding object so we can trace player not to got over edges of room
     _player->setInvertedFloor(new InvertedFloor(QPixmap(qjd["floor"].toString())));
@@ -174,12 +177,9 @@ void Game::loadLevel(){
         _help_text->setPos(5, 415);
         _help_text->setZValue(5);
         addItem(_help_text);
-
-
-
-        qDebug() << "Tutorijal je";
+        //qDebug() << "Tutorijal je";
     }else{
-        qDebug() << "Nije tutorijal";
+        //qDebug() << "Nije tutorijal";
     }
 
     //setting scene, setting origin in top, left corner, size to 1280x720
@@ -280,7 +280,7 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
         _player->keyList.append(_levelKey);
         _key_sound->setLoops(1);
         _key_sound->play();
-        qDebug() << "You got level key";
+        //qDebug() << "You got level key";
         _log->setText("You got level key");
         _levelKey->setPos(1175, 407);
         addItem(_levelKey);

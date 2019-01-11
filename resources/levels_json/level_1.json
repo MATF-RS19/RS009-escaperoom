@@ -19,8 +19,8 @@
     "on_scene": true,
     "pixmapClose": ":/resources/chests/close.png",
     "pixmapOpen": ":/resources/chests/open.png",
-    "x_pos": 420,
-    "y_pos": 310
+    "x_pos": 745,
+    "y_pos": 330
   },
   "inventory": {
      "on_scene": true,

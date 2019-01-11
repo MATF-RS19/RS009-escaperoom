@@ -42,13 +42,13 @@ public:
      * @brief       Function that make json file for new user
      * @param name  User's nickname
      */
-    void writeJson(QString name);
+    void writeJson(const QString & name);
 
     /**
      * @brief       Function that read json file for existing user and sent data to game constructor
      * @param name  User's nickname
      */
-    void readJsonAndStartGame(QString name);
+    void readJsonAndStartGame(const QString & name);
 
     /**
      * @brief       Function that set all objects in main menu to invisible
@@ -104,7 +104,7 @@ private slots:
 
 private:
     Ui::MainWindow *_ui; //!< MainWindow user interface
-    Game *_game; //!< Variable for startting new game
+    Game *_game{}; //!< Variable for startting new game
 };
 
 #endif // MAINWINDOW_H

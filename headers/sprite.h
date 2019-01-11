@@ -32,7 +32,7 @@ public:
      * @brief               Add new sprite
      * @param spriteName    Name of current sprite
      */
-    void addSprite(const QString spriteName);
+    void addSprite(const QString & spriteName);
 
 private:
     QVector<QPixmap> _spritesheet; //!< Sprite sheet of player's moving

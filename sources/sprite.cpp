@@ -1,8 +1,8 @@
 #include "headers/sprite.h"
 
-Sprite::Sprite(){};
+Sprite::Sprite() = default;
 
-Sprite::~Sprite(){}
+Sprite::~Sprite() = default;
 
 QPixmap Sprite::nextSprite(){
     _current = (_current + 1) % _spritesheet.size();
@@ -13,6 +13,6 @@ QPixmap Sprite::startingSprite(){
     return _spritesheet.at(0);
 }
 
-void Sprite::addSprite(const QString spriteName){
+void Sprite::addSprite(const QString & spriteName){
     _spritesheet.push_back(QPixmap(spriteName));
 };

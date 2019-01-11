@@ -1,8 +1,11 @@
 #include "headers/player.h"
 #include "headers/game.h"
 
+#define X_DUMMY_POS (50)
+#define Y_DUMMY_POS (128)
+
 Player::Player(QString name) :
-    _username(name)
+    _username(std::move(name))
 {
     setPixmap(QPixmap(":/resources/outfits/dframe1.png"));
     _currentLevel = 1;
@@ -11,14 +14,12 @@ Player::Player(QString name) :
     initSpriteSheets();
 }
 
-Player::~Player(){
-
-}
+Player::~Player() = default;
 
 void Player::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
      case Qt::Key_A:
-        _dummy->setPos(x()-_doubleStep+50,y()+128);
+        _dummy->setPos(x()-_doubleStep+X_DUMMY_POS,y()+Y_DUMMY_POS);
         if(checkCollision()) {
             setPos(x()-_doubleStep, y() - _step);
             this->setSprite(_aSpriteSheet);
@@ -29,7 +30,7 @@ void Player::keyPressEvent(QKeyEvent *event){
         }
         break;
      case Qt::Key_D:
-        _dummy->setPos(x()+_doubleStep+50,y()+_step+128);
+        _dummy->setPos(x()+_doubleStep+X_DUMMY_POS,y()+_step+Y_DUMMY_POS);
         if(checkCollision()) {
             setPos(x()+_doubleStep,y()+_step);
             this->setSprite(_dSpriteSheet);
@@ -40,7 +41,7 @@ void Player::keyPressEvent(QKeyEvent *event){
         }
         break;
      case Qt::Key_W:
-        _dummy->setPos(x()+_doubleStep+50,y()-_step+128);
+        _dummy->setPos(x()+_doubleStep+X_DUMMY_POS,y()-_step+Y_DUMMY_POS);
         if(checkCollision()) {
             setPos(x()+_doubleStep,y()-_step);
             this->setSprite(_wSpriteSheet);
@@ -50,7 +51,7 @@ void Player::keyPressEvent(QKeyEvent *event){
         }
         break;
      case Qt::Key_S:
-        _dummy->setPos(x()-_doubleStep+50,y()+_step+128);
+        _dummy->setPos(x()-_doubleStep+X_DUMMY_POS,y()+_step+Y_DUMMY_POS);
         if(checkCollision()) {
             setPos(x()-_doubleStep,y()+_step);
             this->setSprite(_sSpriteSheet);
@@ -65,9 +66,8 @@ void Player::keyPressEvent(QKeyEvent *event){
 }
 // We're checking if there's one more collision besides collision with the player.
 bool Player::checkCollision() {
-    return this->_dummy->collidingItems().size() > 1 ? false : true;
+    return this->_dummy->collidingItems().size() <= 1;
 }
-
 
 qint16 Player::getCurrentLevel(){
     return _currentLevel;
@@ -86,11 +86,11 @@ void Player::setCurrentLevel(qint16 cl){
 }
 
 void Player::setInvertedFloor(InvertedFloor *iFloor){
-    _invertedfloor = std::move(iFloor);
+    _invertedfloor = iFloor;
 }
 
 void Player::setDummy(QGraphicsPixmapItem *dummy){
-    _dummy = std::move(dummy);
+    _dummy = dummy;
 }
 
 QString Player::getUsername() {

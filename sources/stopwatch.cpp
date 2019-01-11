@@ -1,5 +1,7 @@
 #include <headers/stopwatch.h>
 
+#define START_TIME (1000)
+
 Stopwatch::Stopwatch(QTime startingTime)
     :_startingTime(startingTime)
 {
@@ -8,9 +10,9 @@ Stopwatch::Stopwatch(QTime startingTime)
     this->move(STOPWATCH_X, STOPWATCH_Y);
     this->setAlignment(Qt::AlignCenter);
     this->setFixedSize(STOPWATCH_WIDTH, STOPWATCH_HEIGHT);
-    QTimer *timer = new QTimer(this);
+    auto *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Stopwatch::showElapsedTime);
-    timer->start(1000);
+    timer->start(START_TIME);
 
 }
 

@@ -68,7 +68,7 @@ void MainWindow::initGUI(){
 //starting new game
 void MainWindow::newGame(QString name) {
     //making new game
-    _game = new Game(_ui->display, name);
+    _game = new Game(_ui->display, std::move(name));
     //setting scene
     _ui->display->setScene(_game);
     //setting game scene to be main scene
@@ -126,40 +126,42 @@ void MainWindow::on_newGame_conf_btn_clicked() {
 }
 
 //make json file for new user or rewrite data for old one
-void MainWindow::writeJson(QString name) {
+void MainWindow::writeJson(const QString & name) {
     QFile qf("../RS009-escaperoom/resources/username_json/" + name + ".json");
-    qf.open(QIODevice::WriteOnly);
-    QJsonDocument qjd;
-    QJsonObject qjo;
-    qjo.insert("CurrentLevel", QJsonValue(1));
-    qjo.insert("UniversalKey", QJsonValue(false));
-    qjo.insert("Time", QJsonValue("00:00"));
-    qjo.insert("Score", QJsonValue("0"));
-    qjd.setObject(qjo);
-    qf.write(qjd.toJson());
-    qf.close();
+    if(qf.open(QIODevice::WriteOnly)){
+        QJsonDocument qjd;
+        QJsonObject qjo;
+        qjo.insert("CurrentLevel", QJsonValue(1));
+        qjo.insert("UniversalKey", QJsonValue(false));
+        qjo.insert("Time", QJsonValue("00:00"));
+        qjo.insert("Score", QJsonValue("0"));
+        qjd.setObject(qjo);
+        qf.write(qjd.toJson());
+        qf.close();
+    }
 }
 
 //load old user's data from json and start game where he/she left off
-void MainWindow::readJsonAndStartGame(QString name) {
+void MainWindow::readJsonAndStartGame(const QString & name) {
     QFile qf("../RS009-escaperoom/resources/username_json/" + name + ".json");
-    qf.open(QIODevice::ReadOnly);
-    QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
-    qf.close();
-    qint32 currLevel = qjd["CurrentLevel"].toInt();
-    bool doesHaveUniversalKey = qjd["UniversalKey"].toBool();
-    QString currentTime = qjd["Time"].toString();
-    QString currentScore = qjd["Score"].toString();
+    if(qf.open(QIODevice::ReadOnly)){
+        QJsonDocument qjd = QJsonDocument::fromJson(qf.readAll());
+        qf.close();
+        qint32 currLevel = qjd["CurrentLevel"].toInt();
+        bool doesHaveUniversalKey = qjd["UniversalKey"].toBool();
+        QString currentTime = qjd["Time"].toString();
+        QString currentScore = qjd["Score"].toString();
 
-    //making new game
-    _game = new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey, currentTime, currentScore);
-    //_game.get()->getPlayer()->setUsername(" ");
-    //setting scene
-    _ui->display->setScene(_game);
-    //setting game scene to be main scene
-    _ui->display->raise();
-    //setting focus on game scene
-    _ui->display->setFocus();
+        //making new game
+        _game = new Game(_ui->display, name, qint16(currLevel), doesHaveUniversalKey, currentTime, currentScore);
+        //_game.get()->getPlayer()->setUsername(" ");
+        //setting scene
+        _ui->display->setScene(_game);
+        //setting game scene to be main scene
+        _ui->display->raise();
+        //setting focus on game scene
+        _ui->display->setFocus();
+    }
 }
 
 //setting textEdit field visible, so user can enter his/her existing username
@@ -212,21 +214,21 @@ void MainWindow::on_highscore_btn_clicked() {
             if(line.trimmed().size() == 0) continue;
             QStringList reci = line.split(' ');
             QPair<QString, qint32> onePlayer(reci.at(0).trimmed(),
-                                             reci.size() > 1 ? reci.at(1).trimmed().toInt() : 0 /*For now, because _score->text return ""*/);
+                                             reci.at(1).trimmed().toInt());
             players.push_back(onePlayer);
         }
         std::sort(std::begin(players), std::end(players),
                   [](const QPair<QString, qint32> &first, const QPair<QString, qint32> &second) {return first.second > second.second;});
-    qDebug() << players.size();
-        for(qint32 i = 0, n = players.size(); i < n; ++i) {
-             QListWidgetItem* list_widget_item = new QListWidgetItem(players.at(i).first + "\t" + QString::number(players.at(i).second));
+        //qDebug() << players.size();
+        for(const auto & player: players) {
+             QListWidgetItem* list_widget_item = new QListWidgetItem(player.first + "\t" + QString::number(player.second));
              list_widget_item->setTextAlignment(Qt::AlignCenter);
              list_widget_item->setFont(QFont("Arial", 13, QFont::Normal));
              list_widget_item->setTextColor("yellow");
-             _ui->highscoreList->addItem(std::move(list_widget_item));
+             _ui->highscoreList->addItem(list_widget_item);
         }
+        qf.close();
     }
-    qf.close();
 }
 
 void MainWindow::on_exit_btn_clicked(){

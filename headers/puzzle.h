@@ -80,15 +80,15 @@ protected:
      * @param cl        Current level
      */
     explicit Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
-    QGraphicsPixmapItem *_closeBtn; //!< Close button,for closing puzzle scene
+    QGraphicsPixmapItem *_closeBtn{}; //!< Close button,for closing puzzle scene
 
 private:
     QGraphicsView *_parent; //!< Main view
     QGraphicsScene *_scene; //!< Current scene
     qint16 cLevel; //!< Current level
-    Player *_player; //!< Object of class Player
-    Key *_levelKey; //!< Level key
-    QLineEdit *_log; //!< User's log
+    Player *_player{}; //!< Object of class Player
+    Key *_levelKey{}; //!< Level key
+    QLineEdit *_log{}; //!< User's log
 };
 
 #endif // PUZZLE_H
