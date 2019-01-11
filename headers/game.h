@@ -136,33 +136,33 @@ public:
     void addStopwatch();
 
 private:
-    QGraphicsView *_parent; //!< Game's parent.
-    Player *_player; //!< Controllable object.
-    Gift *_gift; //!< Generous gift in shape of a Key. Universal key which opens every door.
-    Door *_door; //!< InGameObjects for which you need a Key to open it.
-    Chest *_chest; //!< InGameObjects which opens a Puzzle which when solved gives you a Key.
-    Key *_universalKey; //!< Key which is in Gift.
-    Key *_levelKey; //!< Key which is in Chest.
-    Inventory *_inventory; //!< Object which contains Keys.
-    QLineEdit *_log; //!< Message log which informs you of events.
-    QSound *_door_knock_sound = new QSound(QString(":/resources/sounds/knock_on_the_door.wav")); //!< Door knock sound.
-    QSound *_door_opening_sound = new QSound(QString(":/resources/sounds/door_opening.wav")); //!< Door opening sound.
-    QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav")); //!< Colected Key sound.
-    QSoundEffect *_background_music = new QSoundEffect(); //!< Soundtrack in game.
-    QLabel *_score; //!< Score in game. Calculated with some random function.
-    QString _scoreText = "0"; //!< Score in game used for saving purpose.
-    QTime _startingTime; //!< Starting game time. We use time to calculate score.
-    Stopwatch *_stopwatch; //!< Stopwatch for tracking in-game time.
-    QPixmap _openChestPic; //!< Pixmap used when Chest is opened.
-    QPixmap _openDoorPic; //!< Pixmap used when Door is opened.
-    qint32 _openDoorXCoord; //!< Coordinate for Door which is changed due to different opened door and closed door Pixmaps.
-    QGraphicsPixmapItem *_saveBtn; //!< Button which saves current state of the game.
-    QGraphicsPixmapItem *_quitBtn; //!< Button which brings you back to main menu.
-    bool _tutorial = false; //!< Indicator if the player has started the tutorial.
-    Help *_help; //!< Help shown during tutorial.
-    Help *_help_text; //!< Help shown during tutorial.
-    QString _timeText = "00:00"; //!< Time in game used for saving purpose.
-    bool _isScoreLoaded = false; //!< Checking if the score is loaded or not.
+    QGraphicsView *_parent;         //!< Game's parent.
+    Player *_player;                //!< Controllable object.
+    Gift *_gift;                    //!< Generous gift in shape of a Key. Universal key which opens every door.
+    Door *_door;                    //!< InGameObjects for which you need a Key to open it.
+    Chest *_chest;                  //!< InGameObjects which opens a Puzzle which when solved gives you a Key.
+    Key *_universalKey;             //!< Key which is in Gift.
+    Key *_levelKey;                 //!< Key which is in Chest.
+    Inventory *_inventory;          //!< Object which contains Keys.
+    QLineEdit *_log;                //!< Message log which informs you of events.
+    QSound *_door_knock_sound = new QSound(QString(":/resources/sounds/knock_on_the_door.wav"));    //!< Door knock sound.
+    QSound *_door_opening_sound = new QSound(QString(":/resources/sounds/door_opening.wav"));       //!< Door opening sound.
+    QSound *_key_sound = new QSound(QString(":/resources/sounds/keys.wav"));                        //!< Colected Key sound.
+    QSoundEffect *_background_music = new QSoundEffect();                                           //!< Soundtrack in game.
+    QLabel *_score;                 //!< Score in game. Calculated with some random function.
+    QString _scoreText = "0";       //!< Score in game used for saving purpose.
+    QTime _startingTime;            //!< Starting game time. We use time to calculate score.
+    Stopwatch *_stopwatch;          //!< Stopwatch for tracking in-game time.
+    QPixmap _openChestPic;          //!< Pixmap used when Chest is opened.
+    QPixmap _openDoorPic;           //!< Pixmap used when Door is opened.
+    qint32 _openDoorXCoord;         //!< Coordinate for Door which is changed due to different opened door and closed door Pixmaps.
+    QGraphicsPixmapItem *_saveBtn;  //!< Button which saves current state of the game.
+    QGraphicsPixmapItem *_quitBtn;  //!< Button which brings you back to main menu.
+    bool _tutorial = false;         //!< Indicator if the player has started the tutorial.
+    Help *_help;                    //!< Help shown during tutorial.
+    Help *_help_text;               //!< Help shown during tutorial.
+    QString _timeText = "00:00";    //!< Time in game used for saving purpose.
+    bool _isScoreLoaded = false;    //!< Checking if the score is loaded or not.
 
     /**
      * @brief       Function which load levels from JSON files.

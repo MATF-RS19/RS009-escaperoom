@@ -39,7 +39,7 @@ public:
     void nextStep();
 
 private:
-    qint16 _step = 1; //!< Current step in the tutorial.
+    qint16 _step = 1; //!< Current step in the tutorial. Tutorial is divided in three steps.
 };
 
 #endif // HELP_H

@@ -15,6 +15,11 @@ MainWindow::~MainWindow(){
 
 
 void MainWindow::initGUI(){
+
+    _ui->display->setStyleSheet(
+             "background-image:    url(\":/resources/background.png\"); "
+             "background-position: center;" );
+
     QPixmap exitPixmap(":/resources/gui/quit.png");
     _ui->exit_btn->setStyleSheet("border: none;");
     _ui->exit_btn->setIcon(exitPixmap);
@@ -98,6 +103,10 @@ void MainWindow::on_newGame_conf_btn_clicked() {
     if(qf.exists()){
         qint32 answer = QInputDialog::getInt(this, "Korisnik vec postoji", "Ako zelite da prebriste podatke, unesite 1");
         if(answer == 1){
+
+            //removing background before starting the game
+            _ui->display->setStyleSheet("focus { background:white; }");
+
             writeJson(username);
             newGame(username);
             _ui->newGameTE->clear();
@@ -105,6 +114,10 @@ void MainWindow::on_newGame_conf_btn_clicked() {
         }
     }
     else{
+
+        //removing background before starting the game
+        _ui->display->setStyleSheet("focus { background:white; }");
+
         writeJson(username);
         newGame(username);
         _ui->newGameTE->clear();
@@ -171,6 +184,10 @@ void MainWindow::on_loadGame_conf_btn_clicked() {
     QFile qf("../RS009-escaperoom/resources/username_json/" + username + ".json");
 
     if(qf.exists()){
+
+        //removing background before starting the game
+        _ui->display->setStyleSheet("focus { background:white; }");
+
         setAllInvisible();
         readJsonAndStartGame(username);
         _ui->loadGameTE->clear();
@@ -218,6 +235,7 @@ void MainWindow::on_exit_btn_clicked(){
 
 void MainWindow::on_tutorial_btn_clicked()
 {
+    _ui->display->setStyleSheet("focus { background:white; }");
     setAllInvisible();
     //making a new game, but we are not setting a player name.
     _game = new Game(_ui->display);

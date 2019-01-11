@@ -332,6 +332,10 @@ void Game::quit() {
     }
     _background_music->stop();
     this->deleteLater();
+
+    _parent->setStyleSheet(
+                "background-image:    url(\":/resources/background.png\"); "
+                "background-position: center;" );
 }
 
 //if user press double click somewhere on the scene, player will stay in focus
