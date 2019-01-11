@@ -26,12 +26,12 @@ public:
      * @brief           Chest constructor.
      * @param picture   Sets the pixmap of the chest.
      */
-    Chest(QPixmap picture);
+    Chest(const QPixmap& picture);
     /**
      * @brief           Chest destructor.
      *                  Destroys Chest object.
      */
-    ~Chest();
+    ~Chest() = default;
     /**
      * @brief       Overrides from InGameObjects.
      * @param event An event which should handled.

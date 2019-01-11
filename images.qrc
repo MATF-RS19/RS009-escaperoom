@@ -92,5 +92,9 @@
         <file>resources/puzzles/puzzle_2_0.png</file>
         <file>resources/levels/invertedFloor2.png</file>
         <file>resources/background.png</file>
+        <file>resources/levels/invertedFloor4.png</file>
+        <file>resources/levels/invertedFloor5.png</file>
+        <file>resources/levels/level_04.png</file>
+        <file>resources/chests/chest5.png</file>
     </qresource>
 </RCC>

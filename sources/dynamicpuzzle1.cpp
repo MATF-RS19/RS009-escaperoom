@@ -66,14 +66,14 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
                 _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
-                qDebug() << "Wolf has eaten goat! Be careful next time";
+                //qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island2 && _lettucePosition == island2){
                 _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
-                qDebug() << "Goat has eaten lettuce! Be careful next time";
+                //qDebug() << "Goat has eaten lettuce! Be careful next time";
                 getLog()->setText("Goat has eaten lettuce! Be careful next time");
             }
             break;
@@ -83,14 +83,14 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
                 _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
-                qDebug() << "Wolf has eaten goat! Be careful next time";
+                //qDebug() << "Wolf has eaten goat! Be careful next time";
                 getLog()->setText("Wolf has eaten goat! Be careful next time");
             }
             if(_goatPosition == island1 && _lettucePosition == island1){
                 _fail_sound->setLoops(SET_SOUND_LOOP);
                 _fail_sound->play();
                 puzzleOver();
-                qDebug() << "Goat has eaten lettuce! Be careful next time";
+                //qDebug() << "Goat has eaten lettuce! Be careful next time";
                 getLog()->setText("Goat has eaten lettuce! Be careful next time");
             }
             break;
@@ -101,7 +101,7 @@ void DynamicPuzzle1::checkForEating(qint16 boatIslandNumber){
 void DynamicPuzzle1::checkForWinning(){
     if((_wolfPosition == island2) && (_goatPosition == island2) && (_lettucePosition == island2)){
         getLK()->setKeyAvailability(true);
-        qDebug() << "Chest unlocked, click to get key";
+        //qDebug() << "Chest unlocked, click to get key";
         getLog()->setText("Chest unlocked, click to get key");
         puzzleOver();
     }
@@ -134,7 +134,7 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
             checkForWinning();
         }
         else{
-            qDebug() << "No more space on the boat";
+            //qDebug() << "No more space on the boat";
         }
     }
     else if(_goat->isUnderMouse()){
@@ -160,7 +160,7 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
             checkForWinning();
         }
         else{
-            qDebug() << "No more space on the boat";
+            //qDebug() << "No more space on the boat";
         }
     }
     else if(_lettuce->isUnderMouse()){
@@ -186,7 +186,7 @@ void DynamicPuzzle1::mousePressEvent(QGraphicsSceneMouseEvent *){
             checkForWinning();
         }
         else{
-            qDebug() << "No more space on the boat";
+            //qDebug() << "No more space on the boat";
         }
 
     }

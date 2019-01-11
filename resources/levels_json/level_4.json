@@ -1,6 +1,6 @@
 {
-  "background": ":/resources/levels/level_01.png",
-  "floor": ":/resources/levels/invertedFloor1.png",
+  "background": ":/resources/levels/level_04.png",
+  "floor": ":/resources/levels/invertedFloor4.png",
   "gift": {
     "on_scene": false
   }, 
@@ -8,16 +8,16 @@
     "on_scene": true,
     "pixmapClose": ":/resources/doors/close_door.png",
     "pixmapOpen": ":/resources/doors/open_door.png",
-    "x_pos_close": 320,
-    "y_pos_close": 215,
-    "x_pos_open": 265
+    "x_pos_close":380,
+    "y_pos_close": 228,
+    "x_pos_open": 317
   }, 
   "chest": {
     "on_scene": true,
     "pixmapClose": ":/resources/chests/close.png",
     "pixmapOpen": ":/resources/chests/open.png",
-    "x_pos": 420,
-    "y_pos": 310
+    "x_pos": 845,
+    "y_pos": 330
   },
   "inventory": {
      "on_scene": true,

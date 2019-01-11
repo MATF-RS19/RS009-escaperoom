@@ -1,10 +1,8 @@
 #include "headers/chest.hpp"
 
-Chest::Chest(QPixmap picture) {
+Chest::Chest(const QPixmap& picture) {
     setPixmap(picture);
 }
-
-Chest::~Chest(){}
 
 void Chest::mousePressEvent(QGraphicsSceneMouseEvent *){}
 
@@ -16,7 +14,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
             switch (getPlayer()->getCurrentLevel()) {
                 case DYNAMIC_LEVEL_2:{
                     //setting scene for second dynamic puzzle
-                    DynamicPuzzle2 *dynamicPuzzle2Scene = new DynamicPuzzle2(view, view->scene(), getPlayer()->getCurrentLevel());
+                    auto *dynamicPuzzle2Scene = new DynamicPuzzle2(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle2Scene->setPlayer(this->getPlayer());
                     dynamicPuzzle2Scene->setLevelKey(this->getLK());
                     dynamicPuzzle2Scene->setLog(getLog());
@@ -25,7 +23,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
                 }
                 case DYNAMIC_LEVEL_1: {
                     //setting scene for first dynamic puzzle
-                    DynamicPuzzle1 *dynamicPuzzle1Scene = new DynamicPuzzle1(view, view->scene(), getPlayer()->getCurrentLevel());
+                    auto *dynamicPuzzle1Scene = new DynamicPuzzle1(view, view->scene(), getPlayer()->getCurrentLevel());
                     dynamicPuzzle1Scene->setPlayer(this->getPlayer());
                     dynamicPuzzle1Scene->setLevelKey(this->getLK());
                     dynamicPuzzle1Scene->setLog(getLog());
@@ -34,7 +32,7 @@ void Chest::mousePressEvent(QGraphicsSceneMouseEvent *event, QGraphicsView *view
                 }
                 default: {
                     //setting new scene for static puzzles
-                    StaticPuzzle *puzzleScene = new StaticPuzzle(view, view->scene(), getPlayer()->getCurrentLevel());
+                    auto *puzzleScene = new StaticPuzzle(view, view->scene(), getPlayer()->getCurrentLevel());
                     puzzleScene->setPlayer(this->getPlayer());
                     puzzleScene->setLevelKey(this->getLK());
                     puzzleScene->setLog(getLog());

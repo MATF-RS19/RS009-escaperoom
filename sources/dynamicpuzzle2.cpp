@@ -20,7 +20,7 @@ void DynamicPuzzle2::initializePuzzle(){
             auto s1 = base + QString::number(j*NUM_OF_COLS + i) + ".png";
             QGraphicsPixmapItem* tilePixmap = new QGraphicsPixmapItem(QPixmap(QString(s1)));
             QPair<QGraphicsPixmapItem*, qint16> item(tilePixmap, j*NUM_OF_COLS + i);
-            _tiles.push_back(std::move(item));
+            _tiles.push_back(item);
             _tiles.at(j*NUM_OF_COLS + i).first->setPos(QPoint(STARTING_X+MOVE_VAL*i, STARTING_Y+MOVE_VAL*j));
         }
     }

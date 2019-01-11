@@ -24,13 +24,13 @@ public:
      * @brief           Door constructor.
      * @param picture   Sets the pixmap of the door.
      */
-    Door(QPixmap picture);
+    Door(const QPixmap& picture);
 
     /**
      * @brief           Door destructor.
      *                  Destroys Door object.
      */
-    ~Door();
+    ~Door() = default;
 
     /**
      * @brief           Overrides from InGameObjects.
@@ -44,7 +44,7 @@ public:
      * @param pic       Opened door pixmap.
      * @param xCoord    Corrective coordinate because of pixmap width and height differences.
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent *event, QPixmap pic, qint32 xCoord);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event, const QPixmap& pic, qint32 xCoord);
 
     /**
      * @brief       Returns in-game log.
