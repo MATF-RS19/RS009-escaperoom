@@ -12,9 +12,7 @@
 #include "headers/key.h"
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Abstract class for puzzles
  */
 class Puzzle : public QGraphicsScene {
 
@@ -22,83 +20,75 @@ class Puzzle : public QGraphicsScene {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Pure virtual method that will be implemented in subclass's
      */
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) = 0;
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return current level
      */
     qint16 getCl();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return current main view
      */
     QGraphicsView *getView();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return current scene
      */
     QGraphicsScene *getScene();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Setter for player
      */
     void setPlayer(Player *p);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Setter for level key
      */
     void setLevelKey(Key *lk);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return player
      */
     Player *getPlayer();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return level key
      */
     Key *getLK();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return user log
      */
     QLineEdit *getLog();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Setter for user's log
      */
     void setLog(QLineEdit *l);
 
-    QSound *_fail_sound = new QSound(QString(":/resources/sounds/fail_Windows.wav")); //!<
+    QSound *_fail_sound = new QSound(QString(":/resources/sounds/fail_Windows.wav")); //!< Sound that will be played if user send wrong solution for check
 
 protected:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Explicit constructorfor Puzzle abstract class
+     * @param parent    Main view
+     * @param scene     Current scene
+     * @param cl        Current level
      */
     explicit Puzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
-    QGraphicsPixmapItem *_closeBtn; //!<
+    QGraphicsPixmapItem *_closeBtn; //!< Close button,for closing puzzle scene
 
 private:
-    QGraphicsView *_parent; //!<
-    QGraphicsScene *_scene; //!<
-    qint16 cLevel; //!<
-    Player *_player; //!<
-    Key *_levelKey; //!<
-    QLineEdit *_log; //!<
+    QGraphicsView *_parent; //!< Main view
+    QGraphicsScene *_scene; //!< Current scene
+    qint16 cLevel; //!< Current level
+    Player *_player; //!< Object of class Player
+    Key *_levelKey; //!< Level key
+    QLineEdit *_log; //!< User's log
 };
 
 #endif // PUZZLE_H

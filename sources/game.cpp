@@ -239,9 +239,6 @@ void Game::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
             //if we are in tutorial, game is over
             if(isTutorial() && _help->currentStep() == 3){
-                /*for(QGraphicsItem *item: this->items()){
-                        delete item;
-                }*/
                 quit();
             }
             else {

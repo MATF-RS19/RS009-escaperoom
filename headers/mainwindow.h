@@ -10,9 +10,7 @@ namespace Ui {
 }
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Class that represents main menu
  */
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -20,106 +18,93 @@ class MainWindow : public QMainWindow {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Explicit MainWindow constructor
      */
     explicit MainWindow(QWidget *parent = nullptr);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       MainWindow destructor
      */
     ~MainWindow();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Initialization of main menu interface
      */
     void initGUI();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function that starts new game
+     * @param name  User's nickname
      */
     void newGame(QString name);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function that make json file for new user
+     * @param name  User's nickname
      */
     void writeJson(QString name);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function that read json file for existing user and sent data to game constructor
+     * @param name  User's nickname
      */
     void readJsonAndStartGame(QString name);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function that set all objects in main menu to invisible
      */
     void setAllInvisible();
 
 private slots:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       NewGame button clicked
      */
     void on_newGame_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Exit button clicked
      */
     void on_exit_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       NewGameTextEdit text changed
      */
     void on_newGameTE_textChanged();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       LoadGame button clicked
      */
     void on_loadGame_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       NewGameConfirm button clicked
      */
     void on_newGame_conf_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       LoadGameConfirm button clicked
      */
     void on_loadGame_conf_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       LoadGameTextEdit text changed
      */
     void on_loadGameTE_textChanged();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       HighScore button clicked
      */
     void on_highscore_btn_clicked();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Tutorial button clicked
      */
     void on_tutorial_btn_clicked();
 
 private:
-    Ui::MainWindow *_ui; //!<
-    Game *_game; //!<
+    Ui::MainWindow *_ui; //!< MainWindow user interface
+    Game *_game; //!< Variable for startting new game
 };
 
 #endif // MAINWINDOW_H

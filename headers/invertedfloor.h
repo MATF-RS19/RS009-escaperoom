@@ -6,22 +6,19 @@
 #include <QDebug>
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief In-game object that goes with level pictures and help us with collision
  */
 class InvertedFloor : public QGraphicsPixmapItem {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       InvertedFloor constructor
+     * @param bg    Picture of the inverted floor
      */
     InvertedFloor(QPixmap bg);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       InvertedFloor destructor
      */
     ~InvertedFloor();
 };

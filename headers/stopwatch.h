@@ -16,37 +16,33 @@
 #define STOPWATCH_HEIGHT (30)
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Timer for player
  */
 class Stopwatch : public QLabel {
     Q_OBJECT
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Stopwatch constructor
+     * @param X     Starting time for timer, depends on current time and saved time inside user json file
      */
     Stopwatch(QTime startingTime);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Returns current time in stopwatch
      */
     QString getTime();
 
 private slots:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Slot for showing elapsed time inside stopwatch
      */
     QString showElapsedTime();
 
 private:
-    QTime _startingTime; //!<
-    QString time; //!<
+    QTime _startingTime; //!< Starting time for timer, depends on current time and saved time inside user json file
+    QString time; //!< Text inside stopwatch object
 };
 
 #endif // STOPWATCH_H

@@ -3,46 +3,40 @@
 #include <QPixmap>
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Sprite for player's moving
  */
 class Sprite {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Sprite constructor
      */
     Sprite();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Sprite destructor
      */
     ~Sprite();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return next picture from sprite sheet
      */
     QPixmap nextSprite();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Set sprite sheet on begin
      */
     QPixmap startingSprite();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief               Add new sprite
+     * @param spriteName    Name of current sprite
      */
     void addSprite(const QString spriteName);
 
 private:
-    QVector<QPixmap> _spritesheet; //!<
-    int _current = 0; //!<
+    QVector<QPixmap> _spritesheet; //!< Sprite sheet of player's moving
+    int _current = 0; //!< Current picture from sprite sheet
 };
 
 #endif // SPRITE_H

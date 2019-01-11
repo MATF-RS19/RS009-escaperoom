@@ -3,44 +3,39 @@
 
 #include <QGraphicsPixmapItem>
 
-//Class that will be subclass of Colectable items, for now just object that have id
-
 /**
- * @brief Short description
- *
- * Description
+ * @brief Class for making universal key and level keys with ids and pictures
  */
 class Key : public QGraphicsPixmapItem
 {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Key constructor
+     * @param id    Id of key
+     * @param bg    Picture of the key
      */
     Key(qint16 id, QPixmap bg);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Key destructor
      */
     ~Key();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function that return true if player solved level puzzle
      */
     bool shouldGetKey();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Setter for key
+     * @param k     k equals true when player solve level puzzle
      */
     void setKeyAvailability(bool k);
 
 private:
-    qint16 _id; //!<
-    bool _getKey = false; //!<
+    qint16 _id; //!< Key's id
+    bool _getKey = false; //!< Boolean value that tell us if user solved level puzzle
 };
 
 #endif // KEY_H

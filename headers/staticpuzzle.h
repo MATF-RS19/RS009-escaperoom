@@ -10,35 +10,34 @@
 #include <QSound>
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Class for setting static puzzle's
  */
 class StaticPuzzle : public Puzzle {
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           StaticPuzzle constuctor
+     * @param parent    Main view
+     * @param scene     Current scene
+     * @param cl        Current level
      */
     StaticPuzzle(QGraphicsView *parent, QGraphicsScene *scene, qint16 cl);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief           Mouse press event inside puzzle
+     * @param event     Represent event that trigered this function
      */
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    QGraphicsPixmapItem *_accBtn; //!<
-    QVector<QTextEdit*> _answers; //!<
-    qint32 _ansNum; //!<
-    QVector<QString*> _rightAnswers; //!<
-    QVector<QString*> _answerPositionsX; //!<
-    QVector<QString*> _answerPositionsY; //!<
+    QGraphicsPixmapItem *_accBtn; //!< Accept button
+    QVector<QTextEdit*> _answers; //!< Vector of TextEdit fields where user should eneter his/her answers
+    qint32 _ansNum; //!< Number of answers
+    QVector<QString*> _rightAnswers; //!< Vector of correct answers
+    QVector<QString*> _answerPositionsX; //!< Vector of position on x axis for answers TextEdit fields
+    QVector<QString*> _answerPositionsY; //!< Vector of position on y axis for answers TextEdit fields
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Function for loading data from json file
      */
     void loadPuzzle();
 };

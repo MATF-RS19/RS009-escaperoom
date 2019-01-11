@@ -10,104 +10,91 @@
 #include "headers/invertedfloor.h"
 
 /**
- * @brief Short description
- *
- * Description
+ * @brief Class that represent player, his picture and key collection
  */
 class Player : public QGraphicsPixmapItem {
 
 public:
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Player constructor
+     * @param name  User's nickname
      */
     Player(QString name);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Player destructor
      */
     ~Player();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Player's key list, that can hold one universal key and one level key
      */
     QList<Key*> keyList;
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Keyboar press event function for player's moving
+     * @param key   Represent which key is pressed
      */
     void keyPressEvent(QKeyEvent *key);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Returns current level
      */
     qint16 getCurrentLevel();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return object of class InvertedFloor
      */
     InvertedFloor *getInvertedFloor();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return player's dummy
      */
     QGraphicsPixmapItem *getDummy();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Set current level
      */
     void setCurrentLevel(qint16 cl);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Set object of class InvertedFloor
      */
     void setInvertedFloor(InvertedFloor *iFloor);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Set player's dummy
      */
     void setDummy(QGraphicsPixmapItem *dummy);
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Return user's nickname
      */
     QString getUsername();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Initialize player's sprite sheet for player's moving
      */
     void initSpriteSheets();
 
     /**
-     * @brief       Short description
-     * @param X     X description
+     * @brief       Set player's sprite sheet
      */
     void setSprite(Sprite& sprite);
 private:
-    qreal _step = 3.0; //!<
-    qreal _doubleStep = 2 * _step; //!<
-    qint16 _currentLevel; //!<
-    InvertedFloor *_invertedfloor; //!<
-    QGraphicsPixmapItem* _dummy; //!<
-    QString _username; //!<
-    Sprite _wSpriteSheet; //!<
-    Sprite _aSpriteSheet; //!<
-    Sprite _sSpriteSheet; //!<
-    Sprite _dSpriteSheet; //!<
+    qreal _step = 3.0; //!< Player's speed on y axis
+    qreal _doubleStep = 2 * _step; //!< Player's speed on x axis
+    qint16 _currentLevel; //!< Current level
+    InvertedFloor *_invertedfloor; //!< Object that represent inverted floor
+    QGraphicsPixmapItem* _dummy; //!< Object that always goes with player and help us to solve collision
+    QString _username; //!< User nickname
+    Sprite _wSpriteSheet; //!< SpriteSheet for moving up
+    Sprite _aSpriteSheet; //!< SpriteSheet for moving left
+    Sprite _sSpriteSheet; //!< SpriteSheet for moving down
+    Sprite _dSpriteSheet; //!< SpriteSheet for moving right
 
-    bool checkCollision();
+    bool checkCollision(); //!< Cheking collision between player and the rest of the scene
 };
 
 #endif // PLAYER_H
