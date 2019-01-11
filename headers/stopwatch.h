@@ -24,7 +24,7 @@ public:
 
     /**
      * @brief       Stopwatch constructor
-     * @param X     Starting time for timer, depends on current time and saved time inside user json file
+     * @param startingTime     Starting time for timer, depends on current time and saved time inside user json file
      */
     Stopwatch(QTime startingTime);
 

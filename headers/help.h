@@ -14,13 +14,13 @@ public:
      * @brief           Help constructor.
      * @param picture   Sets the pixmap of the Help.
      */
-    Help(QPixmap picture);
+    Help(const QPixmap& picture);
 
     /**
      * @brief       Help destructor.
      *              Destroys Help object.
      */
-    ~Help();
+    ~Help() = default;
 
     /**
      * @brief           Overrides from InGameObjects.

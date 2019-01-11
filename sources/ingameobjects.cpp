@@ -1,12 +1,5 @@
 #include "headers/ingameobjects.h"
 
-InGameObjects::InGameObjects(){
-
-}
-
-InGameObjects::~InGameObjects(){
-
-}
 
 qreal InGameObjects::distance(){
     qreal deltaX = this->x() - _player->x();
@@ -27,15 +20,15 @@ Key* InGameObjects::getLK(){
 }
 
 void InGameObjects::setPlayer(Player *p){
-    _player = std::move(p);
+    _player = p;
 }
 
 void InGameObjects::setUK(Key *uk){
-    _universalKey = std::move(uk);
+    _universalKey = uk;
 }
 
 void InGameObjects::setLK(Key *lk){
-    _levelKey = std::move(lk);
+    _levelKey = lk;
 }
 
 QLineEdit *InGameObjects::getLog(){

@@ -15,12 +15,12 @@ public:
      * @brief       InvertedFloor constructor
      * @param bg    Picture of the inverted floor
      */
-    InvertedFloor(QPixmap bg);
+    InvertedFloor(const QPixmap& bg);
 
     /**
      * @brief       InvertedFloor destructor
      */
-    ~InvertedFloor();
+    ~InvertedFloor() = default;
 };
 
 #endif // FLOOR_H

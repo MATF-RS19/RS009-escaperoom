@@ -19,13 +19,13 @@ public:
      * @brief           Inventory constructor.
      * @param picture   Sets the pixmap of the Inventory.
      */
-    Inventory(QPixmap picture);
+    Inventory(const QPixmap& picture);
 
 
     /**
      * @brief       Inventory destructor.
      */
-    ~Inventory();
+    ~Inventory() = default;
 };
 
 #endif // INVENTORY_H

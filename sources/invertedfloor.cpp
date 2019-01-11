@@ -1,9 +1,5 @@
 #include "headers/invertedfloor.h"
 
-InvertedFloor::InvertedFloor(QPixmap background){
+InvertedFloor::InvertedFloor(const QPixmap& background){
     setPixmap(background);
-}
-
-InvertedFloor::~InvertedFloor(){
-
 }

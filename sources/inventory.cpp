@@ -1,9 +1,5 @@
 #include "headers/inventory.h"
 
-Inventory::Inventory(QPixmap picture) {
+Inventory::Inventory(const QPixmap& picture) {
     setPixmap(picture);
-}
-
-Inventory::~Inventory(){
-
 }

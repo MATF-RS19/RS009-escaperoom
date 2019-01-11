@@ -68,12 +68,12 @@ protected:
     /**
      * @brief       InGameObjects constructor.
      */
-    explicit InGameObjects();
+    explicit InGameObjects() = default;
 
     /**
      * @brief       InGameObjects destructor.
      */
-    ~InGameObjects();
+    ~InGameObjects() = default;
 
     /**
      * @brief       Distance between Player and InGameObjects.
@@ -82,10 +82,10 @@ protected:
     qreal distance();
 
 private:
-    Player *_player; //!< Controllable object.
-    Key *_universalKey; //!< Key which is in Gift.
-    Key *_levelKey; //!< Key which is in Chest.
-    QLineEdit *_log; //!< In-game log which shows messages.
+    Player *_player {}; //!< Controllable object.
+    Key *_universalKey {}; //!< Key which is in Gift.
+    Key *_levelKey {}; //!< Key which is in Chest.
+    QLineEdit *_log {}; //!< In-game log which shows messages.
 };
 
 #endif // INGAMEOBJECTS_H

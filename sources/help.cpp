@@ -1,12 +1,8 @@
 #include "headers/help.h"
 
-Help::Help(QPixmap pic)
+Help::Help(const QPixmap& pic)
 {
     setPixmap(pic);
-}
-
-Help::~Help(){
-
 }
 
 void Help::mousePressEvent(QGraphicsSceneMouseEvent *){

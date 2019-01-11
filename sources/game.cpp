@@ -21,7 +21,7 @@ Game::Game(QGraphicsView *parent) :
     //Quit button
     _quitBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/exit_btn.png"));
     _quitBtn->setFlag(QGraphicsItem::ItemIsFocusable);
-    _quitBtn->setPos(1070, 655);
+    _quitBtn->setPos(QUIT_BUTTON_X, QUIT_BUTTON_Y);
     addItem(_quitBtn);
     loadLevel();
 }
@@ -29,20 +29,18 @@ Game::Game(QGraphicsView *parent) :
 Game::Game(QGraphicsView *parent, QString name) :
            _parent(parent)
 {
-    start(name);
+    start(std::move(name));
     loadLevel();
 }
 
 Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctime, QString cscore) :
-            _parent(parent)
+            _parent(parent), _scoreText(std::move(cscore)), _timeText(std::move(ctime))
 {
-    _timeText = ctime;
-    start(name);
+    start(std::move(name));
     _player->setCurrentLevel(cl);
-    _scoreText = cscore;
     if(uk){
         _player->keyList.push_back(_universalKey);
-        _universalKey->setPos(1175, 296);
+        _universalKey->setPos(UNIVERSAL_KEY_X, UNIVERSAL_KEY_Y);
         _universalKey->setZValue(5);
         this->addItem(_universalKey);
     }
@@ -50,12 +48,8 @@ Game::Game(QGraphicsView *parent, QString name, qint16 cl, bool uk, QString ctim
     loadLevel();
 }
 
-Game::~Game(){
-
-}
-
 void Game::start(QString name) {
-    _player = new Player(name);
+    _player = new Player(std::move(name));
     addItem(_player);
     addItem(_player->getDummy());
     // Universal key
@@ -68,12 +62,12 @@ void Game::start(QString name) {
     //Save button
     _saveBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/save_btn.png"));
     _saveBtn->setFlag(QGraphicsItem::ItemIsFocusable);
-    _saveBtn->setPos(1070, 585);
+    _saveBtn->setPos(INGAME_BUTTON_X, SAVE_BUTTON_Y);
     addItem(_saveBtn);
     //Quit button
     _quitBtn = new QGraphicsPixmapItem(QPixmap(":/resources/buttons/exit_btn.png"));
     _quitBtn->setFlag(QGraphicsItem::ItemIsFocusable);
-    _quitBtn->setPos(1070, 655);
+    _quitBtn->setPos(INGAME_BUTTON_X, QUIT_BUTTON_Y);
     addItem(_quitBtn);
 }
 
@@ -109,7 +103,7 @@ void Game::loadLevel(){
     _timeText = _stopwatch->getTime();
     // Adding score
     addScore();
-
+    // We may lose precision, but it doesn't really matter that much.
     _player->setPos(SceneMeasure::sceneWidth/2, SceneMeasure::sceneHeight/2);
     //setting player ahead of gift, because first we add player to the scene, then gift, so gift's z-value is lower than player's
     _player->setZValue(5);
@@ -119,6 +113,7 @@ void Game::loadLevel(){
     _player->setFocus();
 
     //setting position for player's dummy object and adding (25,100), so that dummy will be by his legs
+    //We may lose precision, but it doesn't really matter that much.
     _player->getDummy()->setPos(SceneMeasure::sceneWidth/2+25, SceneMeasure::sceneHeight/2+100);
 
     //adding object so we can trace player not to got over edges of room

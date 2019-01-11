@@ -15,12 +15,12 @@ public:
      * @param id    Id of key
      * @param bg    Picture of the key
      */
-    Key(qint16 id, QPixmap bg);
+    Key(qint16 id, const QPixmap& bg);
 
     /**
      * @brief       Key destructor
      */
-    ~Key();
+    ~Key() = default;
 
     /**
      * @brief       Function that return true if player solved level puzzle

@@ -18,13 +18,13 @@ public:
      * @brief           Gift constructor.
      * @param picture   Sets the pixmap of the Gift.
      */
-    Gift(QPixmap picture);
+    Gift(const QPixmap& picture);
 
     /**
      * @brief       Gift destructor.
      *              Destroys Gift object.
      */
-    ~Gift();
+    ~Gift() = default;
 
     /**
      * @brief           Overrides from InGameObjects.

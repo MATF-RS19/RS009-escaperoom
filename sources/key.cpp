@@ -1,13 +1,9 @@
 #include "headers/key.h"
 
-Key::Key(qint16 id, QPixmap bg) :
+Key::Key(qint16 id, const QPixmap& bg) :
     _id(id)
 {
     setPixmap(bg);
-}
-
-Key::~Key(){
-
 }
 
 bool Key::shouldGetKey() {

@@ -1,12 +1,8 @@
 #include "headers/gift.h"
 
-Gift::Gift(QPixmap pic)
+Gift::Gift(const QPixmap& pic)
 {
     setPixmap(pic);
-}
-
-Gift::~Gift() {
-
 }
 
 void Gift::mousePressEvent(QGraphicsSceneMouseEvent *event){
