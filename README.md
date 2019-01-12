@@ -17,7 +17,7 @@ This is a simple game where you solve puzzles and then you recieve a key to open
 	- Jakovljevic Aleksandar 156/2015
 
 ### Professor:
-	- Sasa Malkov
+	- dr Sasa Malkov
 
 ### Teaching assistants:
 	- dr Ivan Cukic
@@ -38,3 +38,5 @@ From freepik.com
 - Naulicreative
 - Macrovector
 - Rawpixel.com
+
+### Screenshot:
